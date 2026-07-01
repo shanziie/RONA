@@ -1,0 +1,152 @@
+/* =========================================
+   GLOBAL & SMOOTH BEHAVIOR
+   ========================================= */
+html {
+    scroll-behavior: smooth; /* Smooth scroll bawaan untuk navigasi anchor */
+}
+
+body {
+    background-color: #FBF7F0;
+    color: #2D3A3A;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+/* =========================================
+   NAVBAR (Background berubah saat scroll)
+   ========================================= */
+.glass-nav {
+    background: transparent;
+    backdrop-filter: blur(0px);
+    border-bottom: 1px solid transparent;
+    transition: all 0.4s ease-in-out;
+}
+
+.glass-nav.scrolled {
+    background: rgba(251, 247, 240, 0.85);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 4px 30px rgba(13, 106, 92, 0.08);
+    border-bottom: 1px solid rgba(13, 106, 92, 0.1);
+}
+
+/* =========================================
+   HOVER EFFECTS (Underline & Glow)
+   ========================================= */
+.hover-underline {
+    position: relative;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.hover-underline::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: currentColor;
+    transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 2px;
+}
+
+.hover-underline:hover::after {
+    width: 100%;
+}
+
+/* Input/Button Glow Effect */
+.glow-on-hover:hover {
+    box-shadow: 0 0 15px rgba(87, 166, 149, 0.5);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+/* Icon Muter Dikit (Rotate on Hover) */
+.icon-spin:hover .material-symbols-outlined {
+    transform: rotate(15deg) scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Card Shadow Hover Modern */
+.card-shadow {
+    box-shadow: 0 4px 20px rgba(13, 106, 92, 0.05);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.card-shadow-hover:hover {
+    box-shadow: 0 12px 30px rgba(13, 106, 92, 0.15);
+    transform: translateY(-8px) scale(1.01);
+}
+
+/* =========================================
+   ANIMATIONS (Floating & Parallax)
+   ========================================= */
+/* Infinite Floating */
+.float-anim {
+    animation: floating 4s ease-in-out infinite;
+}
+
+.float-anim-delayed {
+    animation: floating 5s ease-in-out infinite 1s;
+}
+
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* =========================================
+   REVEAL ON SCROLL (Fade & Slide)
+   ========================================= */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+/* =========================================
+   RESPONSIVE MODAL BOTTOM SHEET & UTILITIES
+   ========================================= */
+/* Bottom Sheet Modal (Mobile) */
+@media (max-width: 767px) {
+  .modal {
+    align-items: flex-end;
+  }
+  .modal-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 28px 28px 0 0 !important;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideFromBottom 0.35s cubic-bezier(0.32, 0.94, 0.6, 1) !important;
+  }
+}
+
+@keyframes slideFromBottom {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Touch-friendly minimum tap target */
+.btn-touch {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Consistent image containers */
+.img-product { aspect-ratio: 4/3; object-fit: cover; }
+.img-article { aspect-ratio: 16/9; object-fit: cover; }
+.img-hero-mobile { max-height: 260px; }
+

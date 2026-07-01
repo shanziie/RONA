@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pembayaran Sukses - RONA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#0d6a5c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#57a695",
+                        "secondary": "#28695d",
+                        "surface": "#f7faf7",
+                        "on-surface": "#181c1b",
+                        "on-surface-variant": "#3f4946",
+                        "outline-variant": "#bec9c5",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f1f4f2",
+                        "surface-container": "#ebefec",
+                        "aman-cream": "#FBF7F0",
+                        "hangat-coral": "#E98A7D"
+                    },
+                    "borderRadius": {
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "card": "20px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBF7F0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.05);
+        }
+        .glass-nav {
+            background: rgba(251, 247, 240, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+
+    <div id="navbarContainer"></div>
+
+    <main class="max-w-[700px] mx-auto px-6 pt-32 pb-20">
+        
+        <!-- Step Wizard Progress Bar -->
+        <div class="max-w-[800px] mx-auto mb-10 bg-white p-4 rounded-2xl border border-outline-variant/20 shadow-sm flex justify-between items-center text-[10px] md:text-xs font-bold text-outline">
+            <div class="flex items-center gap-2 text-[#0d6a5c]">
+                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px]"><span class="material-symbols-outlined text-[12px] font-bold">done</span></span>
+                <span>Keranjang</span>
+            </div>
+            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+            <div class="flex items-center gap-2 text-[#0d6a5c]">
+                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px]"><span class="material-symbols-outlined text-[12px] font-bold">done</span></span>
+                <span>Pengiriman</span>
+            </div>
+            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+            <div class="flex items-center gap-2 text-[#0d6a5c]">
+                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px]"><span class="material-symbols-outlined text-[12px] font-bold">done</span></span>
+                <span>Pembayaran</span>
+            </div>
+            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+            <div class="flex items-center gap-2 text-[#0d6a5c]">
+                <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[10px]">4</span>
+                <span>Konfirmasi Sukses</span>
+            </div>
+        </div>
+
+        <div class="bg-white p-8 md:p-10 rounded-[32px] card-shadow border border-outline-variant/20 text-center space-y-6">
+            
+            <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <span class="material-symbols-outlined text-[48px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            </div>
+            
+            <div>
+                <h1 class="text-2xl font-extrabold text-on-surface mb-1">Pembayaran Berhasil!</h1>
+                <p class="text-xs text-on-surface-variant font-medium">Terima kasih atas pesanan Anda. Tim RONA sedang menyiapkan pengiriman alat stimulasi si kecil.</p>
+            </div>
+
+            <!-- Receipt Details Box -->
+            <div class="bg-surface p-6 rounded-2xl border border-outline-variant/15 text-left text-xs space-y-3 font-semibold text-on-surface-variant">
+                <div class="flex justify-between border-b border-outline-variant/10 pb-2">
+                    <span class="text-outline">ID Transaksi</span>
+                    <span class="text-on-surface font-extrabold text-primary" id="invoiceIdLabel">TX-XXXX</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-outline">Penerima</span>
+                    <span class="text-on-surface" id="recipientName">Andini Putri</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-outline">Metode Pembayaran</span>
+                    <span class="text-on-surface" id="paymentMethodLabel">Transfer Bank</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-outline">Kurir Pengiriman</span>
+                    <span class="text-on-surface font-bold" id="courierLabel">JNE REG</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-outline">Alamat Pengiriman</span>
+                    <span class="text-on-surface text-right max-w-[300px] truncate" id="addressLabel">Surabaya</span>
+                </div>
+                <div id="receiptDiscountRow" class="flex justify-between text-coral font-bold hidden">
+                    <span class="text-outline text-coral">Diskon Voucher</span>
+                    <span id="receiptDiscountLabel" class="text-coral">-Rp 0</span>
+                </div>
+                <div class="flex justify-between border-t border-outline-variant/10 pt-2 text-sm font-extrabold">
+                    <span class="text-on-surface">Total Pembayaran</span>
+                    <span class="text-primary" id="totalPaidLabel">Rp 0</span>
+                </div>
+            </div>
+
+            <!-- Items Purchased list -->
+            <div class="text-left space-y-2">
+                <h4 class="text-xs font-bold text-on-surface">Item Yang Dibeli:</h4>
+                <div class="space-y-2" id="purchasedItemsBox">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Therapist Guidance card -->
+            <div class="bg-emerald-50/60 p-5 rounded-2xl border border-emerald-100 text-left space-y-3">
+                <h4 class="text-xs font-bold text-emerald-800 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px] font-fill-1">psychology</span>
+                    PANDUAN TERAPIS RONA (CARA PENGGUNAAN):
+                </h4>
+                <div class="text-[11px] font-semibold text-emerald-950 space-y-2.5 leading-relaxed" id="therapistGuidanceBox">
+                    <!-- Recommendations -->
+                </div>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-3 justify-center w-full pt-4">
+                <a href="history.html" class="w-full sm:w-auto bg-primary text-white px-6 py-3 rounded-full text-xs font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-1.5 shadow-sm">
+                    <span class="material-symbols-outlined text-[16px]">history</span> Lihat Buku Perjalanan
+                </a>
+                <a href="index.html" class="w-full sm:w-auto border-2 border-primary text-primary px-6 py-3 rounded-full text-xs font-bold hover:bg-primary/5 transition-colors flex items-center justify-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">home</span> Ke Beranda
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- TOAST / CENTRAL BACKEND IMPORT -->
+    <script src="admin-core.js"></script>
+    <script>
+        const role = localStorage.getItem('rona_role') || 'guest';
+        const parentEmail = localStorage.getItem('rona_active_parent_email') || 'parent@gmail.com';
+        
+        let db = ronaDb.get();
+        let activeParent = db.users ? db.users.find(u => u.email === parentEmail) : null;
+
+        // Render dynamic navbar
+        ronaNav.renderNavbar('katalog');
+
+        // Extract transaction
+        const urlParams = new URLSearchParams(window.location.search);
+        const transactionID = urlParams.get('id') || 'TX-9901';
+        
+        db.transactions = db.transactions || [];
+        const tx = db.transactions.find(t => t.id === transactionID) || db.transactions[0];
+
+        if (tx) {
+            document.getElementById('invoiceIdLabel').innerText = tx.id;
+            document.getElementById('recipientName').innerText = tx.customerName || "Orang Tua";
+            document.getElementById('paymentMethodLabel').innerText = tx.paymentMethod || "Transfer Bank";
+            document.getElementById('courierLabel').innerText = tx.courier || "JNE REG";
+            document.getElementById('addressLabel').innerText = tx.address || "-";
+            document.getElementById('addressLabel').title = tx.address || "-";
+            
+            if (tx.discount > 0) {
+                document.getElementById('receiptDiscountRow').classList.remove('hidden');
+                document.getElementById('receiptDiscountLabel').innerText = `-Rp ${tx.discount.toLocaleString('id-ID')}`;
+            }
+
+            document.getElementById('totalPaidLabel').innerText = `Rp ${tx.total.toLocaleString('id-ID')}`;
+
+            // Render purchased items
+            const itemsBox = document.getElementById('purchasedItemsBox');
+            itemsBox.innerHTML = '';
+            
+            const guidanceBox = document.getElementById('therapistGuidanceBox');
+            guidanceBox.innerHTML = '';
+
+            const mockInstructions = {
+                "RONA-SPIN-01": "Biarkan anak memainkannya 5-10 menit saat mulai cemas atau hiperaktif untuk menyalurkan energi motorik halus.",
+                "RONA-BLKT-02": "Selimuti anak dari pundak hingga kaki saat bersiap tidur malam untuk menenangkan saraf taktil.",
+                "RONA-POPB-03": "Gunakan sebagai mainan pengalih perhatian saat berada di tempat umum yang bising.",
+                "RONA-SNDM-04": "Nyalakan white noise atau gemercik air dengan volume rendah 30 menit sebelum tidur.",
+                "RONA-BRSH-05": "Sikat lengan dan punggung anak secara perlahan dengan sikat ini 2-3 kali sehari.",
+                "RONA-VIBR-06": "Gunakan ujung silikon getar saat anak cemas untuk menstabilkan input sensori oral."
+            };
+
+            tx.items.forEach(item => {
+                // Item card
+                itemsBox.innerHTML += `
+                    <div class="flex items-center justify-between p-3 bg-surface rounded-xl border border-outline-variant/15 text-xs font-semibold text-on-surface-variant">
+                        <div class="flex items-center gap-3">
+                            <img src="${item.image}" class="w-10 h-10 object-cover rounded-lg border">
+                            <div>
+                                <p class="text-on-surface font-extrabold">${item.name}</p>
+                                <p class="text-[10px] text-outline">${item.qty} unit • Rp ${item.price.toLocaleString('id-ID')}</p>
+                            </div>
+                        </div>
+                        <p class="font-extrabold text-primary">Rp ${(item.price * item.qty).toLocaleString('id-ID')}</p>
+                    </div>
+                `;
+
+                // Therapist guidance
+                const instrText = mockInstructions[item.sku] || "Gunakan alat ini secara konsisten di bawah pengawasan orang tua saat si kecil tantrum.";
+                guidanceBox.innerHTML += `
+                    <div class="border-l-2 border-emerald-600 pl-3">
+                        <strong class="text-emerald-900 block">${item.name}</strong>
+                        <p class="mt-0.5">${instrText}</p>
+                    </div>
+                `;
+            });
+        } else {
+            document.getElementById('purchasedItemsBox').innerHTML = '<p class="text-xs text-outline italic">Transaksi tidak ditemukan.</p>';
+            document.getElementById('therapistGuidanceBox').innerHTML = '<p class="text-xs text-outline italic">Tidak ada panduan terapis tersedia.</p>';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CMS Kelola Artikel - RONA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#0d6a5c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#57a695",
+                        "secondary": "#28695d",
+                        "surface": "#f7faf7",
+                        "on-surface": "#181c1b",
+                        "on-surface-variant": "#3f4946",
+                        "outline-variant": "#bec9c5",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f1f4f2",
+                        "surface-container": "#ebefec",
+                        "aman-cream": "#FBF7F0",
+                        "hangat-coral": "#E98A7D"
+                    },
+                    "borderRadius": {
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "card": "20px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBF7F0; /* Aman Cream */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        
+        /* Interactive Toggle Switch */
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        input:checked + .slider { background-color: #0d6a5c; }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        /* Modal Style */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            inset: 0;
+            background: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(4px);
+            z-index: 2000; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .modal-content { 
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+        @keyframes slideUp { 
+            from { transform: translateY(20px) scale(0.95); opacity: 0; } 
+            to { transform: translateY(0) scale(1); opacity: 1; } 
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        
+        <!-- SIDEBAR NAV CONTAINER -->
+        <aside id="sidebarContainer"></aside>
+
+        <!-- MAIN PANEL AREA -->
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto max-h-screen">
+            
+            <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-on-surface mb-2">Manajemen Artikel Edukasi</h2>
+                    <p class="text-on-surface-variant font-medium">Unggah materi literasi medis, taksonomi terapi, dan strategi atensi anak untuk konsumsi publik.</p>
+                </div>
+                <button onclick="openArticleModal()" class="bg-primary text-white px-6 py-3 rounded-full font-bold hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm whitespace-nowrap">
+                    <span class="material-symbols-outlined text-[20px]">post_add</span>
+                    Tulis Artikel Baru
+                </button>
+            </div>
+
+            <!-- SEARCH, FILTER TOOLBAR -->
+            <div class="bg-white rounded-3xl p-6 card-shadow border border-outline-variant/30 mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
+                <!-- Search bar -->
+                <div class="relative w-full md:max-w-xs group">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors">search</span>
+                    <input type="text" id="articleSearch" oninput="handleFilterChange()" class="w-full pl-10 pr-4 py-2.5 border border-outline-variant rounded-xl text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none" placeholder="Cari artikel...">
+                </div>
+
+                <!-- Filters -->
+                <div class="flex gap-3 items-center w-full md:w-auto justify-end">
+                    <select id="filterCategory" onchange="handleFilterChange()" class="px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none bg-surface">
+                        <option value="All">Semua Kategori</option>
+                        <option value="Sensory">Sensory</option>
+                        <option value="Focus">Focus</option>
+                        <option value="Calming">Calming</option>
+                    </select>
+
+                    <select id="filterStatus" onchange="handleFilterChange()" class="px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none bg-surface">
+                        <option value="All">Semua Status</option>
+                        <option value="Publish">Publish</option>
+                        <option value="Draft">Draft</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- DATA TABLE ARTIKEL -->
+            <div class="bg-white rounded-3xl p-6 card-shadow border border-outline-variant/30 overflow-x-auto">
+                <table class="w-full text-left border-collapse min-w-[850px]">
+                    <thead>
+                        <tr class="border-b-2 border-surface-container-high">
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">ID</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">JUDUL</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">PENULIS (EDITABLE)</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">KATEGORI</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">VIEWS</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">STATUS PUBLISH</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide text-right">MANAJEMEN KONTROL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="articleTableBody" class="divide-y divide-surface-container-high text-sm">
+                        <!-- JS Render Loop -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL FORM TAMBAH/EDIT ARTIKEL -->
+    <div class="modal" id="artModal">
+        <div class="modal-content bg-white p-8 rounded-3xl max-w-[650px] w-[95%] shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            
+            <button onclick="closeArticleModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            
+            <h3 id="modalTitle" class="text-2xl font-bold text-on-surface mb-6 flex items-center gap-2 border-b border-outline-variant/30 pb-4">
+                Tulis Artikel Baru
+            </h3>
+            
+            <form id="artForm" onsubmit="saveArticle(event)" class="space-y-4 text-xs font-semibold text-on-surface-variant">
+                <input type="hidden" id="editIndex">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                    <!-- Cover image -->
+                    <div class="md:col-span-1">
+                        <label class="block mb-2">Thumbnail Cover</label>
+                        <div class="w-full aspect-video bg-surface-container rounded-2xl flex flex-col items-center justify-center border-2 border-dashed border-outline-variant cursor-pointer relative overflow-hidden group hover:border-primary transition-colors" onclick="document.getElementById('artImageFile').click()">
+                            <span class="material-symbols-outlined text-[32px] text-outline-variant group-hover:text-primary transition-colors z-10 relative bg-white/80 p-2 rounded-full shadow-sm">add_photo_alternate</span>
+                            <img id="artImagePreview" class="absolute inset-0 w-full h-full object-cover hidden">
+                        </div>
+                        <input type="file" id="artImageFile" hidden accept="image/*" onchange="previewArtImage(this)">
+                        <input type="hidden" id="artImageBase64">
+                    </div>
+
+                    <div class="md:col-span-2 space-y-4">
+                        <div>
+                            <label class="block mb-1">Judul Artikel</label>
+                            <input type="text" id="artTitle" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block mb-1">Penulis</label>
+                                <input type="text" id="artAuthor" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                            </div>
+                            <div>
+                                <label class="block mb-1">Kategori</label>
+                                <select id="artCategory" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none bg-white">
+                                    <option value="Sensory">Sensory</option>
+                                    <option value="Focus">Focus</option>
+                                    <option value="Calming">Calming</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block mb-1">Tags (Pisahkan koma)</label>
+                        <input type="text" id="artTags" placeholder="ADHD, Sensory, Parenting" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block mb-1">Status Publikasi</label>
+                        <select id="artStatus" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none bg-white">
+                            <option value="Publish">Publish</option>
+                            <option value="Draft">Draft</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block mb-1">Ringkasan Singkat</label>
+                    <textarea id="artSummary" required rows="2" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm resize-none outline-none focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Ringkasan atau kutipan artikel..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block mb-1">Isi Artikel Lengkap</label>
+                    <textarea id="artContent" required rows="6" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm resize-none outline-none focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Tulis isi konten artikel di sini..."></textarea>
+                </div>
+
+                <div class="pt-4 border-t border-outline-variant/30 flex justify-end gap-3">
+                    <button type="button" onclick="closeArticleModal()" class="px-6 py-3 rounded-full font-bold bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors">Batal</button>
+                    <button type="submit" class="px-6 py-3 rounded-full font-bold bg-primary text-white hover:opacity-90 transition-opacity flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px]">publish</span> Simpan & Publish
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- PREVIEW DIALOG -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-3xl max-w-[600px] w-[95%] shadow-2xl relative max-h-[90vh] overflow-y-auto text-sm">
+            <button onclick="closePreviewModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 class="text-xl font-bold text-on-surface mb-6 border-b border-outline-variant/30 pb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[26px]">visibility</span> Preview Artikel Edukasi
+            </h3>
+            
+            <div id="previewContent" class="space-y-4">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST / CORE LIBRARIES IMPORT -->
+    <script src="admin-core.js"></script>
+    <script>
+        // Init active sidebar highlight
+        ronaAdmin.renderSidebar('kelola-artikel');
+
+        let currentArticles = [];
+        let filteredArticles = [];
+
+        // Image Base64 Handler
+        function previewArtImage(input) {
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                document.getElementById('artImageBase64').value = reader.result;
+                const img = document.getElementById('artImagePreview');
+                img.src = reader.result;
+                img.classList.remove('hidden');
+            }
+            if (file) reader.readAsDataURL(file);
+        }
+
+        // LOAD DATA FROM LOCALSTORAGE
+        function loadArticles() {
+            const db = ronaDb.get();
+            currentArticles = db.articles || [];
+            handleFilterChange();
+        }
+
+        // FILTER, SEARCH, STATUS ENGINE
+        function handleFilterChange() {
+            const searchQuery = document.getElementById('articleSearch').value.toLowerCase().trim();
+            const categoryFilter = document.getElementById('filterCategory').value;
+            const statusFilter = document.getElementById('filterStatus').value;
+
+            filteredArticles = currentArticles.filter(art => {
+                const matchesSearch = art.title.toLowerCase().includes(searchQuery) || art.author.toLowerCase().includes(searchQuery);
+                const matchesCategory = categoryFilter === 'All' || art.category === categoryFilter;
+                const matchesStatus = statusFilter === 'All' || art.status === statusFilter;
+                return matchesSearch && matchesCategory && matchesStatus;
+            });
+
+            renderArticles();
+        }
+
+        // RENDER TABLES & INLINE AUTHORS
+        function renderArticles() {
+            const tbody = document.getElementById('articleTableBody');
+            tbody.innerHTML = '';
+
+            if (filteredArticles.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-10 font-bold text-on-surface-variant italic">Belum ada artikel edukatif ditemukan.</td></tr>`;
+                return;
+            }
+
+            filteredArticles.forEach((art, idx) => {
+                const globalIdx = currentArticles.findIndex(ca => ca.id === art.id);
+                const isChecked = art.status === "Publish" ? "checked" : "";
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-surface transition-colors" id="row_${art.id}">
+                        <td class="py-4 px-4 font-bold text-outline text-xs">${art.id}</td>
+                        <td class="py-4 px-4 flex items-center gap-3 w-[300px]">
+                            <img src="${art.thumbnail}" class="w-12 h-8 rounded-lg object-cover border border-outline-variant/30 shrink-0">
+                            <span class="font-extrabold text-on-surface text-sm truncate block">${art.title}</span>
+                        </td>
+                        <td class="py-4 px-4 font-bold">
+                            <!-- Inline Author Edit Container -->
+                            <div class="flex items-center gap-2" id="authorDisplay_${art.id}">
+                                <span class="text-on-surface-variant text-xs">${art.author}</span>
+                                <button onclick="enableInlineAuthor('${art.id}', '${art.author}', ${globalIdx})" class="text-outline-variant hover:text-primary transition-colors">
+                                    <span class="material-symbols-outlined text-[16px]">edit</span>
+                                </button>
+                            </div>
+                            <div class="flex items-center gap-1.5 hidden" id="authorInputBox_${art.id}">
+                                <input type="text" id="authorField_${art.id}" class="px-2 py-1 border border-outline-variant rounded-lg text-xs font-semibold outline-none max-w-[150px]">
+                                <button onclick="saveInlineAuthor('${art.id}', ${globalIdx})" class="bg-primary text-white p-1 rounded hover:opacity-90">
+                                    <span class="material-symbols-outlined text-[14px]">check</span>
+                                </button>
+                                <button onclick="disableInlineAuthor('${art.id}')" class="bg-surface-container text-on-surface-variant p-1 rounded hover:bg-surface-container-high">
+                                    <span class="material-symbols-outlined text-[14px]">close</span>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="py-4 px-4">
+                            <span class="bg-primary/5 text-primary px-3 py-1 rounded-full border border-primary/20 font-bold text-[10px]">${art.category}</span>
+                        </td>
+                        <td class="py-4 px-4 font-bold text-on-surface-variant text-xs">${art.views || 0}x read</td>
+                        <td class="py-4 px-4">
+                            <label class="switch">
+                                <input type="checkbox" ${isChecked} onchange="toggleArticleStatus(${globalIdx})">
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                        <td class="py-4 px-4 text-right">
+                            <div class="flex justify-end gap-1.5">
+                                <button onclick="triggerPreviewFlow(${globalIdx})" class="text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors" title="Preview Tampilan">
+                                    <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                </button>
+                                <button onclick="openArticleModal(${globalIdx})" class="text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors" title="Edit">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+                                <button onclick="deleteArticle(${globalIdx})" class="text-error hover:bg-error-container/50 p-2 rounded-lg transition-colors text-[#b91c1c]" title="Hapus">
+                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // INLINE AUTHOR MANAGEMENT
+        function enableInlineAuthor(id, author, globalIdx) {
+            document.getElementById(`authorDisplay_${id}`).classList.add('hidden');
+            document.getElementById(`authorInputBox_${id}`).classList.remove('hidden');
+            document.getElementById(`authorField_${id}`).value = author;
+            document.getElementById(`authorField_${id}`).focus();
+        }
+
+        function disableInlineAuthor(id) {
+            document.getElementById(`authorDisplay_${id}`).classList.remove('hidden');
+            document.getElementById(`authorInputBox_${id}`).classList.add('hidden');
+        }
+
+        function saveInlineAuthor(id, globalIdx) {
+            const val = document.getElementById(`authorField_${id}`).value.trim();
+            if (!val) { ronaToast.show('Nama penulis tidak boleh kosong!', 'error'); return; }
+
+            const db = ronaDb.get();
+            db.articles[globalIdx].author = val;
+            ronaDb.save(db);
+            ronaToast.show('Nama penulis berhasil diperbarui!');
+            loadArticles();
+        }
+
+        // TOGGLE STATUS
+        function toggleArticleStatus(index) {
+            const nextStatus = currentArticles[index].status === "Publish" ? "Draft" : "Publish";
+            currentArticles[index].status = nextStatus;
+            
+            const db = ronaDb.get();
+            db.articles = currentArticles;
+            ronaDb.save(db);
+            ronaToast.show(`Artikel '${currentArticles[index].title}' diatur ke '${nextStatus}'!`);
+        }
+
+        // OPEN DIALOG MODAL
+        function openArticleModal(index = -1) {
+            document.getElementById('artForm').reset();
+            document.getElementById('artImagePreview').classList.add('hidden');
+            document.getElementById('artImageBase64').value = "";
+
+            if (index >= 0) {
+                const art = currentArticles[index];
+                document.getElementById('editIndex').value = index;
+                document.getElementById('modalTitle').innerText = `Edit Artikel (${art.id})`;
+                
+                document.getElementById('artTitle').value = art.title;
+                document.getElementById('artAuthor').value = art.author;
+                document.getElementById('artCategory').value = art.category;
+                document.getElementById('artTags').value = art.tags || "ADHD";
+                document.getElementById('artStatus').value = art.status;
+                document.getElementById('artSummary').value = art.summary || "";
+                document.getElementById('artContent').value = art.content || "";
+                
+                if (art.thumbnail) {
+                    document.getElementById('artImagePreview').src = art.thumbnail;
+                    document.getElementById('artImagePreview').classList.remove('hidden');
+                    document.getElementById('artImageBase64').value = art.thumbnail;
+                }
+            } else {
+                document.getElementById('editIndex').value = "";
+                document.getElementById('modalTitle').innerText = "Tulis Artikel Baru";
+            }
+            document.getElementById('artModal').style.display = 'flex';
+        }
+
+        function closeArticleModal() {
+            document.getElementById('artModal').style.display = 'none';
+        }
+
+        // SAVE FORM DATA
+        function saveArticle(e) {
+            e.preventDefault();
+            const index = document.getElementById('editIndex').value;
+            const imgVal = document.getElementById('artImageBase64').value;
+            const fallbackThumbnail = "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=400&q=80";
+            const dateStr = new Date().toLocaleDateString('id-ID', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            });
+
+            const articlePayload = {
+                id: index !== "" ? currentArticles[index].id : "ART-0" + (currentArticles.length + 1),
+                thumbnail: imgVal !== "" ? imgVal : fallbackThumbnail,
+                title: document.getElementById('artTitle').value,
+                author: document.getElementById('artAuthor').value,
+                date: index !== "" ? currentArticles[index].date : dateStr,
+                category: document.getElementById('artCategory').value,
+                status: document.getElementById('artStatus').value,
+                views: index !== "" ? currentArticles[index].views : 0,
+                summary: document.getElementById('artSummary').value,
+                content: document.getElementById('artContent').value,
+                tags: document.getElementById('artTags').value
+            };
+
+            const db = ronaDb.get();
+            if (index !== "") {
+                db.articles[index] = articlePayload;
+                ronaToast.show(`Artikel ${articlePayload.id} sukses diperbarui!`);
+            } else {
+                db.articles.push(articlePayload);
+                ronaDb.addActivity('article_publish', `Artikel '${articlePayload.title}' telah dipublish.`);
+                ronaToast.show('Artikel Baru Berhasil Disimpan!');
+            }
+
+            ronaDb.save(db);
+            closeArticleModal();
+            loadArticles();
+        }
+
+        // DELETE ARTICLE
+        function deleteArticle(index) {
+            const art = currentArticles[index];
+            if (confirm(`Apakah Anda yakin ingin menghapus artikel '${art.title}' secara permanen?`)) {
+                const db = ronaDb.get();
+                db.articles.splice(index, 1);
+                ronaDb.save(db);
+                ronaToast.show('Artikel berhasil dihapus!');
+                loadArticles();
+            }
+        }
+
+        // PREVIEW SHEET DIALOG
+        function triggerPreviewFlow(index) {
+            const art = currentArticles[index];
+            const content = document.getElementById('previewContent');
+            content.innerHTML = `
+                <div class="w-full h-44 rounded-2xl overflow-hidden mb-4 border border-outline-variant/30 bg-surface">
+                    <img src="${art.thumbnail}" class="w-full h-full object-cover">
+                </div>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-start gap-4">
+                        <h4 class="font-extrabold text-lg text-on-surface leading-tight">${art.title}</h4>
+                        <span class="bg-primary/10 text-primary font-bold text-[10px] px-2.5 py-1 rounded-full border border-primary/20">${art.category}</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center text-xs text-outline font-semibold border-y border-outline-variant/20 py-2">
+                        <span>Penulis: <strong>${art.author}</strong></span>
+                        <span>Tanggal: <strong>${art.date}</strong></span>
+                    </div>
+
+                    <div>
+                        <strong class="text-xs text-on-surface">Tags:</strong>
+                        <div class="flex flex-wrap gap-1.5 mt-1">
+                            ${(art.tags || "").split(',').map(tag => `<span class="bg-surface-container-low text-on-surface-variant font-bold text-[9px] px-2 py-0.5 rounded-full">${tag.trim()}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <strong class="text-xs text-on-surface">Ringkasan:</strong>
+                        <p class="text-xs text-on-surface-variant leading-relaxed mt-1 font-medium italic">${art.summary || ""}</p>
+                    </div>
+
+                    <div class="pt-2">
+                        <strong class="text-xs text-on-surface">Isi Artikel Lengkap:</strong>
+                        <p class="text-xs text-on-surface-variant leading-relaxed mt-1 font-medium whitespace-pre-wrap">${art.content || ""}</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('previewModal').style.display = 'flex';
+        }
+
+        function closePreviewModal() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
+
+        // Close modal clicking backdrop
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        }
+
+        // Start
+        loadArticles();
+    </script>
+</body>
+</html>

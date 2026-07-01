@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Penyelesaian Pendampingan Sensori - RONA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#0d6a5c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#57a695",
+                        "secondary": "#28695d",
+                        "surface": "#f7faf7",
+                        "on-surface": "#181c1b",
+                        "on-surface-variant": "#3f4946",
+                        "outline-variant": "#bec9c5",
+                        "surface-container": "#ebefec",
+                        "coral": "#FF9B85",
+                        "aman-cream": "#FBF7F0"
+                    },
+                    "borderRadius": {
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "card": "20px",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBF7F0; /* Aman Cream */
+            color: #2D3A3A;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.04);
+        }
+        .glass-nav {
+            background: rgba(251, 247, 240, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+
+    <div id="navbarContainer"></div>
+
+    <main class="max-w-[1000px] mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-20">
+        <!-- Step Wizard Progress Bar -->
+        <div class="max-w-[800px] mx-auto mb-6 md:mb-10 bg-white p-3 md:p-4 rounded-2xl border border-outline-variant/20 shadow-sm flex justify-between items-center text-[10px] md:text-xs font-bold text-outline overflow-x-auto gap-2">
+            <div class="flex items-center gap-1.5 md:gap-2 text-[#0d6a5c] shrink-0">
+                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px] shrink-0"><span class="material-symbols-outlined text-[12px] font-bold">done</span></span>
+                <span class="hidden sm:inline">Keranjang</span>
+            </div>
+            <span class="material-symbols-outlined text-[14px] md:text-[16px] shrink-0">chevron_right</span>
+            <div class="flex items-center gap-1.5 md:gap-2 text-[#0d6a5c] shrink-0">
+                <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[10px] shrink-0">2</span>
+                <span class="hidden sm:inline">Pengiriman</span>
+            </div>
+            <span class="material-symbols-outlined text-[14px] md:text-[16px] shrink-0">chevron_right</span>
+            <div class="flex items-center gap-1.5 md:gap-2 text-[#0d6a5c] shrink-0">
+                <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[10px] shrink-0">3</span>
+                <span class="hidden sm:inline">Pembayaran</span>
+            </div>
+            <span class="material-symbols-outlined text-[14px] md:text-[16px] shrink-0">chevron_right</span>
+            <div class="flex items-center gap-1.5 md:gap-2 shrink-0">
+                <span class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[10px] shrink-0">4</span>
+                <span class="hidden sm:inline">Konfirmasi</span>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="mb-6 md:mb-10">
+            <h2 class="text-xl md:text-2xl font-extrabold text-on-surface">Penyelesaian Pengasuhan &amp; Logistik</h2>
+            <p class="text-xs font-semibold text-on-surface-variant mt-1">Lengkapi pengiriman barang untuk mendukung stimulasi tenang anak di rumah.</p>
+        </div>
+
+        <div class="flex flex-col lg:grid lg:grid-cols-3 lg:gap-8 gap-6">
+            <!-- Left: Delivery details forms -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Contact info -->
+                <div class="bg-white p-6 rounded-[28px] border border-outline-variant/30 card-shadow space-y-4">
+                    <h3 class="text-sm font-extrabold text-primary flex items-center gap-1.5"><span class="material-symbols-outlined text-[18px]">person</span> Informasi Penerima</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-outline uppercase mb-1">Nama Orang Tua</label>
+                            <input type="text" id="buyerName" value="Andini Putri" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-outline uppercase mb-1">Nomor Telepon</label>
+                            <input type="text" id="buyerPhone" value="081234567891" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="bg-white p-6 rounded-[28px] border border-outline-variant/30 card-shadow space-y-4">
+                    <h3 class="text-sm font-extrabold text-primary flex items-center gap-1.5"><span class="material-symbols-outlined text-[18px]">location_on</span> Alamat Pengiriman</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-outline uppercase mb-1">Provinsi</label>
+                            <input type="text" id="province" value="Jawa Barat" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-outline uppercase mb-1">Kota / Kabupaten</label>
+                            <input type="text" id="city" value="Bandung" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-outline uppercase mb-1">Kecamatan</label>
+                            <input type="text" id="district" value="Sukajadi" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-outline uppercase mb-1">Alamat Lengkap</label>
+                        <textarea id="fullAddress" rows="2" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-xs outline-none resize-none focus:ring-1 focus:ring-primary">Jl. Melati No. 45, Cluster Lavender, Bandung</textarea>
+                    </div>
+                </div>
+
+                <!-- Shipping Logistics options -->
+                <div class="bg-white p-6 rounded-[28px] border border-outline-variant/30 card-shadow space-y-4">
+                    <h3 class="text-sm font-extrabold text-primary flex items-center gap-1.5"><span class="material-symbols-outlined text-[18px]">local_shipping</span> Opsi Ekspedisi Pengiriman</h3>
+                    
+                    <div class="space-y-3">
+                        <label class="flex justify-between items-center p-4 border border-outline-variant rounded-2xl cursor-pointer hover:bg-surface-container-low transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary/5 group">
+                            <span class="flex items-center gap-3 text-xs font-semibold text-on-surface">
+                                <input type="radio" name="courier" value="JNE" data-cost="15000" checked onchange="updateShipping(this)" class="text-primary border-outline-variant focus:ring-primary/20">
+                                <div>
+                                    <strong class="text-xs text-on-surface block group-has-[:checked]:text-primary">JNE Regular Paket</strong>
+                                    <span class="text-[10px] text-outline">Estimasi tiba: 2-3 hari kerja</span>
+                                </div>
+                            </span>
+                            <strong class="text-xs text-primary">Rp 15.000</strong>
+                        </label>
+
+                        <label class="flex justify-between items-center p-4 border border-outline-variant rounded-2xl cursor-pointer hover:bg-surface-container-low transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary/5 group">
+                            <span class="flex items-center gap-3 text-xs font-semibold text-on-surface">
+                                <input type="radio" name="courier" value="J&T" data-cost="12000" onchange="updateShipping(this)" class="text-primary border-outline-variant focus:ring-primary/20">
+                                <div>
+                                    <strong class="text-xs text-on-surface block group-has-[:checked]:text-primary">J&T Express Eco</strong>
+                                    <span class="text-[10px] text-outline">Estimasi tiba: 3-4 hari kerja</span>
+                                </div>
+                            </span>
+                            <strong class="text-xs text-primary">Rp 12.000</strong>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Payment & Summary -->
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-[28px] border border-outline-variant/30 card-shadow space-y-4">
+                    <h3 class="font-extrabold text-sm text-on-surface border-b border-outline-variant/20 pb-3">Ringkasan Nilai Terapi</h3>
+                    
+                    <!-- Checkout Items List with Therapeutic utility notes -->
+                    <div id="checkoutBenefitsList" class="space-y-3 max-h-[180px] overflow-y-auto pr-1">
+                        <!-- Loaded dynamically -->
+                    </div>
+
+                    <div class="space-y-2 text-xs font-semibold text-on-surface-variant border-t border-outline-variant/20 pt-4">
+                        <label class="block text-[11px] font-bold text-outline uppercase mb-2">Metode Pembayaran</label>
+                        <select id="paymentMethod" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-xs outline-none bg-white font-semibold">
+                            <option value="Mandiri VA">Mandiri Virtual Account</option>
+                            <option value="BCA Transfer">BCA Transfer Manual</option>
+                            <option value="QRIS">QRIS E-Wallet (OVO / GoPay)</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-2 text-xs font-semibold text-on-surface-variant border-t border-outline-variant/10 pt-4">
+                        <div class="flex justify-between">
+                            <span>Subtotal Belanja</span>
+                            <span id="subtotalInvoice" class="font-extrabold text-on-surface">Rp 0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Ongkos Kirim (<span id="courierNameLabel">JNE</span>)</span>
+                            <span id="shippingCostLabel" class="font-extrabold text-on-surface">Rp 15.000</span>
+                        </div>
+                        <div id="discountRow" class="flex justify-between text-coral font-bold hidden">
+                            <span>Diskon Voucher (<span id="discountNameLabel"></span>)</span>
+                            <span id="summaryDiscount">-Rp 0</span>
+                        </div>
+                        <div class="flex justify-between border-t border-outline-variant/10 pt-2 text-sm font-extrabold text-on-surface">
+                            <span>Total Tagihan</span>
+                            <span id="totalInvoice" class="text-primary text-base">Rp 0</span>
+                        </div>
+                    </div>
+
+                    <button onclick="eksekusiProsesPembayaran()" id="btnPayment" class="w-full py-3 bg-primary text-white text-xs font-bold rounded-full hover:opacity-90 transition-opacity flex items-center justify-center gap-1.5 shadow-sm">
+                        <span class="material-symbols-outlined text-[16px]">lock</span> Bayar & Selesaikan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SUCCESS POPUP MODAL -->
+    <div id="successModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-[32px] text-center max-w-md w-[90%] shadow-2xl relative">
+            <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span class="material-symbols-outlined text-[48px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            </div>
+            <h2 class="text-2xl font-extrabold text-on-surface mb-2">Pembayaran Sukses!</h2>
+            <p class="text-xs font-semibold text-on-surface-variant leading-relaxed mb-6">
+                Terima kasih, pembayaran telah diverifikasi otomatis. RONA telah menambahkan log adopsi alat bantu sensorik ini ke timeline kemajuan <strong id="modalCourier" class="text-primary font-bold">Rara</strong>.
+            </p>
+            <button id="successBtn" class="w-full py-3 bg-primary text-white text-xs font-bold rounded-full hover:opacity-90 transition-opacity">
+                Lihat Perjalanan Anak
+            </button>
+        </div>
+    </div>
+
+    <!-- TOAST / CORE DATABASE SYSTEM -->
+    <script src="admin-core.js"></script>
+    <script>
+        const role = localStorage.getItem('rona_role') || 'guest';
+        const isLogged = role === 'parent';
+        const parentEmail = localStorage.getItem('rona_active_parent_email') || 'parent@gmail.com';
+        
+        let db = ronaDb.get();
+        let activeParent = db.users ? db.users.find(u => u.email === parentEmail) : null;
+        const childName = activeParent ? activeParent.childName : "Rara";
+
+        // Render dynamic navbar
+        ronaNav.renderNavbar('katalog');
+
+        // Cart loading & computations
+        const cart = JSON.parse(localStorage.getItem('rona_cart')) || [];
+        let subtotalBelanja = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+        // Prefill Parent inputs
+        if (activeParent) {
+            document.getElementById('buyerName').value = activeParent.parentName || "Sarah";
+            document.getElementById('buyerPhone').value = activeParent.phone || "081234567891";
+            document.getElementById('province').value = "DKI Jakarta";
+            document.getElementById('city').value = activeParent.location || "Jakarta Barat";
+            document.getElementById('district').value = "Kembangan";
+            document.getElementById('fullAddress').value = activeParent.address || "Jl. Melati No. 45, Cluster Lavender, Jakarta Barat 11470";
+        }
+
+        // Load checkout summary from cart page
+        const checkoutSummary = JSON.parse(localStorage.getItem('rona_checkout_summary')) || {
+            voucher: null,
+            discount: 0,
+            courier: "J&T EZ",
+            shippingFee: 12000,
+            notes: "",
+            subtotal: subtotalBelanja,
+            grandTotal: subtotalBelanja + 12000
+        };
+
+        let discountVal = checkoutSummary.discount || 0;
+        let activeVoucher = checkoutSummary.voucher || null;
+        let currentShippingCost = checkoutSummary.shippingFee || 12000;
+        let selectedCourierName = checkoutSummary.courier || "J&T EZ";
+        let orderNotes = checkoutSummary.notes || "";
+
+        // Auto select courier radio matching checkoutSummary
+        document.querySelectorAll('input[name="courier"]').forEach(radio => {
+            const val = radio.value;
+            if (selectedCourierName.includes(val)) {
+                radio.checked = true;
+                currentShippingCost = parseInt(radio.getAttribute('data-cost'));
+                selectedCourierName = radio.parentNode.querySelector('strong').innerText;
+            }
+        });
+
+        function updateInvoiceDisplay() {
+            let totalSeluruhTagihan = subtotalBelanja + currentShippingCost - discountVal;
+            if (totalSeluruhTagihan < 0) totalSeluruhTagihan = 0;
+
+            document.getElementById('subtotalInvoice').innerText = `Rp ${subtotalBelanja.toLocaleString('id-ID')}`;
+            document.getElementById('shippingCostLabel').innerText = `Rp ${currentShippingCost.toLocaleString('id-ID')}`;
+            document.getElementById('courierNameLabel').innerText = selectedCourierName;
+            
+            const discountRow = document.getElementById('discountRow');
+            const discountName = document.getElementById('discountNameLabel');
+            const discountEl = document.getElementById('summaryDiscount');
+
+            if (discountVal > 0) {
+                if (discountRow) discountRow.classList.remove('hidden');
+                if (discountName) discountName.innerText = activeVoucher;
+                if (discountEl) discountEl.innerText = `-Rp ${discountVal.toLocaleString('id-ID')}`;
+            } else {
+                if (discountRow) discountRow.classList.add('hidden');
+            }
+
+            document.getElementById('totalInvoice').innerText = `Rp ${totalSeluruhTagihan.toLocaleString('id-ID')}`;
+        }
+
+        window.updateShipping = function(radioInput) {
+            if(radioInput.checked) {
+                selectedCourierName = radioInput.parentNode.querySelector('strong') ? radioInput.parentNode.querySelector('strong').innerText : radioInput.value;
+                currentShippingCost = parseInt(radioInput.getAttribute('data-cost'));
+                updateInvoiceDisplay();
+            }
+        }
+
+        // Render Checkout item benefits list
+        function renderBenefits() {
+            const list = document.getElementById('checkoutBenefitsList');
+            if (cart.length === 0) return;
+
+            list.innerHTML = '';
+            cart.forEach(item => {
+                list.innerHTML += `
+                    <div class="p-3 bg-surface rounded-xl border border-outline-variant/15 text-[10px] font-semibold text-on-surface-variant">
+                        <strong class="text-on-surface text-[11px] block">${item.name} (${item.qty} unit)</strong>
+                        <p class="text-primary mt-1">❤️ ${item.benefits}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Checkout processor
+        window.eksekusiProsesPembayaran = function() {
+            if (cart.length === 0) {
+                ronaToast.show('Keranjang Anda kosong!');
+                return;
+            }
+
+            const inputName = document.getElementById('buyerName').value.trim();
+            const inputPhone = document.getElementById('buyerPhone').value.trim();
+            const inputAddress = `${document.getElementById('fullAddress').value.trim()}, Kec. ${document.getElementById('district').value.trim()}, ${document.getElementById('city').value.trim()}, ${document.getElementById('province').value.trim()}`;
+
+            let db = ronaDb.get();
+            db.transactions = db.transactions || [];
+
+            const generatedTxID = "TX-" + Math.floor(1000 + Math.random() * 9000);
+            const currentDateString = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            const totalInvoice = subtotalBelanja + currentShippingCost - discountVal;
+
+            const newTx = {
+                id: generatedTxID,
+                parentEmail: parentEmail,
+                date: currentDateString,
+                customerName: inputName,
+                customerPhone: inputPhone,
+                address: inputAddress,
+                courier: selectedCourierName,
+                paymentMethod: document.getElementById('paymentMethod').value,
+                items: cart,
+                total: totalInvoice,
+                status: "Diproses",
+                resi: "-",
+                notes: orderNotes,
+                voucher: activeVoucher,
+                discount: discountVal,
+                statusHistory: [
+                    { status: "Menunggu Pembayaran", time: currentDateString + ", 09:00", note: "Dibuat via checkout katalog." },
+                    { status: "Diproses", time: currentDateString + ", 09:05", note: "Pembayaran terkonfirmasi otomatis via " + document.getElementById('paymentMethod').value + "." }
+                ],
+                chatHistory: []
+            };
+
+            db.transactions.unshift(newTx);
+
+            // Log activity event
+            db.activities = db.activities || [];
+            db.activities.unshift({
+                type: "order_in",
+                text: `Pesanan masuk baru #${generatedTxID} dari ${inputName} untuk ${childName}.`,
+                time: new Date().toLocaleString('id-ID')
+            });
+
+            // Also, push this purchase as milestone in child sensory journey!
+            db.childActivities = db.childActivities || [];
+            cart.forEach(item => {
+                db.childActivities.unshift({
+                    id: "ACT-" + Date.now() + Math.random(),
+                    parentEmail: parentEmail,
+                    date: currentDateString,
+                    category: "Adopsi Alat Bantu",
+                    text: `${childName} mulai menggunakan ${item.name} sebagai pendamping terapi.`,
+                    mood: "Netral",
+                    activity: `Adopsi ${item.name}`,
+                    isPurchase: true,
+                    sku: item.sku
+                });
+            });
+
+            ronaDb.save(db);
+            
+            // Empty cart
+            localStorage.removeItem('rona_cart');
+            localStorage.removeItem('rona_checkout_summary');
+
+            // Set loading state
+            const btnEl = document.getElementById('btnPayment');
+            btnEl.innerHTML = 'Memproses Pembayaran...';
+            btnEl.disabled = true;
+
+            setTimeout(() => {
+                document.getElementById('modalCourier').innerText = childName;
+                document.getElementById('successBtn').onclick = () => {
+                    window.location.href = `sukses.html?id=${generatedTxID}`;
+                };
+                document.getElementById('successModal').style.display = 'flex';
+            }, 1200);
+        }
+
+        // Start
+        updateInvoiceDisplay();
+        renderBenefits();
+    </script>
+</body>
+</html>

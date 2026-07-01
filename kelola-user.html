@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Enterprise User Management - RONA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#0d6a5c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#57a695",
+                        "secondary": "#28695d",
+                        "surface": "#f7faf7",
+                        "on-surface": "#181c1b",
+                        "on-surface-variant": "#3f4946",
+                        "outline-variant": "#bec9c5",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f1f4f2",
+                        "surface-container": "#ebefec",
+                        "aman-cream": "#FBF7F0",
+                        "hangat-coral": "#E98A7D"
+                    },
+                    "borderRadius": {
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "card": "20px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBF7F0; /* Aman Cream */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        
+        /* Interactive Toggle Switch */
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        input:checked + .slider { background-color: #0d6a5c; }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        /* Modal Style */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            inset: 0;
+            background: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(4px);
+            z-index: 2000; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .modal-content { 
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+        @keyframes slideUp { 
+            from { transform: translateY(20px) scale(0.95); opacity: 0; } 
+            to { transform: translateY(0) scale(1); opacity: 1; } 
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        
+        <!-- SIDEBAR NAV CONTAINER -->
+        <aside id="sidebarContainer"></aside>
+
+        <!-- MAIN CONTENT PANEL -->
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto max-h-screen">
+            
+            <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-on-surface mb-2">Database Pengguna Platform</h2>
+                    <p class="text-on-surface-variant font-medium">Monitoring data klinis anak, profil medis sensorik, peran (role), dan log aktivitas orang tua secara real-time.</p>
+                </div>
+                <button onclick="openUserModal()" class="bg-primary text-white px-6 py-3 rounded-full font-bold hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm whitespace-nowrap">
+                    <span class="material-symbols-outlined text-[20px]">person_add</span>
+                    Tambah Pengguna
+                </button>
+            </div>
+
+            <!-- FILTERS & SEARCH TOOLBAR -->
+            <div class="bg-white rounded-3xl p-6 card-shadow border border-outline-variant/30 mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
+                <!-- Search bar -->
+                <div class="relative w-full md:max-w-xs group">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors">search</span>
+                    <input type="text" id="userSearch" oninput="handleFilterChange()" class="w-full pl-10 pr-4 py-2.5 border border-outline-variant rounded-xl text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none" placeholder="Cari nama / email...">
+                </div>
+
+                <!-- Filters -->
+                <div class="flex gap-3 items-center w-full md:w-auto justify-end">
+                    <select id="filterRole" onchange="handleFilterChange()" class="px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none bg-surface">
+                        <option value="All">Semua Peran (Role)</option>
+                        <option value="Parent">Parent (Orang Tua)</option>
+                        <option value="Therapist">Therapist (Terapis)</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- USER TABLE -->
+            <div class="bg-white rounded-3xl p-6 card-shadow border border-outline-variant/30 overflow-x-auto">
+                <table class="w-full text-left border-collapse min-w-[950px]">
+                    <thead>
+                        <tr class="border-b-2 border-surface-container-high">
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">AVATAR</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">NAMA LENGKAP</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">EMAIL</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">PERAN</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">STATUS AKUN</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">TANGGAL GABUNG</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">TRANSAKSI</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide text-right">AKSI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody" class="divide-y divide-surface-container-high text-xs">
+                        <!-- JS Loop Render -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL FORM USER (ADD/EDIT) -->
+    <div id="userModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-3xl max-w-[650px] w-[95%] shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            
+            <button onclick="closeUserModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            
+            <h3 id="modalTitle" class="text-2xl font-bold text-on-surface mb-6 flex items-center gap-2 border-b border-outline-variant/30 pb-4">
+                Data Pengguna Baru
+            </h3>
+            
+            <form id="userForm" onsubmit="saveUser(event)" class="space-y-6 text-xs font-semibold text-on-surface-variant">
+                <input type="hidden" id="editUserId">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-1">
+                        <label class="block mb-2">Foto Profil</label>
+                        <div class="w-full aspect-square bg-surface-container-low rounded-2xl flex flex-col items-center justify-center border-2 border-dashed border-outline-variant cursor-pointer relative overflow-hidden group hover:border-primary transition-colors" onclick="document.getElementById('fileInput').click()">
+                            <span class="material-symbols-outlined text-[40px] text-outline-variant group-hover:text-primary transition-colors z-10 relative bg-white/80 p-2 rounded-full shadow-sm">add_a_photo</span>
+                            <img id="previewImg" class="absolute inset-0 w-full h-full object-cover hidden">
+                        </div>
+                        <input type="file" id="fileInput" hidden accept="image/*" onchange="previewFile(this)">
+                        <input type="hidden" id="userAvatarBase64">
+                    </div>
+                    
+                    <div class="md:col-span-2 space-y-4">
+                        <div>
+                            <label class="block mb-1">Nama Orang Tua</label>
+                            <input type="text" id="parentName" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                        </div>
+                        <div>
+                            <label class="block mb-1">Email</label>
+                            <input type="email" id="userEmail" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block mb-1">Telepon/WhatsApp</label>
+                                <input type="text" id="userPhone" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                            </div>
+                            <div>
+                                <label class="block mb-1">Peran (Role)</label>
+                                <select id="userRole" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none bg-white">
+                                    <option value="Parent">Parent</option>
+                                    <option value="Therapist">Therapist</option>
+                                    <option value="Admin">Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block mb-1">Lokasi Domisili</label>
+                        <input type="text" id="userLocation" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block mb-1">Pekerjaan</label>
+                        <input type="text" id="userJob" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                </div>
+
+                <div class="bg-primary/5 p-5 rounded-2xl border border-primary/20 space-y-4">
+                    <h4 class="text-sm font-bold text-primary flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">child_care</span> DATA MEDIS ANAK (Hanya untuk Parent)
+                    </h4>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block mb-1">Nama Anak</label>
+                            <input type="text" id="childName" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm bg-white outline-none">
+                        </div>
+                        <div>
+                            <label class="block mb-1">Usia Anak</label>
+                            <input type="text" id="childAge" placeholder="Contoh: 6 Tahun" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm bg-white outline-none">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block mb-1">Kondisi & Diagnosis Spesifik</label>
+                        <textarea id="childCondition" rows="2" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm bg-white resize-none outline-none" placeholder="Contoh: Suspect ADHD Kombinasi, Sensory Avoidance..."></textarea>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-outline-variant/30 flex justify-end gap-3">
+                    <button type="button" onclick="closeUserModal()" class="px-6 py-3 rounded-full font-bold bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors">Batal</button>
+                    <button type="submit" class="px-6 py-3 rounded-full font-bold bg-primary text-white hover:opacity-90 transition-opacity flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px]">save</span> Simpan Database
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DETAILS DRAWER MODAL -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-3xl max-w-[550px] w-[95%] shadow-2xl relative max-h-[90vh] overflow-y-auto text-sm">
+            <button onclick="closeDetailModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 class="text-xl font-bold text-on-surface mb-6 border-b border-outline-variant/30 pb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[28px]">contact_page</span> Detail Profil Pengguna
+            </h3>
+            
+            <div id="detailContent" class="space-y-6">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PASSWORD RESET MODAL -->
+    <div id="resetModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-3xl max-w-md w-[90%] shadow-2xl relative">
+            <button onclick="closeResetModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 class="text-xl font-bold text-on-surface mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[26px]">lock_reset</span> Reset Password Akun
+            </h3>
+            <p class="text-xs text-on-surface-variant font-medium mb-6">Simulasi pengiriman instruksi reset password aman melalui email pengguna terdaftar.</p>
+            
+            <div class="space-y-4">
+                <div class="p-4 bg-surface rounded-2xl border border-outline-variant/30">
+                    <p class="text-xs font-bold text-on-surface mb-1">Email Pengguna:</p>
+                    <p id="resetEmailText" class="font-extrabold text-primary text-sm">email@user.com</p>
+                </div>
+
+                <div id="resetStatusArea" class="hidden flex items-center gap-2 text-primary font-bold text-xs p-3 bg-primary/5 rounded-xl border border-primary/20">
+                    <span class="animate-spin material-symbols-outlined text-[16px]">rotate_right</span> Mengirimkan instruksi reset ke server...
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t border-outline-variant/30">
+                    <button type="button" onclick="closeResetModal()" class="px-5 py-2.5 bg-surface-container rounded-full text-xs font-bold hover:bg-surface-container-high transition-colors">Batal</button>
+                    <button type="button" onclick="executePasswordReset()" class="px-5 py-2.5 bg-primary text-white rounded-full text-xs font-bold hover:opacity-90 transition-opacity">Kirim Link Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST / CORE LIBRARIES IMPORT -->
+    <script src="admin-core.js"></script>
+    <script>
+        // Init active sidebar highlight
+        ronaAdmin.renderSidebar('kelola-user');
+
+        let currentUsers = [];
+        let filteredUsers = [];
+        let resetUserIndex = -1;
+
+        // Image Base64 Handler
+        function previewFile(input) {
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                document.getElementById('userAvatarBase64').value = reader.result;
+                const img = document.getElementById('previewImg');
+                img.src = reader.result;
+                img.classList.remove('hidden');
+            }
+            if (file) reader.readAsDataURL(file);
+        }
+
+        // LOAD DATA FROM STORAGE
+        function loadUsers() {
+            const db = ronaDb.get();
+            currentUsers = db.users || [];
+            handleFilterChange();
+        }
+
+        // FILTER, SEARCH ENGINE
+        function handleFilterChange() {
+            const searchQuery = document.getElementById('userSearch').value.toLowerCase().trim();
+            const roleFilter = document.getElementById('filterRole').value;
+
+            filteredUsers = currentUsers.filter(u => {
+                const matchesSearch = u.parentName.toLowerCase().includes(searchQuery) || u.email.toLowerCase().includes(searchQuery);
+                const matchesRole = roleFilter === 'All' || u.role === roleFilter;
+                return matchesSearch && matchesRole;
+            });
+
+            renderUsers();
+        }
+
+        // RENDER TABLES
+        function renderUsers() {
+            const tbody = document.getElementById('userTableBody');
+            tbody.innerHTML = '';
+
+            if (filteredUsers.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 font-bold text-on-surface-variant italic">Data pengguna tidak ditemukan.</td></tr>`;
+                return;
+            }
+
+            filteredUsers.forEach((u) => {
+                const globalIdx = currentUsers.findIndex(cu => cu.email === u.email);
+                const isActive = u.status === "Active";
+                const badgeClass = isActive 
+                    ? 'bg-emerald-100 text-emerald-700 border-emerald-200' 
+                    : 'bg-red-100 text-red-700 border-red-200';
+
+                const switchChecked = isActive ? 'checked' : '';
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-surface transition-colors">
+                        <td class="py-4 px-4 shrink-0">
+                            <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container border border-outline-variant/30">
+                                <img src="${u.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100'}" class="w-full h-full object-cover">
+                            </div>
+                        </td>
+                        <td class="py-4 px-4 font-bold text-on-surface hover:underline cursor-pointer" onclick="viewUserDetails(${globalIdx})">${u.parentName}</td>
+                        <td class="py-4 px-4 font-semibold text-on-surface-variant">${u.email}</td>
+                        <td class="py-4 px-4 font-bold text-primary">${u.role}</td>
+                        <td class="py-4 px-4">
+                            <span class="px-3 py-1 rounded-full border text-[10px] font-bold ${badgeClass}">${u.status}</span>
+                        </td>
+                        <td class="py-4 px-4 font-bold text-outline text-xs">${u.joinDate}</td>
+                        <td class="py-4 px-4 font-extrabold text-on-surface-variant">${u.transactionCount} order</td>
+                        <td class="py-4 px-4 text-right">
+                            <div class="flex justify-end items-center gap-1.5">
+                                <label class="switch">
+                                    <input type="checkbox" ${switchChecked} onchange="toggleUserStatus(${globalIdx})">
+                                    <span class="slider"></span>
+                                </label>
+                                <button onclick="viewUserDetails(${globalIdx})" class="text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors" title="Lihat Profil Lengkap">
+                                    <span class="material-symbols-outlined text-[20px]">account_box</span>
+                                </button>
+                                <button onclick="openResetModal(${globalIdx})" class="text-yellow-600 hover:bg-yellow-50 p-2 rounded-lg transition-colors" title="Simulasi Reset Password">
+                                    <span class="material-symbols-outlined text-[20px]">lock_reset</span>
+                                </button>
+                                <button onclick="openUserModal(${globalIdx})" class="text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors" title="Edit">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+                                <button onclick="deleteUser(${globalIdx})" class="text-error hover:bg-error-container/50 p-2 rounded-lg transition-colors text-[#b91c1c]" title="Hapus Akun">
+                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // TOGGLE STATUS
+        function toggleUserStatus(index) {
+            const nextStatus = currentUsers[index].status === "Active" ? "Inactive" : "Active";
+            currentUsers[index].status = nextStatus;
+            
+            const db = ronaDb.get();
+            db.users = currentUsers;
+            ronaDb.save(db);
+            ronaToast.show(`Akun '${currentUsers[index].parentName}' diatur ke '${nextStatus}'!`);
+            loadUsers();
+        }
+
+        // OPEN DIALOG MODAL USER
+        function openUserModal(index = -1) {
+            document.getElementById('userForm').reset();
+            document.getElementById('previewImg').classList.add('hidden');
+            document.getElementById('userAvatarBase64').value = "";
+
+            if (index >= 0) {
+                const u = currentUsers[index];
+                document.getElementById('editUserId').value = index;
+                document.getElementById('modalTitle').innerText = `Edit Profil (${u.parentName})`;
+                
+                document.getElementById('parentName').value = u.parentName;
+                document.getElementById('userEmail').value = u.email;
+                document.getElementById('userPhone').value = u.phone || "";
+                document.getElementById('userRole').value = u.role;
+                document.getElementById('userLocation').value = u.location || "";
+                document.getElementById('userJob').value = u.job || "";
+                document.getElementById('childName').value = u.childName || "";
+                document.getElementById('childAge').value = u.childAge || "";
+                document.getElementById('childCondition').value = u.childCondition || "";
+                
+                if (u.avatar) {
+                    document.getElementById('previewImg').src = u.avatar;
+                    document.getElementById('previewImg').classList.remove('hidden');
+                    document.getElementById('userAvatarBase64').value = u.avatar;
+                }
+            } else {
+                document.getElementById('editUserId').value = "";
+                document.getElementById('modalTitle').innerText = "Data Pengguna Baru";
+            }
+            document.getElementById('userModal').style.display = 'flex';
+        }
+
+        function closeUserModal() {
+            document.getElementById('userModal').style.display = 'none';
+        }
+
+        // SAVE USER
+        function saveUser(e) {
+            e.preventDefault();
+            const index = document.getElementById('editUserId').value;
+            const avatarVal = document.getElementById('userAvatarBase64').value;
+            const fallbackAvatar = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150";
+            const dateStr = new Date().toLocaleDateString('id-ID', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            });
+
+            const userPayload = {
+                id: index !== "" ? currentUsers[index].id : "USR-0" + (currentUsers.length + 1),
+                parentName: document.getElementById('parentName').value,
+                email: document.getElementById('userEmail').value,
+                phone: document.getElementById('userPhone').value,
+                role: document.getElementById('userRole').value,
+                location: document.getElementById('userLocation').value,
+                job: document.getElementById('userJob').value,
+                childName: document.getElementById('childName').value,
+                childAge: document.getElementById('childAge').value,
+                childCondition: document.getElementById('childCondition').value,
+                avatar: avatarVal !== "" ? avatarVal : fallbackAvatar,
+                status: index !== "" ? currentUsers[index].status : "Active",
+                joinDate: index !== "" ? currentUsers[index].joinDate : dateStr,
+                transactionCount: index !== "" ? currentUsers[index].transactionCount : 0,
+                lastActivity: index !== "" ? currentUsers[index].lastActivity : dateStr + ", 00:00 WIB",
+                transactionHistory: index !== "" ? currentUsers[index].transactionHistory : []
+            };
+
+            const db = ronaDb.get();
+            if (index !== "") {
+                db.users[index] = userPayload;
+                ronaToast.show(`Profil ${userPayload.parentName} berhasil diperbarui!`);
+            } else {
+                db.users.push(userPayload);
+                ronaDb.addActivity('user_reg', `Pengguna baru '${userPayload.parentName}' telah ditambahkan manual.`);
+                ronaToast.show('Akun Baru Berhasil Ditambahkan!');
+            }
+
+            ronaDb.save(db);
+            closeUserModal();
+            loadUsers();
+        }
+
+        // DELETE USER
+        function deleteUser(index) {
+            const u = currentUsers[index];
+            if (confirm(`Apakah Anda yakin ingin menghapus akun '${u.parentName}' beserta data klinisnya secara permanen dari server?`)) {
+                const db = ronaDb.get();
+                db.users.splice(index, 1);
+                ronaDb.save(db);
+                ronaToast.show('Pengguna berhasil dihapus!');
+                loadUsers();
+            }
+        }
+
+        // DETAIL USER PROFILE VIEW
+        function viewUserDetails(index) {
+            const u = currentUsers[index];
+            const content = document.getElementById('detailContent');
+            
+            // Build transaction list
+            let txHtml = '';
+            if (u.transactionHistory && u.transactionHistory.length > 0) {
+                txHtml = u.transactionHistory.map(txId => {
+                    return `<span class="bg-primary/5 text-primary border border-primary/20 px-3 py-1 rounded-full text-xs font-bold">${txId}</span>`;
+                }).join(' ');
+            } else {
+                txHtml = '<span class="text-xs text-outline font-medium italic">Tidak ada riwayat belanja.</span>';
+            }
+
+            content.innerHTML = `
+                <div class="flex items-center gap-5 mb-6 pb-4 border-b border-outline-variant/30">
+                    <div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container border-2 border-primary/20 shrink-0">
+                        <img src="${u.avatar}" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-lg text-on-surface leading-tight">${u.parentName}</h4>
+                        <p class="text-xs text-on-surface-variant font-bold mt-1">${u.role} • ${u.email}</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <p class="text-outline font-bold uppercase tracking-wider">Nomor HP/WA</p>
+                            <p class="font-extrabold text-on-surface mt-0.5">${u.phone || '-'}</p>
+                        </div>
+                        <div>
+                            <p class="text-outline font-bold uppercase tracking-wider">Bergabung Sejak</p>
+                            <p class="font-extrabold text-on-surface mt-0.5">${u.joinDate}</p>
+                        </div>
+                        <div>
+                            <p class="text-outline font-bold uppercase tracking-wider">Domisili</p>
+                            <p class="font-extrabold text-on-surface mt-0.5">${u.location || '-'}</p>
+                        </div>
+                        <div>
+                            <p class="text-outline font-bold uppercase tracking-wider">Pekerjaan</p>
+                            <p class="font-extrabold text-on-surface mt-0.5">${u.job || '-'}</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-primary/5 p-5 rounded-2xl border border-primary/20 space-y-3">
+                        <h5 class="font-bold text-primary flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[18px]">child_care</span> DATA MEDIS ANAK
+                        </h5>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                                <span class="text-outline font-bold">Nama:</span>
+                                <p class="font-extrabold text-on-surface">${u.childName || '-'}</p>
+                            </div>
+                            <div>
+                                <span class="text-outline font-bold">Usia:</span>
+                                <p class="font-extrabold text-on-surface">${u.childAge || '-'}</p>
+                            </div>
+                        </div>
+                        <div class="text-xs pt-1">
+                            <span class="text-outline font-bold">Diagnosa Klinis & Sensitivitas:</span>
+                            <p class="font-semibold text-on-surface mt-1 leading-relaxed bg-white p-3 rounded-xl border border-outline-variant/20">${u.childCondition || '-'}</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <strong class="text-xs text-on-surface">Histori Pembelian Alat Terapi:</strong>
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            ${txHtml}
+                        </div>
+                    </div>
+
+                    <div class="bg-surface-container-low p-4 rounded-xl text-xs">
+                        <strong class="text-on-surface">Aktivitas Terakhir:</strong>
+                        <p class="text-on-surface-variant font-medium mt-1">${u.lastActivity || 'Belum terdeteksi'}</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('detailModal').style.display = 'flex';
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').style.display = 'none';
+        }
+
+        // RESET PASSWORD SIMULATION
+        function openResetModal(index) {
+            resetUserIndex = index;
+            document.getElementById('resetEmailText').innerText = currentUsers[index].email;
+            document.getElementById('resetStatusArea').classList.add('hidden');
+            document.getElementById('resetModal').style.display = 'flex';
+        }
+
+        function closeResetModal() {
+            document.getElementById('resetModal').style.display = 'none';
+        }
+
+        function executePasswordReset() {
+            const statusArea = document.getElementById('resetStatusArea');
+            statusArea.classList.remove('hidden');
+            
+            setTimeout(() => {
+                statusArea.classList.add('hidden');
+                closeResetModal();
+                ronaToast.show(`Instruksi reset password terkirim ke ${currentUsers[resetUserIndex].email}!`);
+            }, 1500);
+        }
+
+        // Close modal clicking backdrop
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        }
+
+        // Start
+        loadUsers();
+    </script>
+</body>
+</html>

@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Operasional Transaksi & CS - RONA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#0d6a5c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#57a695",
+                        "secondary": "#28695d",
+                        "surface": "#f7faf7",
+                        "on-surface": "#181c1b",
+                        "on-surface-variant": "#3f4946",
+                        "outline-variant": "#bec9c5",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f1f4f2",
+                        "surface-container": "#ebefec",
+                        "aman-cream": "#FBF7F0",
+                        "hangat-coral": "#E98A7D"
+                    },
+                    "borderRadius": {
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "card": "20px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBF7F0; /* Aman Cream */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        
+        /* Modal Design */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            inset: 0;
+            background: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(4px);
+            z-index: 2000; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .modal-content { 
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+        @keyframes slideUp { 
+            from { transform: translateY(20px) scale(0.95); opacity: 0; } 
+            to { transform: translateY(0) scale(1); opacity: 1; } 
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        
+        <!-- SIDEBAR CONTAINER -->
+        <aside id="sidebarContainer"></aside>
+
+        <!-- MAIN OPERATIONAL WORKSPACE -->
+        <main class="flex-grow p-6 md:p-10 flex flex-col max-h-screen overflow-y-auto">
+            
+            <!-- Page Header -->
+            <div class="mb-6">
+                <h2 class="text-3xl font-extrabold text-on-surface mb-2">Pusat Transaksi & CS Pelanggan</h2>
+                <p class="text-on-surface-variant font-medium">Proses pesanan alat bantu sensorik, selesaikan refund dana, dan balas pesan pelanggan langsung di satu tempat.</p>
+            </div>
+
+            <!-- TAB SELECTOR -->
+            <div class="flex gap-4 border-b border-outline-variant/30 mb-6 shrink-0">
+                <button id="tabBtnOrders" onclick="switchMainTab('orders')" class="pb-3 px-2 text-sm font-bold text-primary border-b-2 border-primary transition-all flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[20px]">receipt_long</span> Daftar Transaksi
+                </button>
+                <button id="tabBtnChat" onclick="switchMainTab('chat')" class="pb-3 px-2 text-sm font-bold text-on-surface-variant hover:text-primary transition-all flex items-center gap-2 relative">
+                    <span class="material-symbols-outlined text-[20px]">chat</span> Chat CS Simulator
+                    <span id="globalUnreadBadge" class="absolute -top-1 -right-3 bg-red-600 text-white text-[9px] w-4.5 h-4.5 rounded-full flex items-center justify-center font-extrabold hidden"></span>
+                </button>
+            </div>
+
+            <!-- PANEL 1: DAFTAR TRANSAKSI -->
+            <div id="panelOrders" class="space-y-6 flex-grow flex flex-col">
+                <!-- Status Filter Row -->
+                <div class="flex gap-2 overflow-x-auto pb-2 shrink-0 scrollbar-thin">
+                    <button onclick="setStatusFilter('All')" class="status-tab px-4 py-2 bg-primary text-white text-xs font-bold rounded-full transition-colors whitespace-nowrap shadow-sm">Semua</button>
+                    <button onclick="setStatusFilter('Menunggu Pembayaran')" class="status-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Belum Bayar</button>
+                    <button onclick="setStatusFilter('Diproses')" class="status-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Diproses</button>
+                    <button onclick="setStatusFilter('Dikemas')" class="status-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Dikemas</button>
+                    <button onclick="setStatusFilter('Dikirim')" class="status-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Dikirim</button>
+                    <button onclick="setStatusFilter('Selesai')" class="status-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Selesai</button>
+                    <button onclick="setStatusFilter('Refund Diproses')" class="status-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Refund Diajukan</button>
+                    <button onclick="setStatusFilter('Refund Disetujui')" class="status-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Refund Selesai</button>
+                    <button onclick="setStatusFilter('Refund Ditolak')" class="status-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Refund Ditolak</button>
+                </div>
+
+                <!-- Search & Filters -->
+                <div class="bg-white rounded-3xl p-6 card-shadow border border-outline-variant/30 flex flex-col md:flex-row gap-4 justify-between items-center shrink-0">
+                    <div class="relative w-full md:max-w-xs group">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors">search</span>
+                        <input type="text" id="orderSearch" oninput="handleOrderFilterChange()" class="w-full pl-10 pr-4 py-2.5 border border-outline-variant rounded-xl text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none" placeholder="Cari nama pembeli / ID Transaksi...">
+                    </div>
+                    
+                    <button onclick="openAddOrderModal()" class="w-full md:w-auto px-6 py-2.5 bg-primary text-white rounded-full text-xs font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+                        <span class="material-symbols-outlined">add</span> Input Order Manual
+                    </button>
+                </div>
+
+                <!-- Transaction Table -->
+                <div class="bg-white rounded-3xl p-6 card-shadow border border-outline-variant/30 overflow-x-auto flex-grow">
+                    <table class="w-full text-left border-collapse min-w-[900px]">
+                        <thead>
+                            <tr class="border-b-2 border-surface-container-high">
+                                <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">ORDER ID</th>
+                                <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">PELANGGAN</th>
+                                <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">TANGGAL</th>
+                                <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">ITEM</th>
+                                <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">TOTAL TAGIHAN</th>
+                                <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">STATUS</th>
+                                <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">RESI PENGIRIMAN</th>
+                                <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide text-right">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionTableBody" class="divide-y divide-surface-container-high text-xs">
+                            <!-- JS Loop Render -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PANEL 2: INTEGRATED CHAT CS SIMULATOR -->
+            <div id="panelChat" class="bg-white rounded-3xl card-shadow border border-outline-variant/30 overflow-hidden flex-grow flex h-[500px]" style="display: none;">
+                <!-- Left Sidebar: Customers List -->
+                <div class="w-full md:w-[280px] border-r border-outline-variant/30 flex flex-col shrink-0">
+                    <div class="p-4 border-b border-outline-variant/30 bg-surface">
+                        <h4 class="font-extrabold text-sm text-on-surface">Pesan Pelanggan</h4>
+                    </div>
+                    <div id="chatUsersList" class="flex-grow overflow-y-auto divide-y divide-outline-variant/10">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Right Sidebar: Messaging thread -->
+                <div class="flex-grow flex flex-col bg-surface-container-low" id="chatThreadPane">
+                    <div id="chatHeader" class="bg-white px-6 py-4 border-b border-outline-variant/30 flex items-center justify-between shadow-sm shrink-0">
+                        <!-- Header customer metadata -->
+                    </div>
+                    
+                    <!-- Chat bubbles container -->
+                    <div id="chatBubblesArea" class="flex-grow p-6 overflow-y-auto space-y-4">
+                        <!-- Loaded dynamically -->
+                    </div>
+
+                    <!-- Typings indicator -->
+                    <div id="typingIndicator" class="px-6 py-2 text-[10px] font-bold text-primary flex items-center gap-1 bg-white border-t border-outline-variant/20 hidden">
+                        <span class="animate-bounce">●</span>
+                        <span class="animate-bounce [animation-delay:0.2s]">●</span>
+                        <span class="animate-bounce [animation-delay:0.4s]">●</span>
+                        <span id="typingUserText">Customer sedang mengetik...</span>
+                    </div>
+                    
+                    <!-- Input box -->
+                    <form id="chatInputForm" onsubmit="sendChatMessage(event)" class="bg-white p-4 border-t border-outline-variant/30 flex gap-3 items-center shrink-0">
+                        <input type="text" id="chatMsgInput" required class="flex-grow px-4 py-3 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Tulis jawaban CS Anda di sini...">
+                        <button type="submit" class="bg-primary text-white p-3 rounded-xl flex items-center justify-center hover:opacity-90 transition-opacity">
+                            <span class="material-symbols-outlined text-[20px]">send</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- TRANSACTION DETAIL MODAL -->
+    <div id="orderDetailModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-3xl max-w-[650px] w-[95%] shadow-2xl relative max-h-[90vh] overflow-y-auto text-sm">
+            <button onclick="closeOrderDetailModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 class="text-xl font-extrabold text-on-surface mb-6 border-b border-outline-variant/30 pb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[28px]">receipt_long</span> Detail & Proses Transaksi
+            </h3>
+            
+            <div id="orderDetailContent" class="space-y-6">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD/EDIT MANUAL TRANSACTION MODAL -->
+    <div id="orderFormModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-3xl max-w-[550px] w-[95%] shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeOrderFormModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 id="formModalTitle" class="text-xl font-bold text-on-surface mb-6 border-b border-outline-variant/30 pb-4">Input Order Manual</h3>
+            
+            <form id="orderForm" onsubmit="saveOrderManual(event)" class="space-y-4 text-xs font-semibold text-on-surface-variant">
+                <input type="hidden" id="editOrderIndex">
+                <div>
+                    <label class="block mb-1">Nama Pelanggan</label>
+                    <input type="text" id="mName" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block mb-1">Nomor WA / HP</label>
+                        <input type="text" id="mPhone" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block mb-1">Kurir Logistik</label>
+                        <input type="text" id="mCourier" placeholder="J&T Express, JNE, dll." required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                </div>
+                <div>
+                    <label class="block mb-1">Alamat Tujuan Pengiriman</label>
+                    <textarea id="mAddress" required rows="2" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm resize-none outline-none focus:ring-1 focus:ring-primary focus:border-primary"></textarea>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block mb-1">Nama Item Barang</label>
+                        <input type="text" id="mItemName" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block mb-1">Total Tagihan (Rp)</label>
+                        <input type="number" id="mTotal" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-outline-variant/30 flex justify-end gap-3">
+                    <button type="button" onclick="closeOrderFormModal()" class="px-6 py-3 rounded-full font-bold bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors">Batal</button>
+                    <button type="submit" class="px-6 py-3 rounded-full font-bold bg-primary text-white hover:opacity-90 transition-opacity">Simpan Transaksi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST / CORE ENGINE IMPORT -->
+    <script src="admin-core.js"></script>
+    <script>
+        // Active Sidebar Rendering
+        ronaAdmin.renderSidebar('kelola-transaksi');
+
+        let currentTransactions = [];
+        let filteredTransactions = [];
+        let activeStatusFilter = "All";
+        let activeChatCustomer = "";
+
+        // Switch main workspace tabs
+        function switchMainTab(tab) {
+            const btnOrders = document.getElementById('tabBtnOrders');
+            const btnChat = document.getElementById('tabBtnChat');
+            const panelOrders = document.getElementById('panelOrders');
+            const panelChat = document.getElementById('panelChat');
+
+            if (tab === 'orders') {
+                btnOrders.className = "pb-3 px-2 text-sm font-bold text-primary border-b-2 border-primary transition-all flex items-center gap-2";
+                btnChat.className = "pb-3 px-2 text-sm font-bold text-on-surface-variant hover:text-primary transition-all flex items-center gap-2 relative";
+                panelOrders.style.display = 'flex';
+                panelChat.style.display = 'none';
+            } else {
+                btnChat.className = "pb-3 px-2 text-sm font-bold text-primary border-b-2 border-primary transition-all flex items-center gap-2 relative";
+                btnOrders.className = "pb-3 px-2 text-sm font-bold text-on-surface-variant hover:text-primary transition-all flex items-center gap-2";
+                panelOrders.style.display = 'none';
+                panelChat.style.display = 'flex';
+                loadChatSystem();
+            }
+        }
+
+        // LOAD DATA
+        function loadTransactions() {
+            const db = ronaDb.get();
+            currentTransactions = db.transactions || [];
+            updateGlobalUnreadBadge();
+            handleOrderFilterChange();
+        }
+
+        function updateGlobalUnreadBadge() {
+            let unreadCount = 0;
+            currentTransactions.forEach(tx => {
+                if (tx.chatHistory && tx.chatHistory.some(c => c.sender === 'customer' && c.status === 'unread')) {
+                    unreadCount++;
+                }
+            });
+
+            const badge = document.getElementById('globalUnreadBadge');
+            if (unreadCount > 0) {
+                badge.innerText = unreadCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        // FILTER STATS CONTROL
+        function setStatusFilter(status) {
+            activeStatusFilter = status;
+            
+            // Highlight active button
+            const buttons = document.querySelectorAll('.status-tab');
+            buttons.forEach(btn => {
+                const label = btn.innerText;
+                const statusMap = {
+                    "Semua": "All",
+                    "Belum Bayar": "Menunggu Pembayaran",
+                    "Diproses": "Diproses",
+                    "Dikemas": "Dikemas",
+                    "Dikirim": "Dikirim",
+                    "Selesai": "Selesai",
+                    "Refund Diajukan": "Refund Diproses",
+                    "Refund Selesai": "Refund Disetujui",
+                    "Refund Ditolak": "Refund Ditolak"
+                };
+                const mapped = statusMap[label] || "All";
+                if (mapped === status) {
+                    btn.className = "status-tab px-4 py-2 bg-primary text-white text-xs font-bold rounded-full transition-colors whitespace-nowrap shadow-sm";
+                } else {
+                    btn.className = "status-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface";
+                }
+            });
+
+            handleOrderFilterChange();
+        }
+
+        function handleOrderFilterChange() {
+            const query = document.getElementById('orderSearch').value.toLowerCase().trim();
+
+            filteredTransactions = currentTransactions.filter(tx => {
+                const matchesSearch = tx.id.toLowerCase().includes(query) || tx.customerName.toLowerCase().includes(query);
+                const matchesStatus = activeStatusFilter === "All" || tx.status === activeStatusFilter;
+                return matchesSearch && matchesStatus;
+            });
+
+            renderTransactions();
+        }
+
+        // RENDER ORDERS TABLE
+        function renderTransactions() {
+            const tbody = document.getElementById('transactionTableBody');
+            tbody.innerHTML = '';
+
+            if (filteredTransactions.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 font-bold text-on-surface-variant italic">Belum ada transaksi di platform RONA.</td></tr>`;
+                return;
+            }
+
+            filteredTransactions.forEach((tx) => {
+                const globalIdx = currentTransactions.findIndex(ctx => ctx.id === tx.id);
+                
+                let badgeClass = 'bg-surface-container-low text-on-surface-variant border-outline-variant/30';
+                if (tx.status === 'Selesai') badgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-200';
+                else if (tx.status === 'Diproses' || tx.status === 'Dikemas') badgeClass = 'bg-blue-100 text-blue-700 border-blue-200';
+                else if (tx.status === 'Dikirim') badgeClass = 'bg-indigo-100 text-indigo-700 border-indigo-200';
+                else if (tx.status === 'Refund Diproses') badgeClass = 'bg-amber-100 text-amber-700 border-amber-200 animate-pulse';
+                else if (tx.status === 'Refund Disetujui') badgeClass = 'bg-[#ebefec] text-[#0d6a5c] border-[#0d6a5c]/20';
+                else if (tx.status === 'Refund Ditolak') badgeClass = 'bg-red-100 text-red-700 border-red-200';
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-surface transition-colors">
+                        <td class="py-4 px-4 font-extrabold text-on-surface">${tx.id}</td>
+                        <td class="py-4 px-4 font-bold text-on-surface-variant">${tx.customerName}</td>
+                        <td class="py-4 px-4 font-bold text-outline text-xs">${tx.date}</td>
+                        <td class="py-4 px-4 font-semibold text-on-surface-variant">${tx.items[0]?.name || 'Alat bantu'}...</td>
+                        <td class="py-4 px-4 font-extrabold text-primary text-sm">Rp ${tx.total.toLocaleString('id-ID')}</td>
+                        <td class="py-4 px-4">
+                            <span class="px-3 py-1.5 rounded-full border text-[10px] font-bold ${badgeClass}">${tx.status}</span>
+                        </td>
+                        <td class="py-4 px-4 font-bold text-outline text-xs">
+                            <div class="flex items-center gap-1">
+                                <input type="text" value="${tx.resi || '-'}" id="resiField_${tx.id}" class="px-2 py-1 border border-outline-variant/30 rounded-lg text-xs font-bold outline-none max-w-[120px] bg-surface" onchange="updateResiDirect('${tx.id}', this.value)">
+                                <span class="material-symbols-outlined text-[16px] text-outline-variant">edit</span>
+                            </div>
+                        </td>
+                        <td class="py-4 px-4 text-right">
+                            <div class="flex justify-end gap-1.5">
+                                <button onclick="viewOrderDetails(${globalIdx})" class="px-4 py-2 bg-primary text-white rounded-full text-xs font-bold hover:opacity-90 transition-opacity">
+                                    Proses
+                                </button>
+                                <button onclick="openChatSimulatorWithCustomer('${tx.customerName}', '${tx.id}')" class="text-secondary hover:bg-primary/5 p-2 rounded-lg transition-colors" title="Buka Percakapan Chat CS">
+                                    <span class="material-symbols-outlined text-[20px]">chat</span>
+                                </button>
+                                <button onclick="deleteOrder(${globalIdx})" class="text-error hover:bg-error-container/50 p-2 rounded-lg transition-colors text-[#b91c1c]" title="Hapus Manual">
+                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // UPDATE RESI DIRECT FROM ROW INPUT
+        function updateResiDirect(id, resiVal) {
+            const db = ronaDb.get();
+            const idx = db.transactions.findIndex(t => t.id === id);
+            if (idx >= 0) {
+                db.transactions[idx].resi = resiVal.trim();
+                db.transactions[idx].statusHistory.push({
+                    status: db.transactions[idx].status,
+                    time: new Date().toLocaleString('id-ID') + ' WIB',
+                    note: `Resi pengiriman diperbarui menjadi: ${resiVal}`
+                });
+                ronaDb.save(db);
+                ronaToast.show(`Resi transaksi ${id} berhasil disimpan!`);
+                loadTransactions();
+            }
+        }
+
+        // DELETE ORDER MANUAL
+        function deleteOrder(index) {
+            if (confirm("Apakah Anda yakin ingin menghapus catatan transaksi ini dari data platform secara permanen?")) {
+                const db = ronaDb.get();
+                db.transactions.splice(index, 1);
+                ronaDb.save(db);
+                ronaToast.show("Transaksi berhasil dihapus.");
+                loadTransactions();
+            }
+        }
+
+        // ORDER DETAIL WORKFLOW DIALOG
+        function viewOrderDetails(index) {
+            const tx = currentTransactions[index];
+            const content = document.getElementById('orderDetailContent');
+
+            // Build Timeline History log
+            const historyHtml = tx.statusHistory.map(h => `
+                <div class="flex gap-3 text-xs">
+                    <div class="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 shrink-0"></div>
+                    <div>
+                        <strong class="text-on-surface block">${h.status}</strong>
+                        <p class="text-[10px] text-outline font-semibold mt-0.5">${h.time}</p>
+                        <p class="text-on-surface-variant font-medium mt-1 bg-surface p-2 rounded-lg border border-outline-variant/10">${h.note}</p>
+                    </div>
+                </div>
+            `).join(' ');
+
+            // Status changer panel dropdown
+            let statusActionHtml = '';
+            if (tx.status === 'Refund Diproses') {
+                statusActionHtml = `
+                    <div class="bg-amber-50 border border-amber-200 p-5 rounded-2xl space-y-4">
+                        <h4 class="text-amber-700 font-extrabold text-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined">gavel</span> PENGAJUAN REFUND OPERASIONAL
+                        </h4>
+                        <div class="text-xs space-y-2">
+                            <p class="text-on-surface-variant"><strong>Alasan Pelanggan:</strong></p>
+                            <p class="p-3 bg-white rounded-xl border border-outline-variant/20 italic font-medium">"${tx.refundReason}"</p>
+                            
+                            ${tx.file ? `
+                                <div class="pt-2">
+                                    <p class="text-on-surface-variant mb-2"><strong>Bukti Nota / Lampiran Pengguna:</strong></p>
+                                    <img src="${tx.file}" class="w-32 h-auto rounded-lg border border-outline-variant/30 object-contain max-h-32">
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="flex gap-3 pt-2">
+                            <button onclick="approveRefund(${index})" class="px-5 py-2.5 bg-[#0d6a5c] text-white font-bold rounded-full text-xs hover:opacity-90 transition-opacity">Setujui Refund & Return</button>
+                            <button onclick="rejectRefund(${index})" class="px-5 py-2.5 bg-red-600 text-white font-bold rounded-full text-xs hover:opacity-90 transition-opacity">Tolak Pengajuan</button>
+                        </div>
+                    </div>
+                `;
+            } else if (tx.status !== 'Refund Disetujui' && tx.status !== 'Refund Ditolak' && tx.status !== 'Selesai') {
+                statusActionHtml = `
+                    <div class="bg-surface p-5 rounded-2xl border border-outline-variant/30 flex justify-between items-center gap-4">
+                        <div>
+                            <span class="text-xs text-outline font-bold">UBAH STATUS OPERASIONAL</span>
+                            <select id="updateStatusSelect" class="block w-full mt-1.5 px-4 py-2 border border-outline-variant rounded-xl text-xs outline-none bg-white font-bold text-secondary">
+                                <option value="Menunggu Pembayaran" ${tx.status === 'Menunggu Pembayaran' ? 'selected' : ''}>Menunggu Pembayaran</option>
+                                <option value="Diproses" ${tx.status === 'Diproses' ? 'selected' : ''}>Diproses</option>
+                                <option value="Dikemas" ${tx.status === 'Dikemas' ? 'selected' : ''}>Dikemas</option>
+                                <option value="Dikirim" ${tx.status === 'Dikirim' ? 'selected' : ''}>Dikirim</option>
+                                <option value="Selesai" ${tx.status === 'Selesai' ? 'selected' : ''}>Selesai</option>
+                            </select>
+                        </div>
+                        <button onclick="saveStatusChange(${index})" class="px-5 py-2.5 bg-primary text-white rounded-full font-bold text-xs hover:opacity-90 transition-opacity">Update Status</button>
+                    </div>
+                `;
+            }
+
+            content.innerHTML = `
+                <div class="grid grid-cols-2 gap-4 text-xs border-b border-outline-variant/20 pb-4">
+                    <div>
+                        <span class="text-outline font-bold">PEMBELI</span>
+                        <p class="font-extrabold text-on-surface mt-0.5">${tx.customerName}</p>
+                    </div>
+                    <div>
+                        <span class="text-outline font-bold">KONTAK HP</span>
+                        <p class="font-extrabold text-on-surface mt-0.5">${tx.customerPhone}</p>
+                    </div>
+                    <div class="col-span-2">
+                        <span class="text-outline font-bold">ALAMAT KIRIM</span>
+                        <p class="font-semibold text-on-surface-variant mt-0.5 leading-relaxed bg-surface p-3 rounded-xl border border-outline-variant/10">${tx.address}</p>
+                    </div>
+                </div>
+
+                <!-- Purchased Items -->
+                <div class="space-y-3">
+                    <strong class="text-xs text-on-surface block">Item Produk Dibeli:</strong>
+                    <div class="space-y-2 max-h-[150px] overflow-y-auto pr-2">
+                        ${tx.items.map(item => `
+                            <div class="flex justify-between items-center bg-surface p-3 rounded-xl border border-outline-variant/10 text-xs">
+                                <div class="flex items-center gap-3">
+                                    <img src="${item.image}" class="w-10 h-10 object-cover rounded-lg">
+                                    <div>
+                                        <strong class="text-on-surface block font-bold">${item.name}</strong>
+                                        <span class="text-outline text-[10px] font-bold">Kuantitas: ${item.qty} pcs</span>
+                                    </div>
+                                </div>
+                                <strong class="text-primary font-bold">Rp ${item.price.toLocaleString('id-ID')}</strong>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- Pricing overview -->
+                <div class="flex justify-between items-center p-4 bg-primary/5 border border-primary/20 rounded-2xl">
+                    <span class="text-xs font-bold text-secondary">Total Tagihan Bersih (Nett)</span>
+                    <strong class="text-lg font-extrabold text-primary">Rp ${tx.total.toLocaleString('id-ID')}</strong>
+                </div>
+
+                <!-- Refund or update status control -->
+                ${statusActionHtml}
+
+                <!-- Timeline history of states -->
+                <div class="space-y-4 pt-4 border-t border-outline-variant/20">
+                    <h5 class="text-xs font-bold text-on-surface">Histori Perubahan Status Logistik</h5>
+                    <div class="space-y-4 max-h-[160px] overflow-y-auto pr-2">
+                        ${historyHtml}
+                    </div>
+                </div>
+            `;
+            document.getElementById('orderDetailModal').style.display = 'flex';
+        }
+
+        function closeOrderDetailModal() {
+            document.getElementById('orderDetailModal').style.display = 'none';
+        }
+
+        // SAVE NORMAL STATUS CHANGE
+        function saveStatusChange(index) {
+            const nextStatus = document.getElementById('updateStatusSelect').value;
+            const db = ronaDb.get();
+            const oldStatus = db.transactions[index].status;
+            
+            if (oldStatus === nextStatus) {
+                ronaToast.show('Status sama, tidak ada perubahan.', 'info');
+                return;
+            }
+
+            db.transactions[index].status = nextStatus;
+            db.transactions[index].statusHistory.push({
+                status: nextStatus,
+                time: new Date().toLocaleString('id-ID') + ' WIB',
+                note: `Status diubah secara manual oleh Admin dari ${oldStatus} menjadi ${nextStatus}.`
+            });
+
+            // Trigger system activities feed
+            ronaDb.save(db);
+            ronaToast.show(`Transaksi ${db.transactions[index].id} sukses diubah ke ${nextStatus}!`);
+            closeOrderDetailModal();
+            loadTransactions();
+        }
+
+        // REFUND WORKFLOWS
+        function approveRefund(index) {
+            if (confirm("Apakah Anda yakin menyetujui pengembalian dana (refund) untuk transaksi ini? Dana akan dilepas kembali ke saldo pelanggan.")) {
+                const db = ronaDb.get();
+                const tx = db.transactions[index];
+                tx.status = "Refund Disetujui";
+                tx.statusHistory.push({
+                    status: "Refund Disetujui",
+                    time: new Date().toLocaleString('id-ID') + ' WIB',
+                    note: "Admin menyetujui klaim refund. Proses retur selesai."
+                });
+
+                ronaDb.save(db);
+                ronaToast.show("Pengajuan Refund Disetujui!");
+                closeOrderDetailModal();
+                loadTransactions();
+            }
+        }
+
+        function rejectRefund(index) {
+            const reason = prompt("Masukkan alasan penolakan pengajuan refund:");
+            if (reason === null) return;
+            if (!reason.trim()) { ronaToast.show("Alasan penolakan wajib diisi!", "error"); return; }
+
+            const db = ronaDb.get();
+            const tx = db.transactions[index];
+            tx.status = "Refund Ditolak";
+            tx.rejectReason = reason.trim();
+            tx.statusHistory.push({
+                status: "Refund Ditolak",
+                time: new Date().toLocaleString('id-ID') + ' WIB',
+                note: `Pengajuan refund ditolak oleh Admin. Alasan: "${reason.trim()}"`
+            });
+
+            ronaDb.save(db);
+            ronaToast.show("Pengajuan Refund Ditolak.");
+            closeOrderDetailModal();
+            loadTransactions();
+        }
+
+        // ADD ORDER MANUAL
+        function openAddOrderModal() {
+            document.getElementById('orderForm').reset();
+            document.getElementById('editOrderIndex').value = "";
+            document.getElementById('orderFormModal').style.display = 'flex';
+        }
+
+        function closeOrderFormModal() {
+            document.getElementById('orderFormModal').style.display = 'none';
+        }
+
+        function saveOrderManual(e) {
+            e.preventDefault();
+            const index = document.getElementById('editOrderIndex').value;
+            
+            const db = ronaDb.get();
+            const dateStr = new Date().toLocaleDateString('id-ID', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            });
+
+            const newTx = {
+                id: "TX-0" + Math.floor(Math.random() * 9000 + 1000),
+                date: dateStr,
+                customerName: document.getElementById('mName').value,
+                customerPhone: document.getElementById('mPhone').value,
+                address: document.getElementById('mAddress').value,
+                total: parseInt(document.getElementById('mTotal').value),
+                status: "Diproses",
+                resi: "-",
+                courier: document.getElementById('mCourier').value,
+                items: [{ name: document.getElementById('mItemName').value, price: parseInt(document.getElementById('mTotal').value), qty: 1, image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=100" }],
+                file: "",
+                refundReason: "",
+                rejectReason: "",
+                statusHistory: [
+                    { status: "Menunggu Pembayaran", time: dateStr + ", 08:00 WIB", note: "Order dibuat admin manual." },
+                    { status: "Diproses", time: dateStr + ", 08:05 WIB", note: "Konfirmasi admin instan." }
+                ],
+                chatHistory: []
+            };
+
+            db.transactions.push(newTx);
+            // Increment transaction count for this parent in DB users
+            const uIdx = db.users.findIndex(u => u.parentName.toLowerCase() === newTx.customerName.toLowerCase());
+            if (uIdx >= 0) {
+                db.users[uIdx].transactionCount++;
+                db.users[uIdx].transactionHistory.push(newTx.id);
+            }
+
+            db.activities = db.activities || [];
+            db.activities.unshift({ type: "order_in", text: `Pesanan manual #${newTx.id} dari ${newTx.customerName} dimasukkan.`, time: dateStr });
+            
+            ronaDb.save(db);
+            ronaToast.show("Transaksi Manual Sukses Disimpan!");
+            closeOrderFormModal();
+            loadTransactions();
+        }
+
+        // ==================== CHAT CUSTOMER SERVICE SIMULATOR SYSTEM ====================
+        let currentChatsList = [];
+
+        function loadChatSystem() {
+            const db = ronaDb.get();
+            const chatsContainer = document.getElementById('chatUsersList');
+            chatsContainer.innerHTML = '';
+
+            // Group transactions that have chat histories
+            currentChatsList = db.transactions.filter(tx => tx.chatHistory && tx.chatHistory.length > 0);
+
+            if (currentChatsList.length === 0) {
+                chatsContainer.innerHTML = '<p class="text-xs text-outline italic text-center py-10 font-bold">Tidak ada pesan masuk.</p>';
+                document.getElementById('chatThreadPane').classList.add('opacity-40', 'pointer-events-none');
+                return;
+            } else {
+                document.getElementById('chatThreadPane').classList.remove('opacity-40', 'pointer-events-none');
+            }
+
+            currentChatsList.forEach((tx) => {
+                const lastMsg = tx.chatHistory[tx.chatHistory.length - 1];
+                const unreadCount = tx.chatHistory.filter(c => c.sender === 'customer' && c.status === 'unread').length;
+                const activeClass = activeChatCustomer === tx.customerName ? 'bg-primary/5 border-l-4 border-primary' : '';
+
+                chatsContainer.innerHTML += `
+                    <div onclick="selectChatCustomer('${tx.customerName}')" class="p-4 cursor-pointer hover:bg-surface transition-colors flex justify-between items-center ${activeClass}">
+                        <div class="min-w-0 flex-1 pr-2">
+                            <strong class="text-xs text-on-surface block font-bold">${tx.customerName}</strong>
+                            <p class="text-[10px] text-on-surface-variant truncate font-semibold mt-1">${lastMsg.text}</p>
+                        </div>
+                        <div class="text-right shrink-0">
+                            <span class="text-[9px] text-outline font-bold">${lastMsg.time.split(',')[1] || lastMsg.time}</span>
+                            ${unreadCount > 0 ? `<span class="bg-red-600 text-white font-extrabold text-[8px] w-4.5 h-4.5 rounded-full flex items-center justify-center mt-1 mx-auto">${unreadCount}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Set default chat customer if not active
+            if (!activeChatCustomer && currentChatsList.length > 0) {
+                selectChatCustomer(currentChatsList[0].customerName);
+            } else if (activeChatCustomer) {
+                renderActiveThread();
+            }
+        }
+
+        // Open chat window direct from transaction row
+        function openChatSimulatorWithCustomer(customerName, orderId) {
+            // Verify if customer has messages, if not, pre-populate a greeting
+            const db = ronaDb.get();
+            const txIdx = db.transactions.findIndex(t => t.customerName === customerName);
+            if (txIdx >= 0) {
+                const tx = db.transactions[txIdx];
+                if (!tx.chatHistory || tx.chatHistory.length === 0) {
+                    tx.chatHistory = [
+                        { sender: 'customer', text: `Halo min, pesanan saya dengan nomor #${orderId} apakah sudah bisa dikirim?`, time: new Date().toLocaleString('id-ID') + ' WIB', status: 'unread' }
+                    ];
+                    ronaDb.save(db);
+                }
+            }
+            activeChatCustomer = customerName;
+            switchMainTab('chat');
+        }
+
+        function selectChatCustomer(name) {
+            activeChatCustomer = name;
+            
+            // Mark all customer messages in this thread as read
+            const db = ronaDb.get();
+            const txIdx = db.transactions.findIndex(t => t.customerName === name);
+            if (txIdx >= 0) {
+                db.transactions[txIdx].chatHistory.forEach(msg => {
+                    if (msg.sender === 'customer') msg.status = 'read';
+                });
+                ronaDb.save(db);
+            }
+
+            loadChatSystem();
+        }
+
+        function renderActiveThread() {
+            const db = ronaDb.get();
+            const tx = db.transactions.find(t => t.customerName === activeChatCustomer);
+            if (!tx) return;
+
+            // Render Header metadata
+            const chatHeader = document.getElementById('chatHeader');
+            chatHeader.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-extrabold shrink-0">
+                        ${tx.customerName.charAt(0)}
+                    </div>
+                    <div>
+                        <strong class="text-xs text-on-surface block font-bold">${tx.customerName}</strong>
+                        <span class="text-[10px] text-outline font-semibold">Terkait transaksi: #${tx.id} (${tx.status})</span>
+                    </div>
+                </div>
+                <button onclick="viewOrderDetails(${db.transactions.indexOf(tx)})" class="px-4 py-2 border border-outline-variant/30 text-xs font-bold rounded-full hover:bg-surface transition-all flex items-center gap-1.5 shadow-sm">
+                    <span class="material-symbols-outlined text-[16px]">receipt_long</span> Rincian Order
+                </button>
+            `;
+
+            // Render Messages
+            const bubblesArea = document.getElementById('chatBubblesArea');
+            bubblesArea.innerHTML = '';
+
+            tx.chatHistory.forEach(msg => {
+                const isAdmin = msg.sender === 'admin';
+                const containerClass = isAdmin ? 'justify-end' : 'justify-start';
+                const bubbleClass = isAdmin 
+                    ? 'bg-primary text-white rounded-br-none rounded-2xl shadow-md' 
+                    : 'bg-white text-on-surface rounded-bl-none rounded-2xl border border-outline-variant/20 shadow-sm';
+                
+                const timeText = msg.time.split(',')[1] || msg.time;
+                const statusIcon = msg.status === 'unread' 
+                    ? `<span class="material-symbols-outlined text-[14px] text-white/50">check</span>` 
+                    : `<span class="material-symbols-outlined text-[14px] text-emerald-400">done_all</span>`;
+
+                bubblesArea.innerHTML += `
+                    <div class="flex w-full ${containerClass}">
+                        <div class="max-w-[70%] p-4 ${bubbleClass} text-xs font-semibold leading-relaxed">
+                            <p class="whitespace-pre-wrap">${msg.text}</p>
+                            <div class="flex justify-end items-center gap-1 mt-1.5 opacity-80 text-[9px]">
+                                <span>${timeText}</span>
+                                ${isAdmin ? statusIcon : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Scroll to bottom
+            bubblesArea.scrollTop = bubblesArea.scrollHeight;
+        }
+
+        // SEND CHAT REPLY
+        function sendChatMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('chatMsgInput');
+            const replyText = input.value.trim();
+            if (!replyText) return;
+
+            const db = ronaDb.get();
+            const txIdx = db.transactions.findIndex(t => t.customerName === activeChatCustomer);
+            if (txIdx < 0) return;
+
+            const timeStr = new Date().toLocaleDateString('id-ID', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            }) + ', ' + new Date().toLocaleTimeString('id-ID', {
+                hour: '2-digit', minute: '2-digit'
+            }) + ' WIB';
+
+            db.transactions[txIdx].chatHistory.push({
+                sender: 'admin',
+                text: replyText,
+                time: timeStr,
+                status: 'read'
+            });
+
+            ronaDb.save(db);
+            input.value = '';
+            renderActiveThread();
+            ronaToast.show('Jawaban CS terkirim!');
+
+            // SIMULATE CUSTOMER AUTO-REPLY TIMEOUT (REALISTIC RESPONSE)
+            simulateCustomerTypingReply(txIdx);
+        }
+
+        function simulateCustomerTypingReply(txIdx) {
+            const replies = [
+                "Baik min, terima kasih banyak atas respon cepatnya ya! 👍",
+                "Oke min ditunggu barangnya. Semoga bisa mempercepat perkembangan fokus anak saya.",
+                "Terima kasih infonya min, saya cek berkala nomor resinya.",
+                "Apakah saya perlu melampirkan video unboxing jika nanti ingin ditukar?",
+                "Baik min, semoga admin RONA lancar jaya!"
+            ];
+
+            const randomReply = replies[Math.floor(Math.random() * replies.length)];
+            const indicator = document.getElementById('typingIndicator');
+            const typingUserText = document.getElementById('typingUserText');
+
+            typingUserText.innerText = `${currentTransactions[txIdx].customerName} sedang mengetik...`;
+            
+            // Wait 1.2s typing
+            setTimeout(() => {
+                indicator.classList.remove('hidden');
+            }, 600);
+
+            setTimeout(() => {
+                indicator.classList.add('hidden');
+                
+                const db = ronaDb.get();
+                const timeStr = new Date().toLocaleDateString('id-ID', {
+                    day: 'numeric', month: 'long', year: 'numeric'
+                }) + ', ' + new Date().toLocaleTimeString('id-ID', {
+                    hour: '2-digit', minute: '2-digit'
+                }) + ' WIB';
+
+                db.transactions[txIdx].chatHistory.push({
+                    sender: 'customer',
+                    text: randomReply,
+                    time: timeStr,
+                    status: 'unread'
+                });
+
+                ronaDb.save(db);
+                loadChatSystem();
+                ronaToast.show('Ada pesan masuk baru!', 'info');
+            }, 2500);
+        }
+
+        // Close modal clicking backdrop
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        }
+
+        // Start
+        loadTransactions();
+    </script>
+</body>
+</html>

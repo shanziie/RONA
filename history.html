@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Perjalanan Perkembangan Anak - RONA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#0d6a5c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#57a695",
+                        "secondary": "#28695d",
+                        "surface": "#f7faf7",
+                        "on-surface": "#181c1b",
+                        "on-surface-variant": "#3f4946",
+                        "outline-variant": "#bec9c5",
+                        "surface-container": "#ebefec",
+                        "coral": "#FF9B85",
+                        "aman-cream": "#FBF7F0"
+                    },
+                    "borderRadius": {
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "card": "20px",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBF7F0; /* Aman Cream */
+            color: #2D3A3A;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.04);
+        }
+        .glass-nav {
+            background: rgba(251, 247, 240, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        .timeline-line {
+            width: 2px;
+            background-color: #bec9c5;
+            position: absolute;
+            top: 24px;
+            bottom: -24px;
+            left: 23px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+
+    <div id="navbarContainer"></div>
+
+    <!-- MAIN PANEL AREA -->
+    <main class="max-w-[800px] mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-20">
+        <!-- Header -->
+        <div class="mb-6 md:mb-10 text-center">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface mb-2">Buku Perjalanan Si Kecil</h2>
+            <p class="text-xs font-semibold text-on-surface-variant leading-relaxed">Catatan harian, milestone tumbuh kembang, dan adopsi alat sensorik pendamping buah hati Anda.</p>
+        </div>
+
+        <!-- Time Range Filters -->
+        <div class="flex gap-2 justify-center mb-5 md:mb-6">
+            <button onclick="setTimeRange('weekly')" id="timeRangeWeekly" class="flex-1 sm:flex-none px-4 md:px-5 py-2 text-xs font-bold rounded-full bg-primary text-white shadow-sm border border-primary/20 transition-all">Mingguan (7 Hari)</button>
+            <button onclick="setTimeRange('monthly')" id="timeRangeMonthly" class="flex-1 sm:flex-none px-4 md:px-5 py-2 text-xs font-bold rounded-full bg-white text-on-surface-variant border border-outline-variant/30 transition-all hover:bg-surface">Bulanan (30 Hari)</button>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex gap-2 overflow-x-auto pb-2 justify-start md:justify-center no-scrollbar">
+            <button onclick="filterTimeline('All')" class="tab-btn px-3.5 py-2 bg-primary text-white text-xs font-bold rounded-full transition-colors whitespace-nowrap shadow-sm">Semua</button>
+            <button onclick="filterTimeline('Journal')" class="tab-btn px-3.5 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Catatan &amp; Jurnal</button>
+            <button onclick="filterTimeline('Milestone')" class="tab-btn px-3.5 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Milestone</button>
+            <button onclick="filterTimeline('Product')" class="tab-btn px-3.5 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Produk Dipakai</button>
+        </div>
+
+        <!-- Vertical Timeline container -->
+        <div id="timelineContainer" class="relative mt-6 md:mt-8 space-y-6 md:space-y-8 pl-3 md:pl-4">
+            <!-- Injected dynamically -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container rounded-t-[40px] py-16 mt-20 border-t border-outline-variant/30">
+        <div class="max-w-[1200px] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                        <img alt="RONA Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgIbGSRqH0qZyiuiq7hoVM0edbPazkiGScH5SQu4WqqTQoAzxBF4k2MxfZr2lOdz-BD3DZeoL4sim82ViCc-91D0g5X4D-zs9Qznw0ru8uYt5VV0xi3awAVeUziJVn1J6gkngp7PbIOVsKZccNPkHRPNZAfoTR1nJKUvZjtOkVTqOMvqHhLDojhHI9S41CsLP4p0AAiqxLp1EBwZ42xgBqIwIaE0Srqr5kjHHSWDFD3SGki6T1hzlw0W-tlrAAeZdqu82g4v88Q258"/>
+                        <span class="text-xl font-extrabold text-primary">RONA</span>
+                    </div>
+                    <p class="text-xs font-medium text-on-surface-variant leading-relaxed">Mendukung Potensi, Menenangkan Hati. Platform inklusif pendamping tumbuh kembang sensori & fokus si kecil secara menyenangkan.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-on-surface mb-4 tracking-wider">Navigasi</h4>
+                    <ul class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                        <li><a class="hover:text-primary transition-colors" href="index.html">Beranda</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="artikel.html">Artikel Edukasi</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="katalog.html">Rekomendasi Alat</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="history.html">Perjalanan Anak</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-on-surface mb-4 tracking-wider">Bantuan</h4>
+                    <ul class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                        <li><a class="hover:text-primary transition-colors" href="#">Kebijakan Privasi</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Syarat & Ketentuan</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Pusat Konsultasi</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-on-surface mb-4 tracking-wider">Kontak</h4>
+                    <ul class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">mail</span> hello@rona.id</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">call</span> +62 812-3456-7890</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">location_on</span> Jakarta, Indonesia</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-outline-variant/20 text-center text-[10px] font-bold text-outline">
+                © 2026 RONA. Dirancang dengan kehangatan untuk tumbuh kembang buah hati.
+            </div>
+        </div>
+    </footer>
+
+    <!-- TOAST / CENTRAL BACKEND IMPORT -->
+    <script src="admin-core.js"></script>
+    <script>
+        const role = localStorage.getItem('rona_role') || 'guest';
+        const isLogged = role === 'parent';
+        const parentEmail = localStorage.getItem('rona_active_parent_email') || 'parent@gmail.com';
+        
+        const db = ronaDb.get();
+        const activeParent = db.users ? db.users.find(u => u.email === parentEmail) : null;
+        const childName = activeParent ? activeParent.childName : "Anak";
+
+        // Render dynamic navbar
+        ronaNav.renderNavbar('perjalanan');
+
+        // Timeline Builder Logic
+        let timelineData = [];
+        let currentTimeRange = 'weekly';
+        let currentCategory = 'All';
+
+        function setTimeRange(range) {
+            currentTimeRange = range;
+            const w = document.getElementById('timeRangeWeekly');
+            const m = document.getElementById('timeRangeMonthly');
+            if (range === 'weekly') {
+                w.className = "px-5 py-2 text-xs font-bold rounded-full bg-primary text-white shadow-sm border border-primary/20 transition-all";
+                m.className = "px-5 py-2 text-xs font-bold rounded-full bg-white text-on-surface-variant border border-outline-variant/30 transition-all hover:bg-surface";
+            } else {
+                m.className = "px-5 py-2 text-xs font-bold rounded-full bg-primary text-white shadow-sm border border-primary/20 transition-all";
+                w.className = "px-5 py-2 text-xs font-bold rounded-full bg-white text-on-surface-variant border border-outline-variant/30 transition-all hover:bg-surface";
+            }
+            renderTimelineFiltered();
+        }
+
+        function buildTimelineData() {
+            timelineData = [];
+
+            // 1. Gather Journals
+            const journals = db.journals || [];
+            journals.filter(j => j.parentEmail === parentEmail).forEach(j => {
+                let text = `"${j.text}"`;
+                if (j.image) {
+                    text += `<br><img src="${j.image}" class="w-full max-h-48 object-cover rounded-xl mt-3 border border-outline-variant/15">`;
+                }
+                timelineData.push({
+                    type: 'Journal',
+                    date: j.date,
+                    timestamp: j.timestamp || new Date(j.date).getTime() || Date.now(),
+                    title: `Catatan Harian Ibu/Papa ${activeParent.parentName}`,
+                    icon: 'book',
+                    iconBg: 'bg-teal-50 text-teal-700 border-teal-200',
+                    content: text
+                });
+            });
+
+            // 2. Gather Purchases (Therapeutic Products)
+            const purchases = db.transactions || [];
+            const parentNameLower = activeParent ? activeParent.parentName.toLowerCase() : "sarah";
+            purchases.filter(tx => tx.customerName.toLowerCase() === parentNameLower || tx.customerEmail === parentEmail).forEach(tx => {
+                tx.items.forEach(item => {
+                    timelineData.push({
+                        type: 'Product',
+                        date: tx.date,
+                        timestamp: new Date(tx.date).getTime() || Date.now() - 5000,
+                        title: `Adopsi Alat Terapi Sensori`,
+                        icon: 'shopping_bag',
+                        iconBg: 'bg-amber-50 text-amber-700 border-amber-200',
+                        content: `Membelikan <strong>${item.name}</strong> untuk ${childName}. <br><span class="text-primary font-bold">Nilai Terapi:</span> ${getTherapistUtility(item.name)}`,
+                        sku: item.sku || 'RONA-SPIN-01'
+                    });
+                });
+            });
+
+            // 3. Mock Medical Milestones & Professional Recommendations
+            timelineData.push({
+                type: 'Milestone',
+                date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+                timestamp: Date.now() - 1000 * 60 * 60 * 24 * 10,
+                title: 'Screening Awal Sensorik & Fokus RONA',
+                icon: 'clinical_notes',
+                iconBg: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+                content: `Menyelesaikan diagnosis mandiri sensori pertama. Hasil awal: ${activeParent ? activeParent.childName : 'Rara'} menunjukkan sensitivitas tinggi terhadap <strong>stimulus taktil & audio mendadak</strong>.`
+            });
+
+            timelineData.push({
+                type: 'Milestone',
+                date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+                timestamp: Date.now() - 1000 * 60 * 60 * 24 * 5,
+                title: 'Rekomendasi Rencana Terapi Rumah',
+                icon: 'psychology',
+                iconBg: 'bg-rose-50 text-rose-700 border-rose-200',
+                content: `Saran dari dr. Shima Sp.A: Biasakan menggunakan metode deep pressure therapy menggunakan Calming Blanket 30 menit sebelum tidur.`
+            });
+
+            // Sort timeline by timestamp descending
+            timelineData.sort((a, b) => b.timestamp - a.timestamp);
+            renderTimelineFiltered();
+        }
+
+        function getTherapistUtility(productName) {
+            if (productName.includes("Blanket")) return "Memberikan rasa aman dan tenang (Deep Pressure) untuk tidur malam yang rileks.";
+            if (productName.includes("Spinner")) return "Membantu menstabilkan fokus motorik halus anak hiperaktif saat cemas.";
+            if (productName.includes("Sand")) return "Melatih ketangkasan taktil ujung jari serta melatih konsentrasi motorik halus.";
+            if (productName.includes("Brush")) return "Mengatasi defensivitas taktil anak yang tidak suka disentuh kasar.";
+            return "Mendukung stimulasi regulasi saraf sensorik anak.";
+        }
+
+        // FILTER RENDERER
+        function filterTimeline(filterType) {
+            currentCategory = filterType;
+            // Highlight active button
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                const label = btn.innerText;
+                const map = {
+                    "Semua Kategori": "All",
+                    "Catatan & Jurnal": "Journal",
+                    "Milestone & Insight": "Milestone",
+                    "Produk Dipakai": "Product"
+                };
+                if (map[label] === filterType) {
+                    btn.className = "tab-btn px-4 py-2 bg-primary text-white text-xs font-bold rounded-full transition-colors whitespace-nowrap shadow-sm";
+                } else {
+                    btn.className = "tab-btn px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface";
+                }
+            });
+
+            renderTimelineFiltered();
+        }
+
+        function renderTimelineFiltered() {
+            const container = document.getElementById('timelineContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const now = Date.now();
+            const oneDay = 24 * 60 * 60 * 1000;
+            const threshold = currentTimeRange === 'weekly' ? 7 * oneDay : 30 * oneDay;
+
+            const filtered = timelineData.filter(item => {
+                // filter by category
+                const catMatches = currentCategory === 'All' || item.type === currentCategory;
+                // filter by time range
+                const timeDiff = now - item.timestamp;
+                const timeMatches = timeDiff <= threshold;
+                return catMatches && timeMatches;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<p class="text-xs text-outline italic text-center py-10 font-bold">Belum ada cerita perjalanan untuk kategori dan rentang waktu ini.</p>`;
+                return;
+            }
+
+            filtered.forEach((item, idx) => {
+                const hasNext = idx < filtered.length - 1;
+                let reviewBtn = '';
+                if (item.type === 'Product' && item.sku) {
+                    reviewBtn = `
+                        <div class="mt-3">
+                            <a href="detail-produk.html?sku=${item.sku}&writeReview=true" class="inline-flex items-center gap-1 text-[10px] font-bold text-primary border border-primary/20 px-3 py-1.5 rounded-xl hover:bg-primary/5 transition-all">
+                                <span class="material-symbols-outlined text-[13px]">rate_review</span>
+                                Beri Ulasan
+                            </a>
+                        </div>
+                    `;
+                }
+                
+                container.innerHTML += `
+                    <div class="relative flex gap-6 items-start pb-4">
+                        ${hasNext ? '<div class="timeline-line"></div>' : ''}
+                        
+                        <!-- Timeline circle icon -->
+                        <div class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border z-10 shadow-sm ${item.iconBg}">
+                            <span class="material-symbols-outlined text-[20px]">${item.icon}</span>
+                        </div>
+                        
+                        <!-- Timeline card -->
+                        <div class="bg-white p-5 rounded-3xl border border-outline-variant/20 shadow-sm flex-grow space-y-1.5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[9px] font-bold text-outline uppercase tracking-wider">${item.date}</span>
+                                <span class="bg-surface-container-low text-[9px] font-bold text-primary px-2.5 py-0.5 rounded-full">${item.type === 'Journal' ? 'Jurnal' : item.type === 'Milestone' ? 'Milestone' : 'Produk'}</span>
+                            </div>
+                            <h4 class="font-extrabold text-sm text-on-surface leading-tight">${item.title}</h4>
+                            <p class="text-xs font-semibold text-on-surface-variant leading-relaxed pt-1">${item.content}</p>
+                            ${reviewBtn}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Start
+        buildTimelineData();
+    </script>
+</body>
+</html>

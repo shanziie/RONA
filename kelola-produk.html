@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CMS Inventaris Produk - RONA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#0d6a5c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#57a695",
+                        "secondary": "#28695d",
+                        "surface": "#f7faf7",
+                        "on-surface": "#181c1b",
+                        "on-surface-variant": "#3f4946",
+                        "outline-variant": "#bec9c5",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f1f4f2",
+                        "surface-container": "#ebefec",
+                        "aman-cream": "#FBF7F0",
+                        "hangat-coral": "#E98A7D"
+                    },
+                    "borderRadius": {
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "card": "20px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBF7F0; /* Aman Cream */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        
+        /* Interactive Toggle Switch */
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        input:checked + .slider { background-color: #0d6a5c; }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        /* Trigger Styling Alert Kritis untuk Stok Kurang dari sama dengan 4 */
+        .stock-alert { 
+            color: #b91c1c !important; 
+            font-weight: 800 !important; 
+            background: #fef2f2; 
+            padding: 6px 12px; 
+            border-radius: 9999px; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 4px; 
+            animation: pulse 2s infinite; 
+            border: 1px solid #fca5a5;
+        }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+
+        /* Modals */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(4px);
+            z-index: 2000; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .modal-content { 
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+        @keyframes slideUp { 
+            from { transform: translateY(20px) scale(0.95); opacity: 0; } 
+            to { transform: translateY(0) scale(1); opacity: 1; } 
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        
+        <!-- SIDEBAR NAV CONTAINER -->
+        <aside id="sidebarContainer"></aside>
+
+        <!-- MAIN PANEL AREA -->
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto max-h-screen">
+            
+            <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-on-surface mb-2">Gudang Inventaris Produk</h2>
+                    <p class="text-on-surface-variant">Pantau ketersediaan barang, spesifikasi medis sensori, dan pasokan alat bantu RONA.</p>
+                </div>
+                <button onclick="openProductModal()" class="bg-primary text-white px-6 py-3 rounded-full font-bold hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm whitespace-nowrap">
+                    <span class="material-symbols-outlined text-[20px]">add</span>
+                    Tambah Produk Baru
+                </button>
+            </div>
+
+            <!-- SEARCH, FILTER, SORT FILTER TOOLBAR -->
+            <div class="bg-white rounded-3xl p-6 card-shadow border border-outline-variant/30 mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
+                <!-- Search bar -->
+                <div class="relative w-full md:max-w-xs group">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors">search</span>
+                    <input type="text" id="productSearch" oninput="handleFilterChange()" class="w-full pl-10 pr-4 py-2.5 border border-outline-variant rounded-xl text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none" placeholder="Cari nama produk / SKU...">
+                </div>
+
+                <!-- Filters -->
+                <div class="flex flex-wrap md:flex-nowrap gap-3 items-center w-full md:w-auto justify-end">
+                    <select id="filterCategory" onchange="handleFilterChange()" class="px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none bg-surface">
+                        <option value="All">Semua Kategori</option>
+                        <option value="Sensory">Sensory</option>
+                        <option value="Focus">Focus</option>
+                        <option value="Calming">Calming</option>
+                    </select>
+
+                    <select id="sortProducts" onchange="handleFilterChange()" class="px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none bg-surface">
+                        <option value="default">Urutkan Default</option>
+                        <option value="priceAsc">Harga Terendah</option>
+                        <option value="priceDesc">Harga Tertinggi</option>
+                        <option value="stockAsc">Stok Terendah</option>
+                        <option value="stockDesc">Stok Tertinggi</option>
+                        <option value="ratingDesc">Rating Tertinggi</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- INVENTARIS PRODUK TABLE -->
+            <div class="bg-white rounded-3xl p-6 card-shadow border border-outline-variant/30 overflow-x-auto">
+                <table class="w-full text-left border-collapse min-w-[950px]">
+                    <thead>
+                        <tr class="border-b-2 border-surface-container-high">
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">PRODUK</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">SKU CODE</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">HARGA</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">KATEGORI</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">STOK</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">RATING</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide">STATUS</th>
+                            <th class="py-4 px-4 text-secondary font-bold text-sm tracking-wide text-right">MANAJEMEN KONTROL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody" class="divide-y divide-surface-container-high">
+                        <!-- JS Loop Render -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="mt-6 flex justify-between items-center px-4">
+                <span id="pageIndicator" class="text-xs font-semibold text-on-surface-variant">Menampilkan 1 - 5 dari 5 produk</span>
+                <div class="flex gap-2">
+                    <button onclick="prevPage()" id="prevBtn" class="px-4 py-2 border border-outline-variant/30 rounded-xl bg-white text-xs font-bold hover:bg-surface-container transition-colors disabled:opacity-50 disabled:pointer-events-none">Sebelumnya</button>
+                    <button onclick="nextPage()" id="nextBtn" class="px-4 py-2 border border-outline-variant/30 rounded-xl bg-white text-xs font-bold hover:bg-surface-container transition-colors disabled:opacity-50 disabled:pointer-events-none">Selanjutnya</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- PRODUCT ADD/EDIT MODAL -->
+    <div id="productModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-3xl max-w-[650px] w-[95%] shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            
+            <h3 id="modalTitle" class="text-2xl font-bold text-on-surface mb-6 flex items-center gap-2 border-b border-outline-variant/30 pb-4">
+                Input Produk Baru
+            </h3>
+            
+            <form id="productForm" onsubmit="saveProduct(event)" class="space-y-4 text-xs font-semibold text-on-surface-variant">
+                <input type="hidden" id="editIndex">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                    <!-- Image Upload -->
+                    <div class="md:col-span-1">
+                        <label class="block mb-2">Cover Produk</label>
+                        <div class="w-full aspect-square bg-surface-container rounded-2xl flex flex-col items-center justify-center border-2 border-dashed border-outline-variant cursor-pointer relative overflow-hidden group hover:border-primary transition-colors" onclick="document.getElementById('productImageFile').click()">
+                            <span class="material-symbols-outlined text-[40px] text-outline-variant group-hover:text-primary transition-colors z-10 relative bg-white/90 p-2 rounded-full shadow-sm">add_a_photo</span>
+                            <img id="productImagePreview" class="absolute inset-0 w-full h-full object-cover hidden">
+                        </div>
+                        <input type="file" id="productImageFile" hidden accept="image/*" onchange="previewProductImage(this)">
+                        <input type="hidden" id="productImageBase64">
+                    </div>
+
+                    <div class="md:col-span-2 space-y-4">
+                        <div>
+                            <label class="block mb-1">Nama Produk</label>
+                            <input type="text" id="prodName" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block mb-1">Kategori</label>
+                                <select id="prodCategory" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none bg-white">
+                                    <option value="Sensory">Sensory</option>
+                                    <option value="Focus">Focus</option>
+                                    <option value="Calming">Calming</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block mb-1">SKU Code</label>
+                                <input type="text" id="prodSku" placeholder="RONA-XXX-00" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="col-span-2">
+                        <label class="block mb-1">Harga Satuan (Rp)</label>
+                        <input type="number" id="prodPrice" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block mb-1">Stok Awal</label>
+                        <input type="number" id="prodStock" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block mb-1">Berat (gram)</label>
+                        <input type="number" id="prodWeight" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block mb-1">Rekomendasi Umur</label>
+                        <input type="text" id="prodAge" placeholder="Contoh: 3-8 Tahun" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block mb-1">Status Penjualan</label>
+                        <select id="prodStatus" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none bg-white">
+                            <option value="true">Aktif (Tampil di Katalog)</option>
+                            <option value="false">Nonaktif (Draft)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block mb-1">Deskripsi Detail</label>
+                    <textarea id="prodDescription" required rows="2" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm resize-none outline-none focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Detail produk..."></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block mb-1">Manfaat Terapi Sensori</label>
+                        <textarea id="prodBenefits" required rows="2" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm resize-none outline-none focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Contoh: Mengurangi kecemasan taktil..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block mb-1">Cara Penggunaan</label>
+                        <textarea id="prodInstructions" required rows="2" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm resize-none outline-none focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Contoh: Sikat lembut dengan gerakan searah..."></textarea>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-outline-variant/30 flex justify-end gap-3">
+                    <button type="button" onclick="closeProductModal()" class="px-6 py-3 rounded-full font-bold bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors">Batal</button>
+                    <button type="submit" class="px-6 py-3 rounded-full font-bold bg-primary text-white hover:opacity-90 transition-opacity flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px]">save</span> Simpan Produk
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- PREVIEW DIALOG -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-3xl max-w-[500px] w-[95%] shadow-2xl relative text-sm">
+            <button onclick="closePreviewModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 class="text-xl font-bold text-on-surface mb-6 border-b border-outline-variant/30 pb-4">Preview Lembar Produk</h3>
+            
+            <div id="previewContent" class="space-y-4">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST / CORE LIBRARIES IMPORT -->
+    <script src="admin-core.js"></script>
+    <script>
+        // Init active sidebar highlight
+        ronaAdmin.renderSidebar('kelola-produk');
+
+        // CRUD VARIABLES
+        let currentProducts = [];
+        let filteredProducts = [];
+        let currentPage = 1;
+        const itemsPerPage = 5;
+
+        // Image Base64 Handler
+        function previewProductImage(input) {
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                document.getElementById('productImageBase64').value = reader.result;
+                const img = document.getElementById('productImagePreview');
+                img.src = reader.result;
+                img.classList.remove('hidden');
+            }
+            if (file) reader.readAsDataURL(file);
+        }
+
+        // LOAD PRODUCTS FROM LOCALSTORAGE
+        function loadProducts() {
+            const db = ronaDb.get();
+            currentProducts = db.products || [];
+            handleFilterChange();
+        }
+
+        // FILTER, SEARCH, SORT ENGINE
+        function handleFilterChange() {
+            const searchQuery = document.getElementById('productSearch').value.toLowerCase().trim();
+            const categoryFilter = document.getElementById('filterCategory').value;
+            const sortVal = document.getElementById('sortProducts').value;
+
+            // Search & Category
+            filteredProducts = currentProducts.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(searchQuery) || p.sku.toLowerCase().includes(searchQuery);
+                const matchesCategory = categoryFilter === 'All' || p.category === categoryFilter;
+                return matchesSearch && matchesCategory;
+            });
+
+            // Sort
+            if (sortVal === 'priceAsc') filteredProducts.sort((a,b) => a.price - b.price);
+            else if (sortVal === 'priceDesc') filteredProducts.sort((a,b) => b.price - a.price);
+            else if (sortVal === 'stockAsc') filteredProducts.sort((a,b) => a.stock - b.stock);
+            else if (sortVal === 'stockDesc') filteredProducts.sort((a,b) => b.stock - a.stock);
+            else if (sortVal === 'ratingDesc') filteredProducts.sort((a,b) => b.rating - a.rating);
+
+            currentPage = 1;
+            renderProductTable();
+        }
+
+        // PAGINATION RENDER
+        function renderProductTable() {
+            const tbody = document.getElementById('productTableBody');
+            tbody.innerHTML = '';
+
+            const startIdx = (currentPage - 1) * itemsPerPage;
+            const endIdx = startIdx + itemsPerPage;
+            const paginated = filteredProducts.slice(startIdx, endIdx);
+
+            if (paginated.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 font-bold text-on-surface-variant italic">Katalog produk tidak ditemukan.</td></tr>`;
+                document.getElementById('pageIndicator').innerText = "Menampilkan 0 produk";
+                document.getElementById('prevBtn').disabled = true;
+                document.getElementById('nextBtn').disabled = true;
+                return;
+            }
+
+            paginated.forEach((p, idx) => {
+                const globalIdx = currentProducts.findIndex(cp => cp.sku === p.sku);
+                
+                // Critical stock warning
+                const stockDisplay = p.stock < 5 
+                    ? `<span class="stock-alert text-[10px]"><span class="material-symbols-outlined text-[14px]">warning</span> ${p.stock} Pcs</span>` 
+                    : `<span class="font-bold text-on-surface bg-surface-container-low px-3 py-1 rounded-full text-xs border border-outline-variant/30">${p.stock} Pcs</span>`;
+
+                const statusChecked = p.active ? 'checked' : '';
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-surface transition-colors">
+                        <td class="py-4 px-4 flex items-center gap-3">
+                            <img src="${p.image || 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=100'}" class="w-10 h-10 rounded-xl object-cover border border-outline-variant/30 shrink-0">
+                            <span class="font-extrabold text-on-surface text-sm">${p.name}</span>
+                        </td>
+                        <td class="py-4 px-4 font-bold text-outline text-xs">${p.sku}</td>
+                        <td class="py-4 px-4 font-extrabold text-primary text-sm">Rp ${p.price.toLocaleString('id-ID')}</td>
+                        <td class="py-4 px-4">
+                            <span class="bg-primary/5 text-primary px-3 py-1 rounded-full border border-primary/20 font-bold text-[10px]">${p.category}</span>
+                        </td>
+                        <td class="py-4 px-4">${stockDisplay}</td>
+                        <td class="py-4 px-4 font-bold text-yellow-600 flex items-center gap-0.5"><span class="material-symbols-outlined text-[16px]">star</span> ${p.rating}</td>
+                        <td class="py-4 px-4">
+                            <label class="switch">
+                                <input type="checkbox" ${statusChecked} onchange="toggleProductStatus(${globalIdx})">
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                        <td class="py-4 px-4 text-right">
+                            <div class="flex justify-end gap-1.5">
+                                <button onclick="triggerPreviewFlow(${globalIdx})" class="text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors" title="Preview Katalog">
+                                    <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                </button>
+                                <button onclick="openProductModal(${globalIdx})" class="text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors" title="Edit">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+                                <button onclick="deleteProduct(${globalIdx})" class="text-error hover:bg-error-container/50 p-2 rounded-lg transition-colors text-[#b91c1c]" title="Hapus">
+                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            // Setup indicators & buttons
+            const totalItems = filteredProducts.length;
+            const shownItems = Math.min(endIdx, totalItems);
+            document.getElementById('pageIndicator').innerText = `Menampilkan ${startIdx + 1} - ${shownItems} dari ${totalItems} produk`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = endIdx >= totalItems;
+        }
+
+        // PAGINATION CONTROL FUNCTIONS
+        function prevPage() { if (currentPage > 1) { currentPage--; renderProductTable(); } }
+        function nextPage() { const totalItems = filteredProducts.length; if (currentPage * itemsPerPage < totalItems) { currentPage++; renderProductTable(); } }
+
+        // TOGGLE STATUS DIRECT ON ROW
+        function toggleProductStatus(index) {
+            currentProducts[index].active = !currentProducts[index].active;
+            const db = ronaDb.get();
+            db.products = currentProducts;
+            ronaDb.save(db);
+            ronaToast.show(`Status produk '${currentProducts[index].name}' berhasil diubah!`);
+        }
+
+        // OPEN DIALOG FORM
+        function openProductModal(index = -1) {
+            document.getElementById('productForm').reset();
+            document.getElementById('productImagePreview').classList.add('hidden');
+            document.getElementById('productImageBase64').value = "";
+            
+            if (index >= 0) {
+                const p = currentProducts[index];
+                document.getElementById('editIndex').value = index;
+                document.getElementById('modalTitle').innerText = `Edit Produk (${p.sku})`;
+                
+                document.getElementById('prodName').value = p.name;
+                document.getElementById('prodCategory').value = p.category;
+                document.getElementById('prodSku').value = p.sku;
+                document.getElementById('prodPrice').value = p.price;
+                document.getElementById('prodStock').value = p.stock;
+                document.getElementById('prodWeight').value = p.weight || 100;
+                document.getElementById('prodAge').value = p.ageRecommendation || "3 Tahun ke atas";
+                document.getElementById('prodStatus').value = p.active ? "true" : "false";
+                document.getElementById('prodDescription').value = p.description || "";
+                document.getElementById('prodBenefits').value = p.benefits || "";
+                document.getElementById('prodInstructions').value = p.instructions || "";
+                
+                if (p.image) {
+                    document.getElementById('productImagePreview').src = p.image;
+                    document.getElementById('productImagePreview').classList.remove('hidden');
+                    document.getElementById('productImageBase64').value = p.image;
+                }
+            } else {
+                document.getElementById('editIndex').value = "";
+                document.getElementById('modalTitle').innerText = "Input Produk Baru";
+            }
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        // SAVE FORM DATA
+        function saveProduct(e) {
+            e.preventDefault();
+            const index = document.getElementById('editIndex').value;
+            const imgVal = document.getElementById('productImageBase64').value;
+            const fallbackImage = "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=400&q=80";
+
+            const productPayload = {
+                sku: document.getElementById('prodSku').value,
+                name: document.getElementById('prodName').value,
+                category: document.getElementById('prodCategory').value,
+                price: parseInt(document.getElementById('prodPrice').value),
+                stock: parseInt(document.getElementById('prodStock').value),
+                weight: parseInt(document.getElementById('prodWeight').value),
+                ageRecommendation: document.getElementById('prodAge').value,
+                active: document.getElementById('prodStatus').value === "true",
+                rating: index !== "" ? currentProducts[index].rating : 5.0,
+                description: document.getElementById('prodDescription').value,
+                benefits: document.getElementById('prodBenefits').value,
+                instructions: document.getElementById('prodInstructions').value,
+                image: imgVal !== "" ? imgVal : fallbackImage
+            };
+
+            const db = ronaDb.get();
+            if (index !== "") {
+                db.products[index] = productPayload;
+                ronaToast.show(`Katalog ${productPayload.sku} sukses diperbarui!`);
+            } else {
+                db.products.push(productPayload);
+                ronaDb.addActivity('product_add', `Produk '${productPayload.name}' berhasil ditambahkan.`);
+                ronaToast.show('Produk Baru Berhasil Disimpan!');
+            }
+
+            ronaDb.save(db);
+            closeProductModal();
+            loadProducts();
+        }
+
+        // DELETE PRODUCT
+        function deleteProduct(index) {
+            const p = currentProducts[index];
+            if (confirm(`Apakah Anda yakin ingin menghapus produk '${p.name}' dari database RONA secara permanen?`)) {
+                const db = ronaDb.get();
+                db.products.splice(index, 1);
+                ronaDb.save(db);
+                ronaToast.show('Produk berhasil dihapus!');
+                loadProducts();
+            }
+        }
+
+        // PREVIEW SHEET DIALOG
+        function triggerPreviewFlow(index) {
+            const p = currentProducts[index];
+            const content = document.getElementById('previewContent');
+            content.innerHTML = `
+                <div class="w-full h-48 rounded-2xl overflow-hidden mb-4 border border-outline-variant/30 bg-surface">
+                    <img src="${p.image}" class="w-full h-full object-cover">
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-start gap-4">
+                        <h4 class="font-extrabold text-lg text-on-surface leading-tight">${p.name}</h4>
+                        <span class="bg-primary/10 text-primary font-bold text-[10px] px-2.5 py-1 rounded-full border border-primary/20">${p.category}</span>
+                    </div>
+                    <p class="text-xs text-outline font-bold">SKU: ${p.sku}</p>
+                    <p class="text-lg font-extrabold text-primary mt-1">Rp ${p.price.toLocaleString('id-ID')}</p>
+                    
+                    <div class="grid grid-cols-3 gap-2 bg-surface p-3 rounded-xl border border-outline-variant/20 text-center font-bold text-[10px] mt-2">
+                        <div>
+                            <p class="text-outline mb-0.5">STOK</p>
+                            <p class="text-on-surface">${p.stock} pcs</p>
+                        </div>
+                        <div>
+                            <p class="text-outline mb-0.5">BERAT</p>
+                            <p class="text-on-surface">${p.weight}g</p>
+                        </div>
+                        <div>
+                            <p class="text-outline mb-0.5">REKOM. UMUR</p>
+                            <p class="text-on-surface">${p.ageRecommendation}</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <strong class="text-xs text-on-surface">Deskripsi Alat:</strong>
+                        <p class="text-xs text-on-surface-variant leading-relaxed mt-1 font-medium">${p.description}</p>
+                    </div>
+
+                    <div class="pt-2">
+                        <strong class="text-xs text-on-surface">Manfaat Terapeutik:</strong>
+                        <p class="text-xs text-on-surface-variant leading-relaxed mt-1 font-medium">${p.benefits}</p>
+                    </div>
+
+                    <div class="pt-2">
+                        <strong class="text-xs text-on-surface">Petunjuk Penggunaan Medis:</strong>
+                        <p class="text-xs text-on-surface-variant leading-relaxed mt-1 font-medium">${p.instructions}</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('previewModal').style.display = 'flex';
+        }
+
+        function closePreviewModal() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
+
+        // Close modal clicking backdrop
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        }
+
+        // Start
+        loadProducts();
+    </script>
+</body>
+</html>

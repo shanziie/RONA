@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard Monitoring Bisnis - RONA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#0d6a5c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#57a695",
+                        "secondary": "#28695d",
+                        "surface": "#f7faf7",
+                        "on-surface": "#181c1b",
+                        "on-surface-variant": "#3f4946",
+                        "outline-variant": "#bec9c5",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f1f4f2",
+                        "surface-container": "#ebefec",
+                        "aman-cream": "#FBF7F0",
+                        "hangat-coral": "#E98A7D"
+                    },
+                    "borderRadius": {
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "card": "20px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBF7F0; /* Aman Cream */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        
+        /* Modal Animation styling */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            inset: 0;
+            background: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(4px);
+            z-index: 2000; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .modal-content { 
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+        @keyframes slideUp { 
+            from { transform: translateY(20px) scale(0.95); opacity: 0; } 
+            to { transform: translateY(0) scale(1); opacity: 1; } 
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        
+        <!-- SIDEBAR NAV CONTAINER -->
+        <aside id="sidebarContainer"></aside>
+
+        <!-- MAIN PANEL AREA -->
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto max-h-screen">
+            
+            <!-- Welcome Header -->
+            <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-on-surface mb-2">Pusat Kontrol RONA</h2>
+                    <p class="text-on-surface-variant font-medium">Monitoring performa penjualan, artikel edukasi, pengguna, dan aktivitas operasional platform.</p>
+                </div>
+            </div>
+
+            <!-- Operational Metrics Grid -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Card 1: Revenue -->
+                <div class="bg-white p-6 rounded-3xl card-shadow border border-outline-variant/30 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[28px]">payments</span>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider mb-0.5">Pendapatan</p>
+                        <h3 id="statRevenue" class="text-xl font-extrabold text-on-surface">Rp 0</h3>
+                    </div>
+                </div>
+
+                <!-- Card 2: Products -->
+                <div class="bg-white p-6 rounded-3xl card-shadow border border-outline-variant/30 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[28px]">inventory_2</span>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider mb-0.5">Total Produk</p>
+                        <h3 id="statProducts" class="text-xl font-extrabold text-on-surface">0</h3>
+                    </div>
+                </div>
+
+                <!-- Card 3: Articles -->
+                <div class="bg-white p-6 rounded-3xl card-shadow border border-outline-variant/30 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[28px]">article</span>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider mb-0.5">Total Artikel</p>
+                        <h3 id="statArticles" class="text-xl font-extrabold text-on-surface">0</h3>
+                    </div>
+                </div>
+
+                <!-- Card 4: Users -->
+                <div class="bg-white p-6 rounded-3xl card-shadow border border-outline-variant/30 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-700 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[28px]">group</span>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider mb-0.5">Total User</p>
+                        <h3 id="statUsers" class="text-xl font-extrabold text-on-surface">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <!-- Sales Trend Chart (SVG) -->
+                <div class="bg-white p-6 rounded-3xl card-shadow border border-outline-variant/30 lg:col-span-2">
+                    <div class="flex justify-between items-center mb-6">
+                        <h4 class="font-bold text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-secondary">trending_up</span>
+                            Tren Pendapatan Mingguan (Juni/Juli 2026)
+                        </h4>
+                        <span class="text-xs font-bold bg-primary/5 text-primary px-3 py-1 rounded-full border border-primary/20">Omzet Live</span>
+                    </div>
+                    
+                    <!-- SVG Chart Container -->
+                    <div class="relative w-full h-[240px] pt-4">
+                        <svg class="w-full h-full" viewBox="0 0 500 200" preserveAspectRatio="none">
+                            <!-- Background Lines -->
+                            <line x1="0" y1="50" x2="500" y2="50" stroke="#f1f4f2" stroke-width="1"/>
+                            <line x1="0" y1="100" x2="500" y2="100" stroke="#f1f4f2" stroke-width="1"/>
+                            <line x1="0" y1="150" x2="500" y2="150" stroke="#f1f4f2" stroke-width="1"/>
+                            
+                            <!-- Graph Area Path -->
+                            <path d="M 0 170 Q 100 130 180 150 T 360 80 T 500 40 L 500 200 L 0 200 Z" fill="rgba(13, 106, 92, 0.05)"/>
+                            <!-- Line Path -->
+                            <path d="M 0 170 Q 100 130 180 150 T 360 80 T 500 40" fill="none" stroke="#0d6a5c" stroke-width="3" stroke-linecap="round"/>
+                            
+                            <!-- Data dots -->
+                            <circle cx="180" cy="150" r="5" fill="#E98A7D"/>
+                            <circle cx="360" cy="80" r="5" fill="#E98A7D"/>
+                            <circle cx="500" cy="40" r="5" fill="#E98A7D"/>
+                        </svg>
+                        
+                        <!-- Axis Labels -->
+                        <div class="absolute bottom-0 left-0 right-0 flex justify-between text-[10px] font-bold text-on-surface-variant px-1 pt-1 border-t border-outline-variant/30">
+                            <span>Minggu 1</span>
+                            <span>Minggu 2</span>
+                            <span>Minggu 3</span>
+                            <span>Minggu 4 (Akhir Juni)</span>
+                            <span>Sekarang (1 Juli)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Panel -->
+                <div class="bg-white p-6 rounded-3xl card-shadow border border-outline-variant/30 flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-bold text-on-surface flex items-center gap-2 mb-2">
+                            <span class="material-symbols-outlined text-secondary">flash_on</span>
+                            Aksi Cepat Admin
+                        </h4>
+                        <p class="text-xs text-on-surface-variant mb-6">Kelola operasional marketplace RONA secara cepat tanpa berpindah halaman.</p>
+                        
+                        <div class="space-y-3">
+                            <button onclick="openQuickProductModal()" class="w-full py-3.5 px-4 bg-primary text-white rounded-2xl font-bold flex items-center justify-between hover:opacity-90 transition-opacity">
+                                <span class="flex items-center gap-2 text-sm">
+                                    <span class="material-symbols-outlined">add_box</span> Tambah Produk Baru
+                                </span>
+                                <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                            </button>
+                            <button onclick="openQuickArticleModal()" class="w-full py-3.5 px-4 bg-primary/5 text-primary border border-primary/20 rounded-2xl font-bold flex items-center justify-between hover:bg-primary/10 transition-colors">
+                                <span class="flex items-center gap-2 text-sm">
+                                    <span class="material-symbols-outlined">post_add</span> Tulis Artikel Edukatif
+                                </span>
+                                <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-outline-variant/30 mt-6 bg-surface-container-low/50 p-4 rounded-2xl flex items-start gap-3">
+                        <span class="material-symbols-outlined text-orange-600 text-[20px]">notifications_active</span>
+                        <div>
+                            <p class="text-xs font-bold text-on-surface">Perhatian Operasional</p>
+                            <p id="lowStockWarningText" class="text-[10px] font-semibold text-on-surface-variant mt-0.5">Semua stok produk dalam status aman.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Row: Recent Activities & Product Performance -->
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                <!-- Recent Activities Feed -->
+                <div class="bg-white p-6 rounded-3xl card-shadow border border-outline-variant/30 xl:col-span-1">
+                    <h4 class="font-bold text-on-surface flex items-center gap-2 mb-4">
+                        <span class="material-symbols-outlined text-secondary">history</span>
+                        Notifikasi & Log Aktivitas
+                    </h4>
+                    <div id="activityFeedList" class="space-y-4 max-h-[350px] overflow-y-auto pr-2">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Product Performance Summary -->
+                <div class="bg-white p-6 rounded-3xl card-shadow border border-outline-variant/30 xl:col-span-2">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-bold text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-secondary">star</span>
+                            Ringkasan Performa Produk (Katalog Terlaris)
+                        </h4>
+                        <a href="kelola-produk.html" class="text-xs font-bold text-primary hover:underline">Kelola Semua</a>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="border-b border-outline-variant/30 text-secondary font-bold">
+                                    <th class="py-3 px-2">PRODUK</th>
+                                    <th class="py-3 px-2">SKU</th>
+                                    <th class="py-3 px-2">HARGA</th>
+                                    <th class="py-3 px-2">STOK</th>
+                                    <th class="py-3 px-2">RATING</th>
+                                </tr>
+                            </thead>
+                            <tbody id="topProductsBody" class="divide-y divide-outline-variant/20">
+                                <!-- Loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- QUICK PRODUCT ADD MODAL -->
+    <div id="quickProductModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-3xl max-w-[500px] w-[95%] shadow-2xl relative">
+            <button onclick="closeQuickProductModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 class="text-xl font-bold text-on-surface mb-6 flex items-center gap-2 border-b border-outline-variant/30 pb-4">
+                <span class="material-symbols-outlined text-primary text-[28px]">add_box</span> Tambah Produk Cepat
+            </h3>
+            
+            <form id="quickProductForm" onsubmit="saveQuickProduct(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-on-surface-variant mb-1">Nama Produk</label>
+                    <input type="text" id="qpName" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant mb-1">Kategori</label>
+                        <select id="qpCategory" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none">
+                            <option value="Sensory">Sensory</option>
+                            <option value="Focus">Focus</option>
+                            <option value="Calming">Calming</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant mb-1">Harga (Rp)</label>
+                        <input type="number" id="qpPrice" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant mb-1">Stok Awal</label>
+                        <input type="number" id="qpStock" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant mb-1">SKU Code</label>
+                        <input type="text" id="qpSku" placeholder="Contoh: RONA-TOY-99" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                </div>
+                <div class="pt-4 border-t border-outline-variant/30 flex justify-end gap-3">
+                    <button type="button" onclick="closeQuickProductModal()" class="px-5 py-2.5 bg-surface-container rounded-full text-xs font-bold hover:bg-surface-container-high transition-colors">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 bg-primary text-white rounded-full text-xs font-bold hover:opacity-90 transition-opacity">Simpan Katalog</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- QUICK ARTICLE ADD MODAL -->
+    <div id="quickArticleModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-3xl max-w-[500px] w-[95%] shadow-2xl relative">
+            <button onclick="closeQuickArticleModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 class="text-xl font-bold text-on-surface mb-6 flex items-center gap-2 border-b border-outline-variant/30 pb-4">
+                <span class="material-symbols-outlined text-primary text-[28px]">post_add</span> Tulis Artikel Cepat
+            </h3>
+            
+            <form id="quickArticleForm" onsubmit="saveQuickArticle(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-on-surface-variant mb-1">Judul Artikel</label>
+                    <input type="text" id="qaTitle" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant mb-1">Penulis (Editable)</label>
+                        <input type="text" id="qaAuthor" value="dr. Shima Maharani, Sp.A" required class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant mb-1">Kategori</label>
+                        <select id="qaCategory" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none">
+                            <option value="Sensory">Sensory</option>
+                            <option value="Focus">Focus</option>
+                            <option value="Calming">Calming</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-on-surface-variant mb-1">Ringkasan Artikel</label>
+                    <textarea id="qaSummary" required rows="3" class="w-full px-4 py-2.5 border border-outline-variant rounded-xl text-sm outline-none resize-none focus:ring-1 focus:ring-primary focus:border-primary"></textarea>
+                </div>
+                <div class="pt-4 border-t border-outline-variant/30 flex justify-end gap-3">
+                    <button type="button" onclick="closeQuickArticleModal()" class="px-5 py-2.5 bg-surface-container rounded-full text-xs font-bold hover:bg-surface-container-high transition-colors">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 bg-primary text-white rounded-full text-xs font-bold hover:opacity-90 transition-opacity">Publish Sekarang</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CORE ADMIN LIBRARY IMPORT -->
+    <script src="admin-core.js"></script>
+    <script>
+        // Render Active Sidebar Highlight
+        ronaAdmin.renderSidebar('dashboard');
+
+        function loadDashboardMetrics() {
+            const db = ronaDb.get();
+            
+            // Total stats
+            document.getElementById('statProducts').innerText = db.products.length;
+            document.getElementById('statArticles').innerText = db.articles.length;
+            document.getElementById('statUsers').innerText = db.users.length;
+            
+            // Revenue & Active orders calculations
+            let revenue = 0;
+            let activeOrders = 0;
+            let lowStockCount = 0;
+
+            db.transactions.forEach(tx => {
+                revenue += tx.total || 0;
+                if (tx.status !== 'Selesai' && tx.status !== 'Refund Disetujui' && tx.status !== 'Refund Ditolak') {
+                    activeOrders++;
+                }
+            });
+
+            db.products.forEach(p => {
+                if (p.stock < 5) lowStockCount++;
+            });
+
+            document.getElementById('statRevenue').innerText = 'Rp ' + revenue.toLocaleString('id-ID');
+            
+            // Render warning stock text
+            const warningText = document.getElementById('lowStockWarningText');
+            if (lowStockCount > 0) {
+                warningText.innerHTML = `<span class="text-red-600 font-extrabold">Perhatian! Ada ${lowStockCount} produk dengan stok kritis (< 5 unit).</span>`;
+            } else {
+                warningText.innerText = "Semua stok produk dalam status aman.";
+            }
+
+            // Render Recent Activities (Max 6)
+            const activityFeed = document.getElementById('activityFeedList');
+            activityFeed.innerHTML = '';
+            if (!db.activities || db.activities.length === 0) {
+                activityFeed.innerHTML = '<p class="text-xs text-on-surface-variant font-semibold italic text-center py-6">Tidak ada aktivitas baru.</p>';
+            } else {
+                db.activities.slice(0, 6).forEach(act => {
+                    let iconHtml = '';
+                    let colorClass = '';
+                    
+                    if (act.type === 'user_reg') { iconHtml = 'person_add'; colorClass = 'text-blue-600 bg-blue-50'; }
+                    else if (act.type === 'order_in') { iconHtml = 'shopping_cart'; colorClass = 'text-green-600 bg-green-50'; }
+                    else if (act.type === 'refund_req') { iconHtml = 'receipt_long'; colorClass = 'text-orange-600 bg-orange-50'; }
+                    else { iconHtml = 'feed'; colorClass = 'text-indigo-600 bg-indigo-50'; }
+
+                    activityFeed.innerHTML += `
+                        <div class="flex gap-3 items-start text-xs border-b border-outline-variant/10 pb-3 last:border-0">
+                            <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${colorClass}">
+                                <span class="material-symbols-outlined text-[18px]">${iconHtml}</span>
+                            </div>
+                            <div>
+                                <p class="text-on-surface font-semibold leading-relaxed">${act.text}</p>
+                                <span class="text-[10px] text-outline font-medium block mt-0.5">${act.time}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            // Render catalog summary
+            const topProducts = document.getElementById('topProductsBody');
+            topProducts.innerHTML = '';
+            
+            db.products.slice(0, 5).forEach(p => {
+                const stockAlertClass = p.stock < 5 ? 'text-red-600 font-extrabold bg-red-50 px-2 py-0.5 rounded-full border border-red-200' : 'text-on-surface-variant font-semibold';
+                topProducts.innerHTML += `
+                    <tr class="hover:bg-surface transition-colors">
+                        <td class="py-3 px-2 flex items-center gap-3">
+                            <img src="${p.image}" class="w-8 h-8 rounded-lg object-cover border border-outline-variant/30 shrink-0">
+                            <span class="font-bold text-on-surface">${p.name}</span>
+                        </td>
+                        <td class="py-3 px-2 text-outline font-bold">${p.sku}</td>
+                        <td class="py-3 px-2 font-bold text-primary">Rp ${p.price.toLocaleString('id-ID')}</td>
+                        <td class="py-3 px-2"><span class="${stockAlertClass}">${p.stock} pcs</span></td>
+                        <td class="py-3 px-2 flex items-center gap-1 font-bold text-yellow-600">
+                            <span class="material-symbols-outlined text-[16px]">star</span> ${p.rating}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // --- Modals logic ---
+        function openQuickProductModal() {
+            document.getElementById('quickProductForm').reset();
+            document.getElementById('quickProductModal').style.display = 'flex';
+        }
+        function closeQuickProductModal() {
+            document.getElementById('quickProductModal').style.display = 'none';
+        }
+        function openQuickArticleModal() {
+            document.getElementById('quickArticleForm').reset();
+            document.getElementById('quickArticleModal').style.display = 'flex';
+        }
+        function closeQuickArticleModal() {
+            document.getElementById('quickArticleModal').style.display = 'none';
+        }
+
+        // Close modal clicking backdrop
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        }
+
+        // Save actions
+        function saveQuickProduct(e) {
+            e.preventDefault();
+            const db = ronaDb.get();
+            const newProduct = {
+                sku: document.getElementById('qpSku').value,
+                name: document.getElementById('qpName').value,
+                category: document.getElementById('qpCategory').value,
+                price: parseInt(document.getElementById('qpPrice').value),
+                stock: parseInt(document.getElementById('qpStock').value),
+                active: true,
+                rating: 5.0,
+                image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=400&q=80",
+                description: "Produk sensori terpercaya untuk si kecil.",
+                benefits: "Mendukung perkembangan sensorik anak.",
+                instructions: "Gunakan di bawah pengawasan orang tua.",
+                ageRecommendation: "3 Tahun ke atas",
+                weight: 100
+            };
+
+            db.products.push(newProduct);
+            ronaDb.save(db);
+            ronaDb.addActivity('product_add', `Produk '${newProduct.name}' berhasil ditambahkan cepat.`);
+            
+            closeQuickProductModal();
+            ronaToast.show('Produk Baru Berhasil Disimpan!');
+            loadDashboardMetrics();
+        }
+
+        function saveQuickArticle(e) {
+            e.preventDefault();
+            const db = ronaDb.get();
+            const dateStr = new Date().toLocaleDateString('id-ID', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            });
+            const newArt = {
+                id: "ART-0" + (db.articles.length + 1),
+                thumbnail: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=400&q=80",
+                title: document.getElementById('qaTitle').value,
+                author: document.getElementById('qaAuthor').value,
+                date: dateStr,
+                category: document.getElementById('qaCategory').value,
+                status: "Publish",
+                views: 0,
+                summary: document.getElementById('qaSummary').value,
+                content: document.getElementById('qaSummary').value,
+                tags: "ADHD, Edukasi"
+            };
+
+            db.articles.push(newArt);
+            ronaDb.save(db);
+            ronaDb.addActivity('article_publish', `Artikel '${newArt.title}' telah dipublish.`);
+            
+            closeQuickArticleModal();
+            ronaToast.show('Artikel Baru Berhasil Dipublish!');
+            loadDashboardMetrics();
+        }
+
+        // Initial Load
+        loadDashboardMetrics();
+    </script>
+</body>
+</html>

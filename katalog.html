@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kurasi Alat Bantu Sensori - RONA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#0d6a5c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#57a695",
+                        "secondary": "#28695d",
+                        "surface": "#f7faf7",
+                        "on-surface": "#181c1b",
+                        "on-surface-variant": "#3f4946",
+                        "outline-variant": "#bec9c5",
+                        "surface-container": "#ebefec",
+                        "coral": "#FF9B85",
+                        "aman-cream": "#FBF7F0"
+                    },
+                    "borderRadius": {
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "card": "20px",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBF7F0; /* Aman Cream */
+            color: #2D3A3A;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.04);
+        }
+        .card-shadow-hover:hover {
+            box-shadow: 0 8px 24px rgba(13, 106, 92, 0.1);
+            transform: translateY(-2px);
+        }
+        .glass-nav {
+            background: rgba(251, 247, 240, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .modal { 
+            display: none; 
+            position: fixed; 
+            inset: 0;
+            background: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(4px);
+            z-index: 2000; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .modal-content { 
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+        @keyframes slideUp { 
+            from { transform: translateY(20px) scale(0.95); opacity: 0; } 
+            to { transform: translateY(0) scale(1); opacity: 1; } 
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+
+    <div id="navbarContainer"></div>
+
+    <main class="max-w-[1200px] mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-16 md:pb-20">
+        <!-- Header -->
+        <div class="mb-6 md:mb-10 text-center max-w-xl mx-auto space-y-2">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface leading-tight">Kurasi Alat Pendamping Sensori</h2>
+            <p class="text-xs font-semibold text-on-surface-variant leading-relaxed">Setiap produk dipilih dengan cermat oleh tim psikolog RONA untuk memfasilitasi kenyamanan taktil, auditori, motorik kasar & regulasi emosi si kecil.</p>
+        </div>
+
+        <!-- FILTERS AND CART SUMMARY BAR -->
+        <div class="flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center mb-6 md:mb-10 bg-white p-3 md:p-4 rounded-2xl border border-outline-variant/25 card-shadow">
+            <div class="flex gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 no-scrollbar">
+                <button onclick="setCategoryFilter('All')" class="filter-tab px-3.5 py-2 bg-primary text-white text-[11px] font-bold rounded-full transition-colors whitespace-nowrap shadow-sm">Semua</button>
+                <button onclick="setCategoryFilter('Selimut &amp; Tidur')" class="filter-tab px-3.5 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-[11px] font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Tidur &amp; Tenang</button>
+                <button onclick="setCategoryFilter('Mainan Terapi')" class="filter-tab px-3.5 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-[11px] font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Fokus &amp; Motorik</button>
+                <button onclick="setCategoryFilter('Alat Sensorik')" class="filter-tab px-3.5 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-[11px] font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Taktil &amp; Kunyah</button>
+            </div>
+            
+            <div class="flex items-center gap-3 w-full sm:w-auto justify-end shrink-0">
+                <a href="keranjang.html" class="flex items-center gap-2 px-4 py-2 bg-primary/5 text-primary text-xs font-bold rounded-xl border border-primary/20 hover:bg-primary/10 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                    <span class="hidden sm:inline">Keranjang</span>
+                    <span id="cartCountBadge" class="bg-coral text-white px-2 py-0.5 rounded-full text-[9px] font-bold">0</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- PRODUCTS GRID -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5 lg:gap-6" id="productsGrid">
+            <!-- Injected dynamically -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container rounded-t-[40px] py-16 mt-20 border-t border-outline-variant/30">
+        <div class="max-w-[1200px] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                        <img alt="RONA Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgIbGSRqH0qZyiuiq7hoVM0edbPazkiGScH5SQu4WqqTQoAzxBF4k2MxfZr2lOdz-BD3DZeoL4sim82ViCc-91D0g5X4D-zs9Qznw0ru8uYt5VV0xi3awAVeUziJVn1J6gkngp7PbIOVsKZccNPkHRPNZAfoTR1nJKUvZjtOkVTqOMvqHhLDojhHI9S41CsLP4p0AAiqxLp1EBwZ42xgBqIwIaE0Srqr5kjHHSWDFD3SGki6T1hzlw0W-tlrAAeZdqu82g4v88Q258"/>
+                        <span class="text-xl font-extrabold text-primary">RONA</span>
+                    </div>
+                    <p class="text-xs font-medium text-on-surface-variant leading-relaxed">Mendukung Potensi, Menenangkan Hati. Platform inklusif pendamping tumbuh kembang sensori & fokus si kecil secara menyenangkan.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-on-surface mb-4 tracking-wider">Navigasi</h4>
+                    <ul class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                        <li><a class="hover:text-primary transition-colors" href="index.html">Beranda</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="artikel.html">Artikel Edukasi</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="katalog.html">Rekomendasi Alat</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="history.html">Perjalanan Anak</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-on-surface mb-4 tracking-wider">Bantuan</h4>
+                    <ul class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                        <li><a class="hover:text-primary transition-colors" href="#">Kebijakan Privasi</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Syarat & Ketentuan</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Pusat Konsultasi</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-on-surface mb-4 tracking-wider">Kontak</h4>
+                    <ul class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">mail</span> hello@rona.id</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">call</span> +62 812-3456-7890</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">location_on</span> Jakarta, Indonesia</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-outline-variant/20 text-center text-[10px] font-bold text-outline">
+                © 2026 RONA. Dirancang dengan kehangatan untuk tumbuh kembang buah hati.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ONBOARDING MODAL FOR GUEST -->
+    <div id="onboardingModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-[32px] max-w-sm w-[90%] text-center shadow-2xl relative">
+            <button onclick="closeOnboardingModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="material-symbols-outlined text-primary text-3xl font-fill-1">favorite</span>
+            </div>
+            <h4 class="text-base font-extrabold text-on-surface mb-2">Yuk, Mulai Langkah Baru</h4>
+            <p class="text-xs text-on-surface-variant font-semibold leading-relaxed mb-6">
+                Buat akun untuk menyimpan produk, melakukan pembelian, dan mendapatkan rekomendasi yang sesuai dengan kebutuhan anak.
+            </p>
+            <a href="register.html" class="block w-full py-3 bg-primary text-white rounded-full text-xs font-bold shadow-md hover:opacity-90 transition-opacity mb-2">Daftar Akun Gratis</a>
+            <a href="login.html" class="text-[10px] font-bold text-outline hover:underline">Sudah punya akun? Masuk</a>
+        </div>
+    </div>
+
+    <!-- TOAST / CORE DATABASE SYSTEM -->
+    <script src="admin-core.js"></script>
+    <script>
+        const role = localStorage.getItem('rona_role') || 'guest';
+        const isLogged = role === 'parent';
+        const parentEmail = localStorage.getItem('rona_active_parent_email') || 'parent@gmail.com';
+        
+        let db = ronaDb.get();
+        let activeParent = db.users ? db.users.find(u => u.email === parentEmail) : null;
+
+        // Render dynamic navbar
+        ronaNav.renderNavbar('katalog');
+
+        // Onboarding guest modal controls
+        window.openOnboardingModal = function() {
+            document.getElementById('onboardingModal').style.display = 'flex';
+        }
+        window.closeOnboardingModal = function() {
+            document.getElementById('onboardingModal').style.display = 'none';
+        }
+
+        // Adjust UI: hide or guard shopping cart button for guests
+        const cartBtn = document.querySelector('a[href="keranjang.html"]');
+        if (cartBtn) {
+            if (!isLogged) {
+                cartBtn.removeAttribute('href');
+                cartBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openOnboardingModal();
+                });
+            }
+        }
+
+        // Curated categories filters
+        let currentCategory = 'All';
+
+        function setCategoryFilter(catVal) {
+            currentCategory = catVal;
+            
+            const buttons = document.querySelectorAll('.filter-tab');
+            buttons.forEach(btn => {
+                const label = btn.innerText.trim();
+                const map = {
+                    "Semua": "All",
+                    "Tidur & Tenang": "Selimut & Tidur",
+                    "Fokus & Motorik": "Mainan Terapi",
+                    "Taktil & Kunyah": "Alat Sensorik"
+                };
+                if (map[label] === catVal) {
+                    btn.className = "filter-tab px-3.5 py-2 bg-primary text-white text-[11px] font-bold rounded-full transition-colors whitespace-nowrap shadow-sm";
+                } else {
+                    btn.className = "filter-tab px-3.5 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-[11px] font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface";
+                }
+            });
+
+            renderProducts();
+        }
+
+        // CART MANAGER
+        let cart = JSON.parse(localStorage.getItem('rona_cart')) || [];
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartCountBadge');
+            if (badge) {
+                const count = cart.reduce((sum, item) => sum + item.qty, 0);
+                badge.innerText = count;
+            }
+        }
+        updateCartBadge();
+
+        function addToCart(sku) {
+            if (!isLogged) {
+                openOnboardingModal();
+                return;
+            }
+
+            const prod = db.products.find(p => p.sku === sku);
+            if (!prod) return;
+
+            const existing = cart.find(item => item.sku === sku);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({
+                    sku: prod.sku,
+                    name: prod.name,
+                    price: prod.price,
+                    image: prod.image,
+                    category: prod.category,
+                    benefits: prod.benefits,
+                    qty: 1
+                });
+            }
+
+            localStorage.setItem('rona_cart', JSON.stringify(cart));
+            updateCartBadge();
+            ronaNav.renderNavbar('katalog'); // update badge count dynamically
+            ronaToast.show(`Berhasil menambahkan ${prod.name} ke keranjang!`);
+        }
+
+        // RENDER CURATED PRODUCTS
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const filtered = db.products.filter(p => {
+                return currentCategory === 'All' || p.category === currentCategory;
+            });
+
+            filtered.forEach(prod => {
+                const mockReviewCount = Math.floor(prod.price / 80000) + 5;
+                const mockRating = (4.7 + (prod.price % 3) / 10).toFixed(1);
+
+                grid.innerHTML += `
+                    <div class="bg-white rounded-[20px] md:rounded-[28px] overflow-hidden border border-outline-variant/20 shadow-sm flex flex-col justify-between card-shadow-hover transition-all">
+                        <div class="w-full aspect-[4/3] bg-surface overflow-hidden relative cursor-pointer" onclick="window.location.href='detail-produk.html?sku=${prod.sku}'">
+                            <img src="${prod.image}" class="w-full h-full object-cover">
+                            <span class="absolute top-2 left-2 md:top-3 md:left-3 bg-white/95 px-2 py-0.5 rounded-full text-[9px] font-bold text-primary shadow-sm border border-primary/10">${prod.category}</span>
+                            <span class="absolute bottom-2 right-2 md:bottom-3 md:right-3 bg-[#ebefec]/95 text-[#0d6a5c] px-2 py-0.5 rounded-full text-[9px] font-bold border border-[#0d6a5c]/25 hidden sm:block">Rekom: ${prod.ageRecommendation}</span>
+                        </div>
+                        
+                        <div class="p-3 md:p-5 flex-grow flex flex-col justify-between space-y-3 md:space-y-4">
+                            <div class="space-y-2">
+                                <h3 class="font-extrabold text-xs md:text-sm text-on-surface leading-tight hover:text-primary cursor-pointer transition-colors line-clamp-2" onclick="window.location.href='detail-produk.html?sku=${prod.sku}'">${prod.name}</h3>
+                                
+                                <div class="bg-surface p-2.5 md:p-3.5 rounded-xl md:rounded-2xl border border-outline-variant/15 space-y-1 hidden md:block">
+                                    <span class="text-[9px] text-primary font-bold uppercase tracking-wider block flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[13px] font-fill-1">psychology</span> Mengapa ini membantu?
+                                    </span>
+                                    <p class="text-[10px] font-semibold text-on-surface-variant leading-relaxed">${prod.benefits}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-2 pt-2 border-t border-outline-variant/10">
+                                <div class="flex justify-between items-center text-xs font-extrabold">
+                                    <span class="text-primary text-xs md:text-sm">Rp ${prod.price.toLocaleString('id-ID')}</span>
+                                    <span class="text-amber-500 flex items-center gap-0.5 text-[9px] md:text-[10px]">
+                                        <span class="material-symbols-outlined text-[11px] md:text-[12px] font-fill-1">star</span> ${mockRating}
+                                    </span>
+                                </div>
+                                
+                                <button onclick="addToCart('${prod.sku}')" class="w-full py-2 md:py-2.5 bg-primary text-white text-[11px] md:text-xs font-bold rounded-full hover:opacity-90 transition-opacity flex items-center justify-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px] md:text-[16px]">add_shopping_cart</span>
+                                    <span class="hidden sm:inline">Pilih Alat Pendamping</span>
+                                    <span class="sm:hidden">Tambah</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Close modal clicking backdrop
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        }
+
+        // Start
+        renderProducts();
+    </script>
+</body>
+</html>

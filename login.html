@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Masuk - RONA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#aeefe0",
+                    "on-surface": "#181c1b",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f7faf7",
+                    "surface-variant": "#e0e3e1",
+                    "surface-tint": "#0d6a5c",
+                    "tertiary": "#625887",
+                    "surface-container-high": "#e6e9e6",
+                    "surface-container": "#ebefec",
+                    "surface-container-low": "#f1f4f2",
+                    "secondary-fixed-dim": "#93d3c4",
+                    "on-primary": "#ffffff",
+                    "primary": "#0d6a5c",
+                    "on-background": "#181c1b",
+                    "surface-bright": "#f7faf7",
+                    "surface-container-highest": "#e0e3e1",
+                    "surface-dim": "#d7dbd8",
+                    "primary-fixed-dim": "#86d5c3",
+                    "inverse-on-surface": "#eef1ef",
+                    "on-primary-container": "#00382f",
+                    "on-tertiary-container": "#332a56",
+                    "tertiary-fixed-dim": "#ccbff6",
+                    "on-secondary-fixed-variant": "#035045",
+                    "on-secondary-fixed": "#00201b",
+                    "outline-variant": "#bec9c5",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#e7deff",
+                    "inverse-surface": "#2d3130",
+                    "primary-container": "#57a695",
+                    "secondary": "#28695d",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#a2f2df",
+                    "outline": "#6f7976",
+                    "on-primary-fixed": "#00201a",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#9d91c5",
+                    "on-surface-variant": "#3f4946",
+                    "on-secondary-container": "#2f6f63",
+                    "on-primary-fixed-variant": "#005145",
+                    "secondary-container": "#aeefe0",
+                    "on-tertiary-fixed-variant": "#4a406e",
+                    "surface": "#f7faf7",
+                    "on-tertiary-fixed": "#1e1440",
+                    "inverse-primary": "#86d5c3",
+                    "on-error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "16px",
+                    "field": "12px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "xs": "4px",
+                    "md": "20px",
+                    "xl": "48px",
+                    "sm": "12px",
+                    "margin-desktop": "40px",
+                    "lg": "32px",
+                    "gutter": "16px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "body-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FBF7F0; /* Aman Cream */
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.05);
+        }
+        .input-focus:focus {
+            outline: none;
+            border-color: #0d6a5c;
+            box-shadow: 0 0 0 2px rgba(13, 106, 92, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col md:flex-row">
+<!-- Left Side: Welcome Branding (Hidden on small mobile if content overflows) -->
+<section class="hidden md:flex flex-col w-full md:w-1/2 bg-surface-container-low min-h-screen p-margin-desktop relative overflow-hidden justify-center">
+<!-- Floating shapes for atmosphere -->
+<div class="absolute -top-20 -left-20 w-64 h-64 rounded-full bg-primary-fixed opacity-20 blur-3xl"></div>
+<div class="absolute -bottom-20 right-0 w-80 h-80 rounded-full bg-secondary-container opacity-10 blur-3xl"></div>
+<div class="relative z-10 max-w-lg mx-auto">
+<div class="mb-lg">
+<img alt="RONA Logo" class="w-16 h-16 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLsjDxsgoDeVE8KlSmx7GR8ihkjVDZ3yUIfpI4wy8NLfOF5389jKSWigYg0XyfNzmNEkciNWLRX0Ji3Sg5YcU3NdeFC4MkG5gw1QJMyyYFOMLssNVAUbVIo-OBllsZc6K6fg1uAJpry-Ey2lKVdBtJuT-5eXT2fKMlokxApk8Hu1KDVC0R11Dd8Rqpd3PUD8E-INWpmtG32DLEgCmhI7MLQR01km-VgNNjwZpNhIEZdqwvux14bleogReCXm"/>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Selamat Datang Kembali.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-xl">
+                Masuk untuk melanjutkan perjalanan tenang Anda bersama RONA. Kami di sini untuk mendukung setiap langkah perkembangan si kecil.
+            </p>
+<!-- Sensory-Friendly Illustration Placeholder -->
+<div class="relative w-full aspect-square rounded-2xl overflow-hidden card-shadow">
+<img class="w-full h-full object-cover" data-alt="A warm, calming digital illustration featuring a parent and child sitting together in a cozy, sunlit room filled with soft textures and pastel colors. The art style is minimalist and gentle, using soft teal and peach tones to evoke a sense of peace and emotional safety. The lighting is golden and high-key, reinforcing a supportive, non-clinical environment for child development." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOTXB9_UhphL_Ri7A8Fi-DwoInhrR-H-PJfnmkgzNYSOJ6HzyIkD2bpFZeX7VrVcngPyMgC3Fw9-0JT4QOUBhD-NY1zT_YzHtLldHhzvgVRg0-oI434O86aFUSBps1SpfbWAy-u6_QgV7fS6dqSte1NwZdDxvcwF_3cAAL29Qu0JRVtQ2DjtB1bdryZ2Dje1I_VUaO5o0UHcTkCNbu7QRgGzRpmcLdCZBEkVdGzZwxG5uSTkrz37xELTckSLctp-Z4FZsRwncpGxTI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+</div>
+</section>
+<!-- Right Side: Login Form -->
+<main class="w-full md:w-1/2 flex flex-col justify-center items-center p-margin-mobile md:p-margin-desktop bg-surface-bright">
+<!-- Mobile Logo (Visible only on mobile) -->
+<div class="md:hidden mb-lg text-center">
+<img alt="RONA Logo" class="w-12 h-12 mx-auto mb-xs" src="https://lh3.googleusercontent.com/aida/AP1WRLsjDxsgoDeVE8KlSmx7GR8ihkjVDZ3yUIfpI4wy8NLfOF5389jKSWigYg0XyfNzmNEkciNWLRX0Ji3Sg5YcU3NdeFC4MkG5gw1QJMyyYFOMLssNVAUbVIo-OBllsZc6K6fg1uAJpry-Ey2lKVdBtJuT-5eXT2fKMlokxApk8Hu1KDVC0R11Dd8Rqpd3PUD8E-INWpmtG32DLEgCmhI7MLQR01km-VgNNjwZpNhIEZdqwvux14bleogReCXm"/>
+<span class="font-headline-sm text-headline-sm text-primary">RONA</span>
+</div>
+<div class="w-full max-w-md">
+<!-- Auth Toggle -->
+<div class="flex bg-surface-container-high p-1 rounded-full mb-lg w-fit mx-auto md:mx-0">
+<button class="px-6 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-primary shadow-sm">Masuk</button>
+<a href="register.html" class="px-6 py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center">Daftar</a>
+</div>
+<div class="mb-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-xs">Masuk ke Akun Anda</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Silakan masukkan detail akun Anda di bawah ini.</p>
+</div>
+<!-- Error Alert Container -->
+<div id="errorAlert" class="hidden p-4 mb-4 text-sm text-[#ba1a1a] rounded-2xl bg-[#ffdad6] border border-[#ffdad6] flex items-start gap-2">
+    <span class="material-symbols-outlined text-[20px] text-[#ba1a1a] shrink-0">error</span>
+    <span id="errorMessage" class="font-semibold"></span>
+</div>
+<!-- Login Form -->
+<form class="space-y-md" onsubmit="event.preventDefault();">
+<!-- Email Field -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface block" for="email">Email</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">mail</span>
+<input class="w-full pl-12 pr-4 py-3 bg-surface-container-lowest border-outline-variant rounded-field font-body-md text-body-md input-focus transition-all" id="email" placeholder="nama@email.com" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface block" for="password">Password</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">lock</span>
+<input class="w-full pl-12 pr-12 py-3 bg-surface-container-lowest border-outline-variant rounded-field font-body-md text-body-md input-focus transition-all" id="password" placeholder="Minimal 8 karakter" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors" onclick="togglePassword()" type="button">
+<span class="material-symbols-outlined" id="eye-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember & Forgot -->
+<div class="flex items-center justify-between font-label-md text-label-md">
+<label class="flex items-center gap-xs cursor-pointer text-on-surface-variant select-none">
+<input class="w-4 h-4 rounded text-primary border-outline-variant focus:ring-primary focus:ring-offset-0" type="checkbox"/>
+<span>Ingat Saya</span>
+</label>
+<a class="text-primary hover:underline transition-all" href="#">Lupa Password?</a>
+</div>
+<!-- Submit Button -->
+<button class="w-full py-4 bg-primary-container hover:bg-primary text-white font-label-md text-label-md rounded-field shadow-lg transition-all active:scale-[0.98] mt-xs" type="submit">
+                    Masuk
+                </button>
+<!-- Divider -->
+<div class="relative flex items-center py-4">
+<div class="flex-grow border-t border-outline-variant"></div>
+<span class="flex-shrink mx-4 font-label-sm text-label-sm text-on-surface-variant bg-surface-bright">Atau masuk dengan</span>
+<div class="flex-grow border-t border-outline-variant"></div>
+</div>
+<!-- Social Login -->
+<button class="w-full py-3 flex items-center justify-center gap-base border border-outline-variant rounded-field bg-surface-container-lowest font-label-md text-label-md text-on-surface hover:bg-surface-container transition-colors" type="button">
+<svg class="w-5 h-5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 12-4.53z" fill="#EA4335"></path>
+</svg>
+                    Google
+                </button>
+</form>
+<p class="text-center mt-xl font-body-md text-body-md text-on-surface-variant">
+                Belum punya akun? <a class="text-primary font-label-md font-bold hover:underline" href="register.html">Daftar Sekarang</a>
+</p>
+</div>
+<!-- Subtle Footer in the form column -->
+<footer class="mt-auto pt-xl w-full text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-60">
+                © 2024 RONA. Dirancang dengan kasih untuk fokus Anda.
+            </p>
+</footer>
+</main>
+<script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.textContent = 'visibility';
+            }
+        }
+
+        // Lightweight interaction for the primary button
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const alertBox = document.getElementById('errorAlert');
+            const alertMsg = document.getElementById('errorMessage');
+            
+            // Hide previous errors
+            alertBox.classList.add('hidden');
+            
+            btn.innerHTML = '<span class="flex items-center justify-center gap-2">Memproses... <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></span>';
+            
+            setTimeout(() => {
+                if (email === 'admin@gmail.com' && password === 'admin123') {
+                    localStorage.setItem('rona_role', 'admin');
+                    window.location.href = 'dashboard.html';
+                } else if (email === 'parent@gmail.com' && password === 'parent123') {
+                    localStorage.setItem('rona_role', 'parent');
+                    localStorage.setItem('rona_parent_logged_in', 'true');
+                    localStorage.setItem('rona_active_parent_email', 'parent@gmail.com');
+                    window.location.href = 'index.html';
+                } else {
+                    btn.innerHTML = 'Masuk';
+                    alertMsg.innerText = 'Email atau password salah! (admin@gmail.com/admin123 atau parent@gmail.com/parent123)';
+                    alertBox.classList.remove('hidden');
+                }
+            }, 1000);
+        });
+    </script>
+</body></html>

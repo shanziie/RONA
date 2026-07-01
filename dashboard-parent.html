@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>RONA - Ruang Kendali Orang Tua</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#0d6a5c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#57a695",
+                        "secondary": "#28695d",
+                        "surface": "#f7faf7",
+                        "on-surface": "#181c1b",
+                        "on-surface-variant": "#3f4946",
+                        "outline-variant": "#bec9c5",
+                        "surface-container": "#ebefec",
+                        "coral": "#FF9B85",
+                        "aman-cream": "#FBF7F0"
+                    },
+                    "borderRadius": {
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "card": "20px",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FBF7F0; /* Aman Cream */
+            color: #2D3A3A;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.04);
+        }
+        .card-shadow-hover:hover {
+            box-shadow: 0 8px 24px rgba(13, 106, 92, 0.1);
+            transform: translateY(-2px);
+        }
+        .glass-nav {
+            background: rgba(251, 247, 240, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        /* Tab Pill styling */
+        .tab-btn-active {
+            background-color: #0d6a5c;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(13, 106, 92, 0.15);
+        }
+        .tab-btn-inactive {
+            background-color: #ffffff;
+            color: #3f4946;
+            border: 1px solid rgba(190, 201, 197, 0.4);
+        }
+        .tab-btn-inactive:hover {
+            background-color: #f1f4f2;
+            color: #0d6a5c;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Custom modal fallback */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            inset: 0;
+            background: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(4px);
+            z-index: 2000; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .modal-content { 
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+        @keyframes slideUp { 
+            from { transform: translateY(20px) scale(0.95); opacity: 0; } 
+            to { transform: translateY(0) scale(1); opacity: 1; } 
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+
+    <div id="navbarContainer"></div>
+
+    <main class="max-w-[1200px] mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-20">
+        
+        <!-- Welcome Header -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4 pb-6 border-b border-outline-variant/20">
+            <div>
+                <h1 class="text-xl md:text-2xl font-extrabold text-on-surface" id="welcomeParentHeader">Halo, Orang Tua RONA 👋</h1>
+                <p class="text-xs md:text-sm font-semibold text-on-surface-variant leading-relaxed">Ruang kendali tumbuh kembang anak, preferensi sensorik, serta riwayat belanja alat bantu asuh.</p>
+            </div>
+            
+            <div class="flex items-center gap-3 w-full md:w-auto shrink-0">
+                <!-- Child Card -->
+                <div class="flex items-center gap-2.5 bg-white border border-outline-variant/30 px-4 py-2 rounded-2xl shadow-sm">
+                    <div class="w-8 h-8 rounded-xl bg-teal-50 border border-teal-200 overflow-hidden flex items-center justify-center font-extrabold text-primary text-xs" id="headerChildAvatar">
+                        R
+                    </div>
+                    <div class="text-left">
+                        <p class="text-xs font-bold text-on-surface leading-tight" id="headerChildLabel">Rara</p>
+                        <span class="text-[9px] font-bold text-primary bg-primary/5 px-2 py-0.5 rounded-full inline-block mt-0.5" id="headerChildCondition">Seeking (Taktil)</span>
+                    </div>
+                </div>
+                <!-- Quick action button -->
+                <button onclick="simulasiEksporLaporan()" class="flex-grow md:flex-grow-0 bg-coral hover:opacity-95 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-sm transition-all flex items-center justify-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">download</span> Laporan
+                </button>
+            </div>
+        </header>
+
+        <!-- NAVIGATION TAB BAR -->
+        <nav class="flex gap-2 overflow-x-auto pb-3 mb-6 md:mb-8 no-scrollbar border-b border-outline-variant/10">
+            <button onclick="switchTab('dashboard')" id="tabBtn_dashboard" class="tab-btn px-4 py-2.5 rounded-full text-xs font-extrabold transition-all whitespace-nowrap flex items-center gap-1.5 tab-btn-active">
+                <span class="material-symbols-outlined text-[18px]">dashboard</span> Ringkasan &amp; Tren
+            </button>
+            <button onclick="switchTab('profile')" id="tabBtn_profile" class="tab-btn px-4 py-2.5 rounded-full text-xs font-extrabold transition-all whitespace-nowrap flex items-center gap-1.5 tab-btn-inactive">
+                <span class="material-symbols-outlined text-[18px]">face</span> Profil &amp; Sensorik Anak
+            </button>
+            <button onclick="switchTab('purchases')" id="tabBtn_purchases" class="tab-btn px-4 py-2.5 rounded-full text-xs font-extrabold transition-all whitespace-nowrap flex items-center gap-1.5 tab-btn-inactive">
+                <span class="material-symbols-outlined text-[18px]">receipt_long</span> Riwayat Belanja
+            </button>
+        </nav>
+
+        <!-- ================== TAB 1: DASHBOARD RINGKASAN ================== -->
+        <div id="tabContent_dashboard" class="space-y-6 md:space-y-10">
+            <!-- Stat Cards -->
+            <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+                <!-- Mood Card -->
+                <div class="bg-white p-5 rounded-3xl border border-outline-variant/20 shadow-sm flex flex-col justify-center items-center text-center">
+                    <span class="text-on-surface-variant text-[10px] font-bold uppercase tracking-wider mb-2">Mood Hari Ini</span>
+                    <div class="text-4xl mb-2">😊</div>
+                    <p class="font-extrabold text-sm text-primary">Cukup Tenang</p>
+                </div>
+                <!-- Focus Card -->
+                <div class="bg-white p-5 rounded-3xl border border-outline-variant/20 shadow-sm flex flex-col items-center justify-center">
+                    <span class="text-on-surface-variant text-[10px] font-bold uppercase tracking-wider mb-2">Tingkat Fokus</span>
+                    <div class="relative w-14 h-14 mb-2">
+                        <svg class="w-full h-full">
+                            <circle class="text-surface-container stroke-current" cx="28" cy="28" fill="transparent" r="24" stroke-width="4"></circle>
+                            <circle class="text-primary stroke-current progress-ring-circle" cx="28" cy="28" fill="transparent" r="24" stroke-linecap="round" stroke-width="4" style="stroke-dasharray: 150.8; stroke-dashoffset: 37.7;"></circle>
+                        </svg>
+                        <span class="absolute inset-0 flex items-center justify-center font-extrabold text-xs">75%</span>
+                    </div>
+                    <p class="text-xs font-bold text-on-surface">Meningkat 👍</p>
+                </div>
+                <!-- Trigger Card -->
+                <div class="bg-white p-5 rounded-3xl border border-outline-variant/20 shadow-sm flex flex-col justify-center items-center text-center">
+                    <span class="text-on-surface-variant text-[10px] font-bold uppercase tracking-wider mb-2">Sensory Overload</span>
+                    <span class="text-3xl font-extrabold text-secondary mb-1">2</span>
+                    <p class="text-xs font-bold text-on-surface">Meltdown Ringan</p>
+                </div>
+                <!-- Streak Card -->
+                <div class="bg-white p-5 rounded-3xl border border-outline-variant/20 shadow-sm flex flex-col justify-center items-center text-center">
+                    <span class="text-on-surface-variant text-[10px] font-bold uppercase tracking-wider mb-2">Jurnal Harian</span>
+                    <div class="flex items-baseline gap-0.5">
+                        <span class="text-3xl font-extrabold text-[#FF9B85] mb-1">12</span>
+                        <span class="material-symbols-outlined text-[#FF9B85] text-[18px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+                    </div>
+                    <p class="text-xs font-bold text-on-surface">Hari Beruntun</p>
+                </div>
+            </section>
+
+            <!-- Main Charts & Recommendations Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+                <!-- Focus & Mood Chart -->
+                <div class="bg-white p-6 rounded-[28px] border border-outline-variant/20 shadow-sm lg:col-span-2 space-y-6">
+                    <div class="flex justify-between items-center flex-wrap gap-2">
+                        <div>
+                            <h3 class="font-extrabold text-sm md:text-base text-on-surface">Grafik Stabilitas Fokus &amp; Mood</h3>
+                            <p class="text-[10px] font-bold text-outline uppercase mt-0.5">Memantau pola perilaku asuh 7 hari terakhir</p>
+                        </div>
+                        <div class="flex bg-surface-container/60 p-0.5 rounded-xl border border-outline-variant/20">
+                            <button class="bg-white text-primary text-[10px] font-bold px-3 py-1.5 rounded-lg shadow-sm">Mingguan</button>
+                            <button onclick="alert('Analisis grafik bulanan memerlukan langganan Premium RONA')" class="text-on-surface-variant hover:text-primary text-[10px] font-bold px-3 py-1.5 rounded-lg">Bulanan</button>
+                        </div>
+                    </div>
+                    <div class="h-60 relative w-full pt-4">
+                        <svg class="w-full h-full overflow-visible" viewbox="0 0 800 200" preserveAspectRatio="none">
+                            <line stroke="#bec9c5" stroke-dasharray="4" x1="0" x2="800" y1="0" y2="0"></line>
+                            <line stroke="#bec9c5" stroke-dasharray="4" x1="0" x2="800" y1="50" y2="50"></line>
+                            <line stroke="#bec9c5" stroke-dasharray="4" x1="0" x2="800" y1="100" y2="100"></line>
+                            <line stroke="#bec9c5" stroke-dasharray="4" x1="0" x2="800" y1="150" y2="150"></line>
+                            <!-- Focus Line (Sage Teal) -->
+                            <path d="M 0 140 Q 60 120 120 150 T 240 80 T 360 100 T 480 60 T 600 40 T 720 90 T 800 50" fill="none" stroke="#0d6a5c" stroke-linecap="round" stroke-width="4"></path>
+                            <!-- Mood Line (Coral) -->
+                            <path d="M 0 160 Q 60 180 120 140 T 240 160 T 360 120 T 480 140 T 600 130 T 720 150 T 800 120" fill="none" stroke="#FF9B85" stroke-linecap="round" stroke-width="4"></path>
+                            <!-- Data Points -->
+                            <circle cx="480" cy="60" fill="#0d6a5c" r="6" class="cursor-pointer hover:r-8"></circle>
+                            <circle cx="480" cy="140" fill="#FF9B85" r="6" class="cursor-pointer hover:r-8"></circle>
+                        </svg>
+                        <div class="flex justify-between mt-4 text-[10px] font-bold text-on-surface-variant px-1">
+                            <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span class="text-primary font-extrabold">Jum</span><span>Sab</span><span>Min</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 text-xs font-semibold">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-[#0d6a5c]"></span>
+                            <span>Tingkat Fokus Anak</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-[#FF9B85]"></span>
+                            <span>Kestabilan Mood</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personalized Recommendation Sidebar -->
+                <div class="bg-white p-6 rounded-[28px] border border-outline-variant/20 shadow-sm space-y-6">
+                    <div class="flex justify-between items-center border-b border-outline-variant/10 pb-3">
+                        <h3 class="font-extrabold text-sm text-on-surface flex items-center gap-1">
+                            <span class="material-symbols-outlined text-primary text-[20px]">auto_awesome</span> Rekomendasi Hari Ini
+                        </h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div onclick="window.location.href='artikel.html'" class="flex gap-3 items-center p-3 rounded-2xl bg-surface border border-outline-variant/10 hover:bg-surface-container-low cursor-pointer transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-primary text-[20px]">menu_book</span>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-xs font-bold text-on-surface truncate">Menenangkan Overload Sensori</p>
+                                <p class="text-[9px] font-bold text-outline uppercase">Panduan • 5 Menit Baca</p>
+                            </div>
+                        </div>
+                        <div onclick="window.location.href='katalog.html'" class="flex gap-3 items-center p-3 rounded-2xl bg-surface border border-outline-variant/10 hover:bg-surface-container-low cursor-pointer transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-secondary text-[20px]">shopping_basket</span>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-xs font-bold text-on-surface truncate">Weighted Calming Blanket</p>
+                                <p class="text-[9px] font-bold text-outline uppercase">Produk • Bantu Rileks &amp; Tidur</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="switchTab('profile')" class="w-full py-2.5 border border-primary/20 text-primary text-xs font-bold rounded-xl hover:bg-primary/5 transition-colors">
+                        Sesuaikan Profil Tumbuh Kembang
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lower Level: Trigger Breakdown & Recent Jurnal Notes -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <!-- Trigger Breakdown -->
+                <div class="bg-white p-6 rounded-[28px] border border-outline-variant/20 shadow-sm space-y-6">
+                    <h3 class="font-extrabold text-sm text-on-surface">Faktor Trigger Meltdown</h3>
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-semibold">
+                                <span>Suara Bising / Blender</span>
+                                <span class="font-bold text-primary">65%</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+                                <div class="h-full bg-primary rounded-full" style="width: 65%;"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-semibold">
+                                <span>Lampu Terang / Layar HP</span>
+                                <span class="font-bold text-primary">20%</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+                                <div class="h-full bg-primary rounded-full" style="width: 20%;"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-semibold">
+                                <span>Label Pakaian Kasar</span>
+                                <span class="font-bold text-primary">10%</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+                                <div class="h-full bg-primary rounded-full" style="width: 10%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Jurnal Notes -->
+                <div class="bg-white p-6 rounded-[28px] border border-outline-variant/20 shadow-sm md:col-span-2 space-y-6">
+                    <div class="flex justify-between items-center border-b border-outline-variant/10 pb-3">
+                        <h3 class="font-extrabold text-sm text-on-surface">Catatan Catatan Jurnal Harian</h3>
+                        <a href="history.html" class="text-primary text-xs font-bold hover:underline">Lihat Semua</a>
+                    </div>
+                    <div class="space-y-5">
+                        <div class="relative pl-6 border-l-2 border-primary/20 pb-1">
+                            <div class="absolute -left-[6px] top-1 w-2.5 h-2.5 rounded-full bg-primary"></div>
+                            <div class="flex justify-between text-[10px] font-bold text-outline mb-1">
+                                <span>HARI INI, 14:20 WIB</span>
+                                <span class="text-base leading-none">😊</span>
+                            </div>
+                            <p class="text-xs font-semibold text-on-surface-variant">Rara berhasil makan malam mandiri tanpa penolakan tekstur nasi kasar. Sangat kooperatif hari ini.</p>
+                        </div>
+                        <div class="relative pl-6 border-l-2 border-primary/20 pb-1">
+                            <div class="absolute -left-[6px] top-1 w-2.5 h-2.5 rounded-full bg-outline-variant"></div>
+                            <div class="flex justify-between text-[10px] font-bold text-outline mb-1">
+                                <span>KEMARIN, 18:45 WIB</span>
+                                <span class="text-base leading-none">😵‍💫</span>
+                            </div>
+                            <p class="text-xs font-semibold text-on-surface-variant">Tantrum ringan selama 5 menit saat blender dinyalakan untuk membuat jus buah. Langsung reda setelah dipeluk blanket.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================== TAB 2: PROFIL & SENSORIK ANAK ================== -->
+        <div id="tabContent_profile" class="hidden space-y-6 md:space-y-8">
+            <!-- Header Kid Card -->
+            <div class="bg-white p-6 md:p-8 rounded-[24px] md:rounded-[32px] border border-outline-variant/20 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-teal-50 border border-teal-200 rounded-2xl overflow-hidden shrink-0 flex items-center justify-center text-xl md:text-2xl font-extrabold text-primary shadow-sm" id="profileKidInitial">
+                        R
+                    </div>
+                    <div class="space-y-1">
+                        <h2 class="text-lg md:text-xl font-extrabold text-on-surface" id="profileKidName">Rara</h2>
+                        <p class="text-xs font-semibold text-on-surface-variant" id="profileKidAgeLocation">Usia: 4 Tahun • Jakarta</p>
+                        <p class="text-[10px] font-bold text-primary bg-primary/5 border border-primary/20 px-2.5 py-0.5 rounded-full inline-block" id="profileKidCondition">Sensory Seeking (Taktil)</p>
+                    </div>
+                </div>
+                <button onclick="editChildDiagnosis()" class="px-4 py-2 bg-primary/5 text-primary rounded-full text-xs font-bold border border-primary/20 hover:bg-primary/10 transition-colors flex items-center gap-1 shrink-0 w-full sm:w-auto justify-center sm:justify-start">
+                    <span class="material-symbols-outlined text-[16px]">edit</span> Update Diagnosis
+                </button>
+            </div>
+
+            <!-- Sensory Preferences Column -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+                <div class="bg-white p-6 rounded-[28px] border border-outline-variant/20 shadow-sm space-y-6 lg:col-span-2">
+                    <div class="border-b border-outline-variant/10 pb-3">
+                        <h3 class="font-extrabold text-sm text-on-surface flex items-center gap-1">
+                            <span class="material-symbols-outlined text-secondary text-[20px]">insights</span> Peta Preferensi Sensorik Anak
+                        </h3>
+                        <p class="text-[9px] text-outline font-bold uppercase mt-0.5">Beri tanda centang pada gejala sensorik yang dialami anak di rumah.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="preferencesGrid">
+                        <!-- Auditori -->
+                        <div class="space-y-3 bg-surface p-4 rounded-2xl border border-outline-variant/10">
+                            <h4 class="font-bold text-xs text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">hearing</span> AUDITORI (SUARA)</h4>
+                            <div class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="pref_aud_avoid" onchange="savePreferences()" class="rounded border-outline-variant text-primary focus:ring-primary/20">
+                                    <span>Menutup Telinga (Auditory Avoid)</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="pref_aud_seek" onchange="savePreferences()" class="rounded border-outline-variant text-primary focus:ring-primary/20">
+                                    <span>Suka Suara Kencang (Auditory Seek)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Taktil -->
+                        <div class="space-y-3 bg-surface p-4 rounded-2xl border border-outline-variant/10">
+                            <h4 class="font-bold text-xs text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">touch_app</span> TAKTIL (SENTUHAN)</h4>
+                            <div class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="pref_tak_avoid" onchange="savePreferences()" class="rounded border-outline-variant text-primary focus:ring-primary/20">
+                                    <span>Sensitif Label Baju (Taktil Avoid)</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="pref_tak_seek" onchange="savePreferences()" class="rounded border-outline-variant text-primary focus:ring-primary/20">
+                                    <span>Suka Meremas Slime (Taktil Seek)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Vestibular -->
+                        <div class="space-y-3 bg-surface p-4 rounded-2xl border border-outline-variant/10">
+                            <h4 class="font-bold text-xs text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">swap_calls</span> VESTIBULAR (GERAKAN)</h4>
+                            <div class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="pref_vest_avoid" onchange="savePreferences()" class="rounded border-outline-variant text-primary focus:ring-primary/20">
+                                    <span>Takut Ketinggian/Ayunan (Avoid)</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="pref_vest_seek" onchange="savePreferences()" class="rounded border-outline-variant text-primary focus:ring-primary/20">
+                                    <span>Suka Berputar/Melompat (Seek)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Oral -->
+                        <div class="space-y-3 bg-surface p-4 rounded-2xl border border-outline-variant/10">
+                            <h4 class="font-bold text-xs text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">mood_bad</span> ORAL (MENGUNYAH)</h4>
+                            <div class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="pref_oral_avoid" onchange="savePreferences()" class="rounded border-outline-variant text-primary focus:ring-primary/20">
+                                    <span>Picky Eater Tekstur Kasar</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="pref_oral_seek" onchange="savePreferences()" class="rounded border-outline-variant text-primary focus:ring-primary/20">
+                                    <span>Suka Menggigit Kerah Baju</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Targets list -->
+                <div class="bg-white p-6 rounded-[28px] border border-outline-variant/20 shadow-sm space-y-6">
+                    <div class="border-b border-outline-variant/10 pb-3">
+                        <h3 class="font-extrabold text-sm text-on-surface flex items-center gap-1">
+                            <span class="material-symbols-outlined text-secondary text-[20px]">award</span> Target Pekan Ini
+                        </h3>
+                        <p class="text-[9px] text-outline font-bold uppercase mt-0.5">Tujuan regulasi emosi &amp; sensori anak.</p>
+                    </div>
+                    <div id="targetsBox" class="space-y-3">
+                        <!-- Loaded dynamically -->
+                    </div>
+                    <form id="addTargetForm" onsubmit="addNewTarget(event)" class="flex gap-2 pt-2 border-t border-outline-variant/10">
+                        <input type="text" id="targetTextInput" required class="flex-grow px-3 py-2 border border-outline-variant rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary" placeholder="Tulis target baru...">
+                        <button type="submit" class="bg-primary text-white px-3.5 rounded-xl font-bold flex items-center justify-center hover:opacity-90 transition-opacity">
+                            <span class="material-symbols-outlined text-[16px]">add</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Habits & Favorites -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <!-- Habit Tracker -->
+                <div class="bg-white p-6 rounded-[28px] border border-outline-variant/20 shadow-sm space-y-6">
+                    <div class="border-b border-outline-variant/10 pb-3">
+                        <h3 class="font-extrabold text-sm text-on-surface flex items-center gap-1">
+                            <span class="material-symbols-outlined text-secondary text-[20px]">checklist</span> Kebiasaan Menenangkan
+                        </h3>
+                        <p class="text-[9px] text-outline font-bold uppercase mt-0.5">Rutinitas harian untuk ketenangan sistem saraf.</p>
+                    </div>
+                    <div id="habitsBox" class="space-y-3">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Favorite Games -->
+                <div class="bg-white p-6 rounded-[28px] border border-outline-variant/20 shadow-sm space-y-6">
+                    <div class="border-b border-outline-variant/10 pb-3">
+                        <h3 class="font-extrabold text-sm text-on-surface flex items-center gap-1">
+                            <span class="material-symbols-outlined text-secondary text-[20px]">sports_esports</span> Aktivitas Favorit Anak
+                        </h3>
+                        <p class="text-[9px] text-outline font-bold uppercase mt-0.5">Permainan sensorik yang disukai anak.</p>
+                    </div>
+                    <div id="favoritesList" class="flex flex-wrap gap-2">
+                        <!-- Loaded dynamically -->
+                    </div>
+                    <form id="addFavoriteForm" onsubmit="addFavoriteActivity(event)" class="flex gap-2 pt-2 border-t border-outline-variant/10">
+                        <input type="text" id="favoriteInput" required class="flex-grow px-3 py-2 border border-outline-variant rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary" placeholder="Contoh: Bermain Slime Taktil">
+                        <button type="submit" class="bg-primary text-white px-3.5 rounded-xl font-bold flex items-center justify-center hover:opacity-90 transition-opacity">
+                            <span class="material-symbols-outlined text-[16px]">add</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================== TAB 3: RIWAYAT BELANJA ================== -->
+        <div id="tabContent_purchases" class="hidden space-y-6 md:space-y-8">
+            <!-- Search & Filters -->
+            <div class="bg-white p-4 rounded-3xl border border-outline-variant/20 shadow-sm space-y-4">
+                <!-- Search bar -->
+                <div class="relative w-full group">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary text-[18px]">search</span>
+                    <input type="text" id="txSearchInput" oninput="loadPurchases()" class="w-full pl-9 pr-4 py-2.5 border border-outline-variant rounded-2xl text-xs outline-none focus:ring-1 focus:ring-primary" placeholder="Cari nomor pesanan atau nama produk...">
+                </div>
+
+                <!-- Sub-status filter tabs -->
+                <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar border-t border-outline-variant/10 pt-3">
+                    <button onclick="setPurchaseFilter('All')" id="pFilter_All" class="px-3.5 py-1.5 bg-primary text-white text-[11px] font-extrabold rounded-full transition-colors whitespace-nowrap shadow-sm">Semua</button>
+                    <button onclick="setPurchaseFilter('Diproses')" id="pFilter_Diproses" class="px-3.5 py-1.5 bg-surface text-on-surface-variant border border-outline-variant/30 text-[11px] font-extrabold rounded-full transition-colors whitespace-nowrap hover:bg-surface-container-low">Diproses</button>
+                    <button onclick="setPurchaseFilter('Dikirim')" id="pFilter_Dikirim" class="px-3.5 py-1.5 bg-surface text-on-surface-variant border border-outline-variant/30 text-[11px] font-extrabold rounded-full transition-colors whitespace-nowrap hover:bg-surface-container-low">Dikirim</button>
+                    <button onclick="setPurchaseFilter('Selesai')" id="pFilter_Selesai" class="px-3.5 py-1.5 bg-surface text-on-surface-variant border border-outline-variant/30 text-[11px] font-extrabold rounded-full transition-colors whitespace-nowrap hover:bg-surface-container-low">Selesai</button>
+                    <button onclick="setPurchaseFilter('Batal')" id="pFilter_Batal" class="px-3.5 py-1.5 bg-surface text-on-surface-variant border border-outline-variant/30 text-[11px] font-extrabold rounded-full transition-colors whitespace-nowrap hover:bg-surface-container-low">Batal / Refund</button>
+                </div>
+            </div>
+
+            <!-- Purchases list -->
+            <div id="purchasesListBox" class="space-y-4">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container rounded-t-[40px] py-16 mt-20 border-t border-outline-variant/30">
+        <div class="max-w-[1200px] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                        <img alt="RONA Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgIbGSRqH0qZyiuiq7hoVM0edbPazkiGScH5SQu4WqqTQoAzxBF4k2MxfZr2lOdz-BD3DZeoL4sim82ViCc-91D0g5X4D-zs9Qznw0ru8uYt5VV0xi3awAVeUziJVn1J6gkngp7PbIOVsKZccNPkHRPNZAfoTR1nJKUvZjtOkVTqOMvqHhLDojhHI9S41CsLP4p0AAiqxLp1EBwZ42xgBqIwIaE0Srqr5kjHHSWDFD3SGki6T1hzlw0W-tlrAAeZdqu82g4v88Q258"/>
+                        <span class="text-xl font-extrabold text-primary">RONA</span>
+                    </div>
+                    <p class="text-xs font-medium text-on-surface-variant leading-relaxed">Mendukung Potensi, Menenangkan Hati. Platform inklusif pendamping tumbuh kembang sensori & fokus si kecil secara menyenangkan.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-on-surface mb-4 tracking-wider">Navigasi</h4>
+                    <ul class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                        <li><a class="hover:text-primary transition-colors" href="index.html">Beranda</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="artikel.html">Artikel Edukasi</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="katalog.html">Rekomendasi Alat</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="history.html">Perjalanan Anak</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-on-surface mb-4 tracking-wider">Bantuan</h4>
+                    <ul class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                        <li><a class="hover:text-primary transition-colors" href="#">Kebijakan Privasi</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Syarat & Ketentuan</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Pusat Konsultasi</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-on-surface mb-4 tracking-wider">Kontak</h4>
+                    <ul class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">mail</span> hello@rona.id</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">call</span> +62 812-3456-7890</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">location_on</span> Jakarta, Indonesia</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-outline-variant/20 text-center text-[10px] font-bold text-outline">
+                © 2026 RONA. Dirancang dengan kehangatan untuk tumbuh kembang buah hati.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================== MODAL: UPDATE DIAGNOSIS ================== -->
+    <div id="diagModal" class="modal">
+        <div class="modal-content bg-white p-6 md:p-8 rounded-3xl max-w-md w-[95%] shadow-2xl relative">
+            <button onclick="closeDiagModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 class="text-base md:text-lg font-bold text-on-surface mb-4 border-b border-outline-variant/30 pb-2 flex items-center gap-1.5"><span class="material-symbols-outlined text-primary">edit</span> Update Kondisi Medis Anak</h3>
+            
+            <form onsubmit="saveDiagnosis(event)" class="space-y-4 text-xs font-semibold text-on-surface-variant">
+                <div>
+                    <label class="block mb-1">Nama Anak</label>
+                    <input type="text" id="diagChildName" required class="w-full px-4 py-2 border border-outline-variant rounded-xl text-xs outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block mb-1">Usia Anak</label>
+                        <input type="text" id="diagChildAge" required class="w-full px-4 py-2 border border-outline-variant rounded-xl text-xs outline-none" placeholder="Misal: 4 Tahun">
+                    </div>
+                    <div>
+                        <label class="block mb-1">Domisili</label>
+                        <input type="text" id="diagLocation" required class="w-full px-4 py-2 border border-outline-variant rounded-xl text-xs outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block mb-1">Diagnosis / Karakteristik Sensorik</label>
+                    <textarea id="diagCondition" required rows="2" class="w-full px-4 py-2 border border-outline-variant rounded-xl text-xs resize-none outline-none" placeholder="Misal: Sensory Seeking (Taktil)"></textarea>
+                </div>
+                <div class="pt-4 border-t border-outline-variant/20 flex justify-end gap-2.5">
+                    <button type="button" onclick="closeDiagModal()" class="px-4 py-2.5 bg-surface-container rounded-full font-bold hover:bg-surface-container-high transition-colors">Batal</button>
+                    <button type="submit" class="px-4 py-2.5 bg-primary text-white rounded-full font-bold hover:opacity-90 transition-opacity">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================== MODAL: LACAK RESI (TRACKING) ================== -->
+    <div id="trackModal" class="modal">
+        <div class="modal-content bg-white p-6 md:p-8 rounded-[32px] max-w-md w-[95%] shadow-2xl relative">
+            <button onclick="closeTrackModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 class="text-sm md:text-base font-extrabold text-on-surface mb-4 pb-2 border-b border-outline-variant/20 flex items-center gap-1.5"><span class="material-symbols-outlined text-primary">local_shipping</span> Lacak Pengiriman Paket</h3>
+            
+            <div class="space-y-4">
+                <div class="p-3 bg-surface rounded-2xl border border-outline-variant/15 text-[11px] font-bold text-on-surface-variant flex justify-between">
+                    <span>Kurir: <strong id="trackCourierName" class="text-primary font-extrabold">J&T Express</strong></span>
+                    <span>No. Resi: <strong id="trackResiVal" class="text-secondary font-extrabold">JNT38492023</strong></span>
+                </div>
+                <!-- Timeline steps -->
+                <div class="space-y-4 pl-3" id="trackHistoryArea">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+            <button onclick="closeTrackModal()" class="w-full mt-6 py-2.5 bg-primary text-white rounded-full text-xs font-bold shadow-sm hover:opacity-95 transition-opacity">Tutup Detail</button>
+        </div>
+    </div>
+
+    <!-- ================== MODAL: TANYA ADMIN (MOCK CHAT) ================== -->
+    <div id="chatModal" class="modal">
+        <div class="modal-content bg-white rounded-3xl max-w-md w-[95%] shadow-2xl relative overflow-hidden flex flex-col h-[420px]">
+            <!-- Header -->
+            <div class="bg-primary text-white p-4 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-extrabold text-xs">A</div>
+                    <div>
+                        <h4 class="text-xs font-extrabold leading-none">Customer Support RONA</h4>
+                        <span class="text-[9px] opacity-75 font-semibold mt-0.5 block">Online • Siap membantu dengan kehangatan</span>
+                    </div>
+                </div>
+                <button onclick="closeChatModal()" class="text-white/80 hover:text-white p-1 rounded-full">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            
+            <!-- Message Area -->
+            <div id="chatMessageArea" class="flex-grow p-4 space-y-3 overflow-y-auto text-xs leading-relaxed font-semibold bg-surface-container-lowest">
+                <!-- Dynamically loaded messages -->
+            </div>
+            
+            <!-- Input Area -->
+            <form onsubmit="sendChatMsg(event)" class="p-3 bg-white border-t border-outline-variant/20 flex gap-2">
+                <input type="text" id="chatInputText" placeholder="Ketik pesan Anda..." required class="flex-grow px-3 py-2 text-xs border border-outline-variant rounded-xl outline-none focus:ring-1 focus:ring-primary">
+                <button type="submit" class="bg-primary text-white p-2 rounded-xl flex items-center justify-center hover:opacity-90">
+                    <span class="material-symbols-outlined text-[18px]">send</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================== MODAL: MOCK REVIEW ================== -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content bg-white p-6 rounded-3xl max-w-sm w-[90%] text-center shadow-2xl relative">
+            <button onclick="closeReviewModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="w-12 h-12 bg-emerald-50 border border-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="material-symbols-outlined text-[#0d6a5c] text-2xl font-fill-1">star</span>
+            </div>
+            <h4 class="text-sm font-extrabold text-on-surface mb-1">Berikan Ulasan Produk</h4>
+            <p class="text-[10px] text-on-surface-variant font-semibold mb-4 leading-relaxed">Terima kasih telah mempercayakan asuh sensori si kecil bersama RONA. Bagikan ulasan Anda:</p>
+            
+            <div class="flex justify-center gap-1 mb-4 text-amber-400">
+                <span class="material-symbols-outlined text-2xl cursor-pointer font-fill-1">star</span>
+                <span class="material-symbols-outlined text-2xl cursor-pointer font-fill-1">star</span>
+                <span class="material-symbols-outlined text-2xl cursor-pointer font-fill-1">star</span>
+                <span class="material-symbols-outlined text-2xl cursor-pointer font-fill-1">star</span>
+                <span class="material-symbols-outlined text-2xl cursor-pointer font-fill-1">star</span>
+            </div>
+            <textarea placeholder="Tuliskan pengalaman Anda menggunakan produk ini..." rows="3" class="w-full p-3 border border-outline-variant rounded-xl text-xs resize-none outline-none mb-4"></textarea>
+            <button onclick="submitReview()" class="w-full py-2.5 bg-primary text-white text-xs font-bold rounded-full shadow-sm hover:opacity-90">Kirim Ulasan</button>
+        </div>
+    </div>
+
+    <!-- TOAST / CENTRAL BACKEND IMPORT -->
+    <script src="admin-core.js"></script>
+    <script>
+        const role = localStorage.getItem('rona_role') || 'guest';
+        const isLogged = role === 'parent';
+        const parentEmail = localStorage.getItem('rona_active_parent_email') || 'parent@gmail.com';
+
+        if (!isLogged) {
+            alert('Akses Ditolak. Silakan masuk sebagai orang tua terlebih dahulu.');
+            window.location.href = 'login.html';
+        }
+
+        let db = ronaDb.get();
+        let activeParent = db.users ? db.users.find(u => u.email === parentEmail) : null;
+        let currentPurchaseFilter = 'All';
+
+        // Read URL query parameter for active tab
+        function getUrlTab() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('tab') || 'dashboard';
+        }
+
+        // TAB SWITCH CONTROLLER
+        function switchTab(tabId) {
+            const tabs = ['dashboard', 'profile', 'purchases'];
+            
+            // Hide all tab content boxes
+            tabs.forEach(t => {
+                const el = document.getElementById(`tabContent_${t}`);
+                if (el) el.classList.add('hidden');
+                
+                const btn = document.getElementById(`tabBtn_${t}`);
+                if (btn) {
+                    btn.className = "tab-btn px-4 py-2.5 rounded-full text-xs font-extrabold transition-all whitespace-nowrap flex items-center gap-1.5 tab-btn-inactive";
+                }
+            });
+
+            // Show selected tab content box
+            const targetEl = document.getElementById(`tabContent_${tabId}`);
+            if (targetEl) targetEl.classList.remove('hidden');
+
+            const targetBtn = document.getElementById(`tabBtn_${tabId}`);
+            if (targetBtn) {
+                targetBtn.className = "tab-btn px-4 py-2.5 rounded-full text-xs font-extrabold transition-all whitespace-nowrap flex items-center gap-1.5 tab-btn-active";
+            }
+
+            // Sync with Navbar active highlighting
+            if (tabId === 'profile') {
+                ronaNav.renderNavbar('profil-anak');
+            } else if (tabId === 'purchases') {
+                ronaNav.renderNavbar('riwayat-belanja');
+            } else {
+                ronaNav.renderNavbar('dashboard');
+            }
+
+            // Update URL search parameters without page reload
+            const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?tab=' + tabId;
+            window.history.pushState({path:newurl},'',newurl);
+
+            // Fetch specific content on demand
+            if (tabId === 'profile') {
+                loadChildProfile();
+            } else if (tabId === 'purchases') {
+                loadPurchases();
+            }
+        }
+
+        // 1. DASHBOARD INITIALIZATION
+        function loadDashboard() {
+            if (activeParent) {
+                document.getElementById('welcomeParentHeader').innerText = `Halo, Ibu/Papa ${activeParent.parentName} 👋`;
+                document.getElementById('headerChildLabel').innerText = `${activeParent.childName || 'Anak'}`;
+                document.getElementById('headerChildCondition').innerText = `${activeParent.childCondition || 'Seeking (Taktil)'}`;
+                
+                const initial = activeParent.childName ? activeParent.childName.charAt(0) : 'R';
+                document.getElementById('headerChildAvatar').innerText = initial;
+            }
+        }
+
+        // 2. CHILD PROFILE LOADER (Tab 2)
+        function loadChildProfile() {
+            if (!activeParent) return;
+
+            document.getElementById('profileKidInitial').innerText = activeParent.childName ? activeParent.childName.charAt(0) : 'R';
+            document.getElementById('profileKidName').innerText = activeParent.childName || 'Rara';
+            document.getElementById('profileKidAgeLocation').innerText = `Usia: ${activeParent.childAge || '4 Tahun'} • ${activeParent.location || 'Jakarta'}`;
+            document.getElementById('profileKidCondition').innerText = activeParent.childCondition || 'Sensory Seeking (Taktil)';
+
+            // Load Preferences
+            const prefs = activeParent.sensoryPreferences || {
+                aud_avoid: false, aud_seek: false,
+                tak_avoid: false, tak_seek: false,
+                vest_avoid: false, vest_seek: false,
+                oral_avoid: false, oral_seek: false
+            };
+
+            document.getElementById('pref_aud_avoid').checked = prefs.aud_avoid;
+            document.getElementById('pref_aud_seek').checked = prefs.aud_seek;
+            document.getElementById('pref_tak_avoid').checked = prefs.tak_avoid;
+            document.getElementById('pref_tak_seek').checked = prefs.tak_seek;
+            document.getElementById('pref_vest_avoid').checked = prefs.vest_avoid;
+            document.getElementById('pref_vest_seek').checked = prefs.vest_seek;
+            document.getElementById('pref_oral_avoid').checked = prefs.oral_avoid;
+            document.getElementById('pref_oral_seek').checked = prefs.oral_seek;
+
+            renderTargets();
+            renderHabits();
+            renderFavorites();
+        }
+
+        function savePreferences() {
+            const prefs = {
+                aud_avoid: document.getElementById('pref_aud_avoid').checked,
+                aud_seek: document.getElementById('pref_aud_seek').checked,
+                tak_avoid: document.getElementById('pref_tak_avoid').checked,
+                tak_seek: document.getElementById('pref_tak_seek').checked,
+                vest_avoid: document.getElementById('pref_vest_avoid').checked,
+                vest_seek: document.getElementById('pref_vest_seek').checked,
+                oral_avoid: document.getElementById('pref_oral_avoid').checked,
+                oral_seek: document.getElementById('pref_oral_seek').checked
+            };
+
+            activeParent.sensoryPreferences = prefs;
+            saveParentDataDirect();
+            ronaToast.show('Preferensi sensorik berhasil diperbarui!');
+        }
+
+        // Diagnosis Update Modal
+        function editChildDiagnosis() {
+            document.getElementById('diagChildName').value = activeParent.childName || "";
+            document.getElementById('diagChildAge').value = activeParent.childAge || "";
+            document.getElementById('diagLocation').value = activeParent.location || "";
+            document.getElementById('diagCondition').value = activeParent.childCondition || "";
+            document.getElementById('diagModal').style.display = 'flex';
+        }
+
+        function closeDiagModal() {
+            document.getElementById('diagModal').style.display = 'none';
+        }
+
+        function saveDiagnosis(e) {
+            e.preventDefault();
+            activeParent.childName = document.getElementById('diagChildName').value.trim();
+            activeParent.childAge = document.getElementById('diagChildAge').value.trim();
+            activeParent.location = document.getElementById('diagLocation').value.trim();
+            activeParent.childCondition = document.getElementById('diagCondition').value.trim();
+
+            saveParentDataDirect();
+            closeDiagModal();
+            loadDashboard();
+            loadChildProfile();
+            ronaToast.show('Diagnosis & identitas anak berhasil diperbarui!');
+        }
+
+        // Targets checklist
+        function renderTargets() {
+            const targetsBox = document.getElementById('targetsBox');
+            if (!targetsBox) return;
+
+            const targets = activeParent.targets || [
+                { id: 1, text: "Bermain meremas pasir kinetik selama 10 menit", checked: false },
+                { id: 2, text: "Belajar menyikat gigi dengan pasta gigi buah", checked: true },
+                { id: 3, text: "Menggunakan kaos dalam bertekstur halus", checked: false }
+            ];
+
+            if (!activeParent.targets) {
+                activeParent.targets = targets;
+                saveParentDataDirect();
+            }
+
+            targetsBox.innerHTML = '';
+            targets.forEach(t => {
+                const checkedClass = t.checked ? 'line-through text-outline' : 'text-on-surface-variant';
+                const isChecked = t.checked ? 'checked' : '';
+                targetsBox.innerHTML += `
+                    <label class="flex justify-between items-center bg-surface p-3.5 rounded-2xl border border-outline-variant/15 text-xs font-semibold hover:bg-surface-container-low transition-colors cursor-pointer">
+                        <span class="flex items-center gap-2.5 ${checkedClass}">
+                            <input type="checkbox" ${isChecked} onchange="toggleTarget(${t.id})" class="rounded border-outline-variant text-primary focus:ring-primary/20">
+                            <span>${t.text}</span>
+                        </span>
+                        <button onclick="deleteTarget(${t.id}, event)" class="text-outline hover:text-red-600 transition-colors p-1">
+                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                        </button>
+                    </label>
+                `;
+            });
+        }
+
+        function toggleTarget(id) {
+            const t = activeParent.targets.find(target => target.id === id);
+            if (t) {
+                t.checked = !t.checked;
+                saveParentDataDirect();
+                renderTargets();
+                ronaToast.show('Target perkembangan diperbarui!');
+            }
+        }
+
+        function addNewTarget(e) {
+            e.preventDefault();
+            const input = document.getElementById('targetTextInput');
+            const targetText = input.value.trim();
+            if (!targetText) return;
+
+            activeParent.targets = activeParent.targets || [];
+            activeParent.targets.push({
+                id: Date.now(),
+                text: targetText,
+                checked: false
+            });
+
+            saveParentDataDirect();
+            input.value = '';
+            renderTargets();
+            ronaToast.show('Target baru ditambahkan!');
+        }
+
+        function deleteTarget(id, e) {
+            e.stopPropagation();
+            e.preventDefault();
+            activeParent.targets = activeParent.targets.filter(t => t.id !== id);
+            saveParentDataDirect();
+            renderTargets();
+            ronaToast.show('Target berhasil dihapus.');
+        }
+
+        // Habits checklist
+        function renderHabits() {
+            const habitsBox = document.getElementById('habitsBox');
+            if (!habitsBox) return;
+
+            const habits = activeParent.habits || [
+                { id: 1, text: "Latihan sikat sensorik Wilbarger (Pagi)", checked: true },
+                { id: 2, text: "Terapi blanket pemberat di ranjang (Malam)", checked: true },
+                { id: 3, text: "Bermain slime / pasir kinetik (Sore)", checked: false }
+            ];
+
+            if (!activeParent.habits) {
+                activeParent.habits = habits;
+                saveParentDataDirect();
+            }
+
+            habitsBox.innerHTML = '';
+            habits.forEach(h => {
+                const checkedClass = h.checked ? 'text-primary' : 'text-on-surface-variant';
+                const isChecked = h.checked ? 'checked' : '';
+                habitsBox.innerHTML += `
+                    <label class="flex items-center gap-3 p-3.5 bg-surface rounded-2xl border border-outline-variant/15 text-xs font-semibold cursor-pointer hover:bg-surface-container-low transition-colors">
+                        <input type="checkbox" ${isChecked} onchange="toggleHabit(${h.id})" class="rounded border-outline-variant text-primary focus:ring-primary/20">
+                        <span class="${checkedClass}">${h.text}</span>
+                    </label>
+                `;
+            });
+        }
+
+        function toggleHabit(id) {
+            const h = activeParent.habits.find(habit => habit.id === id);
+            if (h) {
+                h.checked = !h.checked;
+                saveParentDataDirect();
+                renderHabits();
+                ronaToast.show('Status kebiasaan berhasil diperbarui!');
+            }
+        }
+
+        // Favorites
+        function renderFavorites() {
+            const list = document.getElementById('favoritesList');
+            if (!list) return;
+
+            const favs = activeParent.favorites || ["Slime Kinetik", "Fidget Spinner", "Sensory Swing"];
+            if (!activeParent.favorites) {
+                activeParent.favorites = favs;
+                saveParentDataDirect();
+            }
+
+            list.innerHTML = '';
+            favs.forEach((f, idx) => {
+                list.innerHTML += `
+                    <span class="flex items-center gap-1 px-3 py-1.5 bg-primary/5 text-primary text-xs font-bold rounded-full border border-primary/20">
+                        <span>${f}</span>
+                        <button onclick="removeFavorite(${idx})" class="hover:text-red-600 transition-colors flex items-center">
+                            <span class="material-symbols-outlined text-[14px]">close</span>
+                        </button>
+                    </span>
+                `;
+            });
+        }
+
+        function addFavoriteActivity(e) {
+            e.preventDefault();
+            const input = document.getElementById('favoriteInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            activeParent.favorites = activeParent.favorites || [];
+            activeParent.favorites.push(text);
+            saveParentDataDirect();
+            input.value = '';
+            renderFavorites();
+            ronaToast.show('Aktivitas favorit ditambahkan!');
+        }
+
+        function removeFavorite(index) {
+            activeParent.favorites.splice(index, 1);
+            saveParentDataDirect();
+            renderFavorites();
+        }
+
+        // Shared local write helper
+        function saveParentDataDirect() {
+            db = ronaDb.get();
+            const uIdx = db.users.findIndex(u => u.email === parentEmail);
+            if (uIdx >= 0) db.users[uIdx] = activeParent;
+            ronaDb.save(db);
+        }
+
+        // 3. PURCHASE HISTORY LOADER (Tab 3 - Shopee-Style)
+        function setPurchaseFilter(statusVal) {
+            currentPurchaseFilter = statusVal;
+            
+            // Highlight sub-status pills
+            const pills = ['All', 'Diproses', 'Dikirim', 'Selesai', 'Batal'];
+            pills.forEach(p => {
+                const el = document.getElementById(`pFilter_${p}`);
+                if (el) {
+                    if (p === statusVal) {
+                        el.className = "px-3.5 py-1.5 bg-primary text-white text-[11px] font-extrabold rounded-full transition-colors whitespace-nowrap shadow-sm";
+                    } else {
+                        el.className = "px-3.5 py-1.5 bg-surface text-on-surface-variant border border-outline-variant/30 text-[11px] font-extrabold rounded-full transition-colors whitespace-nowrap hover:bg-surface-container-low";
+                    }
+                }
+            });
+
+            loadPurchases();
+        }
+
+        function loadPurchases() {
+            const listContainer = document.getElementById('purchasesListBox');
+            if (!listContainer) return;
+
+            db = ronaDb.get();
+            const transactions = db.transactions || [];
+            const searchQuery = document.getElementById('txSearchInput').value.toLowerCase().trim();
+
+            // Filter transactions associated with this parent
+            // Support parentEmail or customerName fallback
+            let myTx = transactions.filter(tx => {
+                const isMine = tx.parentEmail === parentEmail || 
+                             (tx.customerName && activeParent && tx.customerName.toLowerCase() === activeParent.parentName.toLowerCase());
+                return isMine;
+            });
+
+            // Apply search filter (order ID or item names)
+            if (searchQuery) {
+                myTx = myTx.filter(tx => {
+                    const matchID = tx.id.toLowerCase().includes(searchQuery);
+                    const matchItems = tx.items.some(item => item.name.toLowerCase().includes(searchQuery));
+                    return matchID || matchItems;
+                });
+            }
+
+            // Apply status filter
+            if (currentPurchaseFilter !== 'All') {
+                if (currentPurchaseFilter === 'Batal') {
+                    myTx = myTx.filter(tx => tx.status.toLowerCase().includes('batal') || tx.status.toLowerCase().includes('refund'));
+                } else {
+                    myTx = myTx.filter(tx => tx.status === currentPurchaseFilter);
+                }
+            }
+
+            if (myTx.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="bg-white p-12 text-center rounded-3xl border border-outline-variant/25 card-shadow flex flex-col items-center">
+                        <span class="material-symbols-outlined text-outline-variant text-4xl mb-2">shopping_bag</span>
+                        <p class="text-xs font-bold text-outline-variant italic">Belum ada riwayat pesanan yang cocok.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = '';
+            myTx.forEach(tx => {
+                // Determine status colors and buttons
+                let statusBadgeColor = 'bg-yellow-50 text-yellow-700 border-yellow-100';
+                let actionButtonsHtml = '';
+
+                if (tx.status === 'Diproses') {
+                    statusBadgeColor = 'bg-amber-50 text-amber-700 border-amber-100';
+                    actionButtonsHtml = `
+                        <button onclick="openChatAdmin('${tx.id}')" class="px-4 py-2 border border-outline-variant rounded-full hover:bg-surface text-[10px] font-extrabold flex items-center gap-1 text-on-surface-variant">
+                            <span class="material-symbols-outlined text-[14px]">chat</span> Tanya Admin
+                        </button>
+                        <button onclick="alert('Rincian Pesanan #${tx.id}: Dikirim menggunakan ${tx.courier}. Sedang dikemas oleh tim logistik RONA.')" class="px-4 py-2 bg-primary text-white rounded-full hover:opacity-90 text-[10px] font-extrabold shadow-sm">
+                            Detail Pesanan
+                        </button>
+                    `;
+                } else if (tx.status === 'Dikirim') {
+                    statusBadgeColor = 'bg-blue-50 text-blue-700 border-blue-100';
+                    actionButtonsHtml = `
+                        <button onclick="trackResi('${tx.id}')" class="px-4 py-2 border border-outline-variant rounded-full hover:bg-surface text-[10px] font-extrabold flex items-center gap-1 text-on-surface-variant">
+                            <span class="material-symbols-outlined text-[14px]">local_shipping</span> Lacak Paket
+                        </button>
+                        <button onclick="confirmOrderReceived('${tx.id}')" class="px-4 py-2 bg-[#0d6a5c] text-white rounded-full hover:opacity-90 text-[10px] font-extrabold shadow-sm">
+                            Pesanan Diterima
+                        </button>
+                    `;
+                } else if (tx.status === 'Selesai') {
+                    statusBadgeColor = 'bg-emerald-50 text-emerald-700 border-emerald-100';
+                    // Parse items to buy again
+                    const itemsJson = JSON.stringify(tx.items).replace(/"/g, '&quot;');
+                    actionButtonsHtml = `
+                        <button onclick="openReviewPopup()" class="px-4 py-2 border border-outline-variant rounded-full hover:bg-surface text-[10px] font-extrabold text-on-surface-variant">
+                            Beri Ulasan
+                        </button>
+                        <button onclick="buyAgain(${itemsJson})" class="px-4 py-2 bg-primary text-white rounded-full hover:opacity-90 text-[10px] font-extrabold shadow-sm flex items-center gap-0.5">
+                            <span class="material-symbols-outlined text-[13px]">shopping_cart</span> Beli Lagi
+                        </button>
+                    `;
+                } else {
+                    // Batal or Refund states
+                    statusBadgeColor = 'bg-red-50 text-red-700 border-red-100';
+                    const itemsJson = JSON.stringify(tx.items).replace(/"/g, '&quot;');
+                    actionButtonsHtml = `
+                        <button onclick="openChatAdmin('${tx.id}')" class="px-4 py-2 border border-outline-variant rounded-full hover:bg-surface text-[10px] font-extrabold text-on-surface-variant">
+                            Rincian Pembatalan
+                        </button>
+                        <button onclick="buyAgain(${itemsJson})" class="px-4 py-2 bg-primary text-white rounded-full hover:opacity-90 text-[10px] font-extrabold shadow-sm">
+                            Beli Lagi
+                        </button>
+                    `;
+                }
+
+                // Render products inside transaction
+                let productsHtml = '';
+                tx.items.forEach(item => {
+                    const fallbackImg = "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=100";
+                    productsHtml += `
+                        <div class="flex gap-4 p-4 items-start border-b border-outline-variant/10 last:border-b-0">
+                            <img src="${item.image || fallbackImg}" class="w-12 h-12 object-cover rounded-xl border border-outline-variant/20 shrink-0">
+                            <div class="min-w-0 flex-grow">
+                                <h4 class="text-xs font-extrabold text-on-surface truncate">${item.name}</h4>
+                                <p class="text-[10px] text-outline font-bold mt-1">Jumlah: ${item.qty} pcs</p>
+                            </div>
+                            <span class="text-xs font-extrabold text-on-surface shrink-0">Rp ${item.price.toLocaleString('id-ID')}</span>
+                        </div>
+                    `;
+                });
+
+                listContainer.innerHTML += `
+                    <div class="bg-white rounded-[24px] border border-outline-variant/20 shadow-sm overflow-hidden flex flex-col">
+                        <!-- Card Header -->
+                        <div class="px-5 py-3 border-b border-outline-variant/10 flex justify-between items-center bg-surface/50">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">storefront</span>
+                                <span class="text-[11px] font-extrabold text-primary">RONA Official Shop</span>
+                                <span class="text-[10px] font-bold text-outline">| ${tx.id}</span>
+                            </div>
+                            <span class="text-[9px] font-extrabold px-3 py-1 rounded-full border ${statusBadgeColor}">${tx.status}</span>
+                        </div>
+                        
+                        <!-- Card Items List -->
+                        <div class="flex-grow">
+                            ${productsHtml}
+                        </div>
+
+                        <!-- Card Footer -->
+                        <div class="px-5 py-4 border-t border-outline-variant/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-surface/20">
+                            <div class="text-xs font-bold text-on-surface-variant flex items-baseline gap-1">
+                                <span>Total Pesanan:</span>
+                                <strong class="text-primary text-sm font-extrabold">Rp ${tx.total.toLocaleString('id-ID')}</strong>
+                            </div>
+                            <div class="flex gap-2 self-end sm:self-auto">
+                                ${actionButtonsHtml}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Action: Pesanan Diterima
+        function confirmOrderReceived(txId) {
+            if (!confirm("Apakah Anda yakin telah menerima paket pesanan RONA Anda dan ingin menyelesaikan transaksi?")) return;
+
+            db = ronaDb.get();
+            const tx = db.transactions.find(t => t.id === txId);
+            if (tx) {
+                tx.status = 'Selesai';
+                const currentDate = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+                tx.statusHistory.push({
+                    status: "Selesai",
+                    time: currentDate + ", 18:00",
+                    note: "Pesanan selesai dikonfirmasi oleh pembeli."
+                });
+
+                ronaDb.save(db);
+                ronaToast.show('Transaksi berhasil diselesaikan! Silakan berikan ulasan.');
+                loadPurchases();
+            }
+        }
+
+        // Action: Beli Lagi
+        function buyAgain(items) {
+            let cart = JSON.parse(localStorage.getItem('rona_cart')) || [];
+            items.forEach(item => {
+                const existing = cart.find(c => c.sku === item.sku);
+                if (existing) {
+                    existing.qty += item.qty;
+                } else {
+                    cart.push({
+                        sku: item.sku || "RONA-SPIN-01",
+                        name: item.name,
+                        price: item.price,
+                        qty: item.qty,
+                        image: item.image || "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=100",
+                        category: item.category || "Sensory"
+                    });
+                }
+            });
+            localStorage.setItem('rona_cart', JSON.stringify(cart));
+            ronaToast.show('Item berhasil ditambahkan ke keranjang belanja!');
+            setTimeout(() => {
+                window.location.href = "keranjang.html";
+            }, 800);
+        }
+
+        // ================== TRACK RESI MODAL ==================
+        function trackResi(txId) {
+            db = ronaDb.get();
+            const tx = db.transactions.find(t => t.id === txId);
+            if (!tx) return;
+
+            document.getElementById('trackCourierName').innerText = tx.courier || "J&T Express";
+            document.getElementById('trackResiVal').innerText = tx.resi || "JNT38492023";
+
+            const historyArea = document.getElementById('trackHistoryArea');
+            historyArea.innerHTML = '';
+
+            // Map tracking status histories
+            const steps = tx.statusHistory || [
+                { status: "Menunggu Pembayaran", time: "29 Juni, 10:00", note: "Pesanan dibuat." },
+                { status: "Diproses", time: "29 Juni, 10:30", note: "Pembayaran terverifikasi." }
+            ];
+
+            steps.forEach((step, idx) => {
+                const isLatest = idx === steps.length - 1;
+                const bulletColor = isLatest ? 'bg-primary border-primary' : 'bg-outline-variant/30 border-transparent';
+                const textColor = isLatest ? 'text-primary font-extrabold' : 'text-on-surface-variant font-semibold';
+                const subTextColor = isLatest ? 'text-on-surface' : 'text-outline';
+                
+                historyArea.innerHTML += `
+                    <div class="relative pl-6 border-l-2 border-primary/20 pb-4 last:pb-0">
+                        <div class="absolute -left-[6px] top-1 w-2.5 h-2.5 rounded-full border ${bulletColor} flex items-center justify-center">
+                            ${isLatest ? '<div class="w-1 h-1 bg-white rounded-full"></div>' : ''}
+                        </div>
+                        <div class="text-[10px] font-bold ${subTextColor} uppercase">${step.time}</div>
+                        <h5 class="text-xs ${textColor} mt-0.5 leading-tight">${step.status}</h5>
+                        <p class="text-[10px] text-outline mt-0.5 leading-relaxed font-semibold">${step.note}</p>
+                    </div>
+                `;
+            });
+
+            document.getElementById('trackModal').style.display = 'flex';
+        }
+
+        function closeTrackModal() {
+            document.getElementById('trackModal').style.display = 'none';
+        }
+
+        // ================== MOCK CHAT ADMIN MODAL ==================
+        let activeChatTxId = '';
+        function openChatAdmin(txId) {
+            activeChatTxId = txId;
+            const messageArea = document.getElementById('chatMessageArea');
+            messageArea.innerHTML = `
+                <div class="flex gap-2.5 items-start">
+                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 font-extrabold text-primary text-[10px]">A</div>
+                    <div class="p-3 bg-primary/5 border border-primary/10 rounded-2xl rounded-tl-none max-w-[80%]">
+                        <p>Halo Ibu/Papa Sarah, terima kasih telah menghubungi CS RONA. Ada yang bisa kami bantu terkait pesanan <strong>#${txId}</strong>?</p>
+                        <span class="text-[8px] text-outline font-bold mt-1 block">09:05 WIB</span>
+                    </div>
+                </div>
+            `;
+            document.getElementById('chatModal').style.display = 'flex';
+        }
+
+        function closeChatModal() {
+            document.getElementById('chatModal').style.display = 'none';
+        }
+
+        function sendChatMsg(e) {
+            e.preventDefault();
+            const input = document.getElementById('chatInputText');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            const messageArea = document.getElementById('chatMessageArea');
+            const timeNow = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+            
+            // Add user message
+            messageArea.innerHTML += `
+                <div class="flex gap-2.5 items-start justify-end">
+                    <div class="p-3 bg-white border border-outline-variant/30 rounded-2xl rounded-tr-none max-w-[80%] text-right">
+                        <p>${msg}</p>
+                        <span class="text-[8px] text-outline font-bold mt-1 block">${timeNow}</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-teal-50 border border-teal-200 flex items-center justify-center shrink-0 font-extrabold text-primary text-[10px]">P</div>
+                </div>
+            `;
+
+            input.value = '';
+            messageArea.scrollTop = messageArea.scrollHeight;
+
+            // Trigger admin automatic warm reply
+            setTimeout(() => {
+                messageArea.innerHTML += `
+                    <div class="flex gap-2.5 items-start">
+                        <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 font-extrabold text-primary text-[10px]">A</div>
+                        <div class="p-3 bg-primary/5 border border-primary/10 rounded-2xl rounded-tl-none max-w-[80%]">
+                            <p>Tentu, Kak. Tim logistik kami sedang mengemas produk dengan kehangatan &amp; perlindungan ganda. Kami pastikan no resi terupdate malam ini ya. Terima kasih atas kesabarannya! 😊</p>
+                            <span class="text-[8px] text-outline font-bold mt-1 block">${timeNow}</span>
+                        </div>
+                    </div>
+                `;
+                messageArea.scrollTop = messageArea.scrollHeight;
+            }, 1200);
+        }
+
+        // ================== MOCK REVIEW MODAL ==================
+        function openReviewPopup() {
+            document.getElementById('reviewModal').style.display = 'flex';
+        }
+
+        function closeReviewModal() {
+            document.getElementById('reviewModal').style.display = 'none';
+        }
+
+        function submitReview() {
+            closeReviewModal();
+            ronaToast.show('Ulasan Anda berhasil dikirim! Terima kasih.');
+        }
+
+        // ================== REPORT EXPORT SIMULATION ==================
+        function simulasiEksporLaporan() {
+            alert('Menyiapkan Laporan Tumbuh Kembang...\n\nPDF berisi rangkuman grafik sensorik, checklist target, dan milestone anak berhasil diunduh ke folder Downloads Anda.');
+            ronaToast.show('Laporan Tumbuh Kembang berhasil diunduh.');
+        }
+
+        // Close modal on clicking backdrop
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        }
+
+        // INITIAL START
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboard();
+            const activeTab = getUrlTab();
+            switchTab(activeTab);
+        });
+    </script>
+</body>
+</html>

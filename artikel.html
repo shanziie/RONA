@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ruang Belajar Orang Tua - RONA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#0d6a5c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#57a695",
+                        "secondary": "#28695d",
+                        "surface": "#f7faf7",
+                        "on-surface": "#181c1b",
+                        "on-surface-variant": "#3f4946",
+                        "outline-variant": "#bec9c5",
+                        "surface-container": "#ebefec",
+                        "coral": "#FF9B85",
+                        "aman-cream": "#FBF7F0"
+                    },
+                    "borderRadius": {
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "card": "20px",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBF7F0; /* Aman Cream */
+            color: #2D3A3A;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.04);
+        }
+        .card-shadow-hover:hover {
+            box-shadow: 0 8px 24px rgba(13, 106, 92, 0.1);
+            transform: translateY(-2px);
+        }
+        .glass-nav {
+            background: rgba(251, 247, 240, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .modal { 
+            display: none; 
+            position: fixed; 
+            inset: 0;
+            background: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(4px);
+            z-index: 2000; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .modal-content { 
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+        @keyframes slideUp { 
+            from { transform: translateY(20px) scale(0.95); opacity: 0; } 
+            to { transform: translateY(0) scale(1); opacity: 1; } 
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+
+    <div id="navbarContainer"></div>
+
+    <main class="max-w-[1200px] mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-16 md:pb-20">
+        <!-- Header -->
+        <div class="mb-6 md:mb-10 text-center max-w-xl mx-auto space-y-2">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface leading-tight">Ruang Belajar &amp; Informasi</h2>
+            <p class="text-xs font-semibold text-on-surface-variant leading-relaxed">Temukan ratusan panduan asuh dari psikolog anak &amp; dokter spesialis RONA, bebas dari istilah medis yang rumit.</p>
+        </div>
+
+        <!-- CONTINUE READING (LANJUT BACA) BAR -->
+        <div id="continueReadingBar" class="bg-white p-4 md:p-5 rounded-2xl md:rounded-3xl border border-outline-variant/20 card-shadow mb-6 md:mb-8 hidden">
+            <h4 class="text-xs font-extrabold text-primary flex items-center gap-1 mb-3"><span class="material-symbols-outlined text-[16px]">menu_book</span> LANJUT BACA TERAKHIR</h4>
+            <div id="continueReadingList" class="flex gap-3 overflow-x-auto pb-1">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- FILTERS AND SEARCH BAR -->
+        <div class="flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center mb-6 md:mb-8 bg-white p-3 md:p-4 rounded-2xl border border-outline-variant/25 card-shadow">
+            <div class="flex gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0" id="filterTabsContainer">
+                <!-- Injected dynamically -->
+            </div>
+            
+            <div class="relative w-full sm:w-auto sm:min-w-[200px] group shrink-0">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary text-[18px]">search</span>
+                <input type="text" id="articleSearch" oninput="loadArticles()" class="w-full pl-9 pr-4 py-2 border border-outline-variant rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary" placeholder="Cari materi...">
+            </div>
+        </div>
+
+        <!-- ARTICLES LIST GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 animate-fade-in" id="articlesGrid">
+            <!-- Injected dynamically -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container rounded-t-[40px] py-16 mt-20 border-t border-outline-variant/30">
+        <div class="max-w-[1200px] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                        <img alt="RONA Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgIbGSRqH0qZyiuiq7hoVM0edbPazkiGScH5SQu4WqqTQoAzxBF4k2MxfZr2lOdz-BD3DZeoL4sim82ViCc-91D0g5X4D-zs9Qznw0ru8uYt5VV0xi3awAVeUziJVn1J6gkngp7PbIOVsKZccNPkHRPNZAfoTR1nJKUvZjtOkVTqOMvqHhLDojhHI9S41CsLP4p0AAiqxLp1EBwZ42xgBqIwIaE0Srqr5kjHHSWDFD3SGki6T1hzlw0W-tlrAAeZdqu82g4v88Q258"/>
+                        <span class="text-xl font-extrabold text-primary">RONA</span>
+                    </div>
+                    <p class="text-xs font-medium text-on-surface-variant leading-relaxed">Mendukung Potensi, Menenangkan Hati. Platform inklusif pendamping tumbuh kembang sensori & fokus si kecil secara menyenangkan.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-on-surface mb-4 tracking-wider">Navigasi</h4>
+                    <ul class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                        <li><a class="hover:text-primary transition-colors" href="index.html">Beranda</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="artikel.html">Artikel Edukasi</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="katalog.html">Rekomendasi Alat</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="history.html">Perjalanan Anak</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-on-surface mb-4 tracking-wider">Bantuan</h4>
+                    <ul class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                        <li><a class="hover:text-primary transition-colors" href="#">Kebijakan Privasi</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Syarat & Ketentuan</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Pusat Konsultasi</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase text-on-surface mb-4 tracking-wider">Kontak</h4>
+                    <ul class="space-y-2 text-xs font-semibold text-on-surface-variant">
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">mail</span> hello@rona.id</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">call</span> +62 812-3456-7890</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">location_on</span> Jakarta, Indonesia</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-outline-variant/20 text-center text-[10px] font-bold text-outline">
+                © 2026 RONA. Dirancang dengan kehangatan untuk tumbuh kembang buah hati.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ARTICLE READER MODAL (Reads detail content) -->
+    <div id="readModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-3xl max-w-[650px] w-[95%] shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeReadModal()" class="absolute top-4 right-4 text-outline hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-container-low">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            
+            <div id="articleContentArea" class="space-y-6 text-sm leading-relaxed text-on-surface-variant font-medium">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST / CORE DATABASE SYSTEM -->
+    <script src="admin-core.js"></script>
+    <script>
+        const role = localStorage.getItem('rona_role') || 'guest';
+        const isLogged = role === 'parent';
+        const parentEmail = localStorage.getItem('rona_active_parent_email') || 'parent@gmail.com';
+        
+        let db = ronaDb.get();
+        let activeParent = db.users ? db.users.find(u => u.email === parentEmail) : null;
+
+        // Render dynamic navbar
+        ronaNav.renderNavbar('artikel');
+
+        // Bookmark controller
+        let savedArticles = JSON.parse(localStorage.getItem('rona_saved_articles')) || [];
+        let recentlyRead = JSON.parse(localStorage.getItem('rona_recently_read')) || [];
+        let currentFilter = 'All';
+
+        // Render Personalized/Dynamic Filter Tabs
+        function renderFilterTabs() {
+            const container = document.getElementById('filterTabsContainer');
+            if (!container) return;
+
+            if (isLogged) {
+                const childName = activeParent ? activeParent.childName : "Rara";
+                const childAge = activeParent ? activeParent.childAge : "4 Tahun";
+                container.innerHTML = `
+                    <button onclick="setAgeFilter('All')" class="filter-tab px-4 py-2 bg-primary text-white text-xs font-bold rounded-full transition-colors whitespace-nowrap shadow-sm">Semua Artikel</button>
+                    <button onclick="setAgeFilter('Toddler')" class="filter-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Sesuai Usia ${childName} (${childAge}) ✨</button>
+                    <button onclick="setAgeFilter('Kid')" class="filter-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Anak Lain (Usia 6-12)</button>
+                    <button onclick="setAgeFilter('Tracking')" class="filter-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Rekomendasi Sensori (Tracking) 🔍</button>
+                    <button onclick="setAgeFilter('Saved')" class="filter-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">bookmark</span> Tersimpan</button>
+                `;
+            } else {
+                container.innerHTML = `
+                    <button onclick="setAgeFilter('All')" class="filter-tab px-4 py-2 bg-primary text-white text-xs font-bold rounded-full transition-colors whitespace-nowrap shadow-sm">Semua Artikel</button>
+                    <button onclick="setAgeFilter('Toddler')" class="filter-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Balita (Usia 2-5 Tahun)</button>
+                    <button onclick="setAgeFilter('Kid')" class="filter-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface">Anak (Usia 6-12 Tahun)</button>
+                `;
+            }
+        }
+
+        renderFilterTabs();
+
+        function setAgeFilter(filterVal) {
+            currentFilter = filterVal;
+            
+            const buttons = document.querySelectorAll('.filter-tab');
+            buttons.forEach(btn => {
+                const clickHandler = btn.getAttribute('onclick') || '';
+                if (clickHandler.includes(`'${filterVal}'`)) {
+                    btn.className = "filter-tab px-4 py-2 bg-primary text-white text-xs font-bold rounded-full transition-colors whitespace-nowrap shadow-sm";
+                } else {
+                    btn.className = "filter-tab px-4 py-2 bg-white text-on-surface-variant border border-outline-variant/30 text-xs font-bold rounded-full transition-colors whitespace-nowrap hover:bg-surface flex items-center gap-1";
+                }
+            });
+
+            loadArticles();
+        }
+
+        // LOAD ARTICLES LIST
+        function loadArticles() {
+            const grid = document.getElementById('articlesGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const searchQuery = document.getElementById('articleSearch').value.toLowerCase().trim();
+
+            const filtered = db.articles.filter(art => {
+                const matchesSearch = art.title.toLowerCase().includes(searchQuery) || art.summary.toLowerCase().includes(searchQuery);
+                
+                let matchesFilter = true;
+                if (currentFilter === 'Toddler') {
+                    matchesFilter = art.tags.toLowerCase().includes('balita') || art.title.toLowerCase().includes('balita') || art.id === 'ART-01' || art.id === 'ART-03' || art.id === 'ART-06' || art.id === 'ART-08';
+                } else if (currentFilter === 'Kid') {
+                    matchesFilter = !art.tags.toLowerCase().includes('balita') || art.id === 'ART-02' || art.id === 'ART-04' || art.id === 'ART-05' || art.id === 'ART-07';
+                } else if (currentFilter === 'Tracking') {
+                    matchesFilter = art.category === 'Sensory' || art.tags.toLowerCase().includes('sensory') || art.tags.toLowerCase().includes('terapi');
+                } else if (currentFilter === 'Saved') {
+                    matchesFilter = savedArticles.includes(art.id);
+                }
+
+                return matchesSearch && matchesFilter;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p class="col-span-3 text-xs text-outline italic text-center py-10 font-bold">Materi edukasi tidak ditemukan.</p>`;
+                return;
+            }
+
+            filtered.forEach(art => {
+                const isSaved = savedArticles.includes(art.id);
+                const bookmarkIcon = isSaved ? 'bookmark' : 'bookmark_border';
+                const bookmarkColor = isSaved ? 'text-primary font-fill-1' : 'text-outline-variant';
+
+                const peerHelpCount = Math.floor(art.views / 25) + 12;
+
+                grid.innerHTML += `
+                    <div class="bg-white rounded-[20px] md:rounded-[28px] overflow-hidden border border-outline-variant/20 shadow-sm card-shadow-hover transition-all">
+                        <!-- Mobile: horizontal card | Desktop: vertical card -->
+                        <div class="flex md:flex-col">
+                            <div class="w-28 shrink-0 md:w-full md:aspect-[16/9] aspect-square bg-surface overflow-hidden relative">
+                                <img src="${art.thumbnail}" class="w-full h-full object-cover">
+                                <button onclick="toggleSaveArticle('${art.id}', event)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-white/90 p-1.5 rounded-full shadow-sm hover:scale-110 transition-transform flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-[16px] md:text-[18px] ${bookmarkColor}">${bookmarkIcon}</span>
+                                </button>
+                            </div>
+                            <div class="p-3 md:p-5 flex-grow flex flex-col justify-between space-y-2 md:space-y-4">
+                                <div class="space-y-1.5 md:space-y-2">
+                                    <div class="flex justify-between items-center text-[9px] font-bold text-outline">
+                                        <span class="hidden md:inline">${art.date}</span>
+                                        <span class="bg-[#ebefec] text-[#0d6a5c] px-2 py-0.5 rounded-full border border-[#0d6a5c]/20">${art.category}</span>
+                                    </div>
+                                    <h3 class="font-extrabold text-xs md:text-sm text-on-surface leading-tight hover:text-primary cursor-pointer transition-colors line-clamp-2 md:line-clamp-3" onclick="openArticleReader('${art.id}')">${art.title}</h3>
+                                    <p class="text-[10px] md:text-[11px] font-semibold text-on-surface-variant leading-relaxed line-clamp-2 md:line-clamp-3 hidden sm:block">${art.summary}</p>
+                                </div>
+                                
+                                <div class="pt-2 md:pt-3 border-t border-outline-variant/10 flex justify-between items-center text-[10px] font-bold">
+                                    <span class="text-outline hidden md:inline">Oleh: ${art.author}</span>
+                                    <span class="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 flex items-center gap-0.5">
+                                        <span class="material-symbols-outlined text-[11px] font-fill-1">thumb_up</span> ${peerHelpCount}+ Ibu
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // SAVE / BOOKMARK ARTICLE
+        function toggleSaveArticle(id, event) {
+            event.stopPropagation();
+            if (!isLogged) {
+                alert('Silakan masuk atau daftar akun gratis RONA untuk dapat menyimpan artikel ke Bookmark Anda.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const idx = savedArticles.indexOf(id);
+            if (idx >= 0) {
+                savedArticles.splice(idx, 1);
+                ronaToast.show('Artikel dihapus dari penyimpanan.');
+            } else {
+                savedArticles.push(id);
+                ronaToast.show('Artikel berhasil disimpan ke bookmark!');
+            }
+            localStorage.setItem('rona_saved_articles', JSON.stringify(savedArticles));
+            loadArticles();
+        }
+
+        // ARTICLE DETAIL READER (Modal layout with Guest gating blurs)
+        function openArticleReader(id) {
+            const art = db.articles.find(a => a.id === id);
+            if (!art) return;
+
+            // Track to continue reading only if logged in
+            if (isLogged) {
+                const readIdx = recentlyRead.indexOf(id);
+                if (readIdx >= 0) recentlyRead.splice(readIdx, 1);
+                recentlyRead.unshift(id);
+                if (recentlyRead.length > 5) recentlyRead.pop();
+                localStorage.setItem('rona_recently_read', JSON.stringify(recentlyRead));
+            }
+
+            const container = document.getElementById('articleContentArea');
+            
+            // Build rich structured article
+            let detailHtml = `
+                <div class="w-full h-56 rounded-2xl overflow-hidden border border-outline-variant/30 bg-surface">
+                    <img src="${art.thumbnail}" class="w-full h-full object-cover">
+                </div>
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] font-bold bg-[#ebefec] text-[#0d6a5c] border border-[#0d6a5c]/20 px-3 py-1 rounded-full">${art.category}</span>
+                        <span class="text-[10px] font-bold text-outline">8 Menit Baca • ${art.date}</span>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-on-surface leading-tight">${art.title}</h3>
+                    <p class="text-xs font-bold text-outline border-y border-outline-variant/20 py-2">Penulis profesional: <strong>${art.author}</strong></p>
+                    
+                    <!-- Table of Contents -->
+                    <div class="p-4 bg-surface rounded-2xl border border-outline-variant/15 text-[11px] font-semibold text-on-surface-variant">
+                        <p class="font-bold text-xs text-primary mb-2">Daftar Isi Panduan:</p>
+                        <ul class="space-y-1.5 list-decimal pl-4">
+                            <li>Pengantar</li>
+                            <li>Penjelasan Teoretis & Medis</li>
+                            <li>Tanda-tanda Deteksi Awal</li>
+                            <li>Contoh Perilaku Sehari-hari</li>
+                            <li>Aktivitas Regulasi & Stimulasi Mandiri</li>
+                            <li>Kesalahan Umum Orang Tua</li>
+                            <li>Langkah Kecil Hari Ini</li>
+                            <li>Kesimpulan & FAQ</li>
+                        </ul>
+                    </div>
+
+                    <!-- Article Body Structure -->
+                    <div class="text-xs text-on-surface-variant leading-relaxed font-semibold space-y-4">
+                        <div>
+                            <h4 class="font-bold text-sm text-primary mb-1">1. Pengantar</h4>
+                            <p>${art.summary}. Memahami kondisi ini dengan baik adalah langkah pertama pengasuhan yang aman dan suportif.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-sm text-primary mb-1">2. Penjelasan Teoretis & Medis</h4>
+                            <p>${art.content || 'Regulasi sensorik adalah cara otak anak memproses stimulus di sekitar mereka. Sensitivitas yang berlebih dapat memicu meltdown emosional.'}</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-sm text-primary mb-1">3. Tanda-tanda Deteksi Awal</h4>
+                            <p>Anak sering menutup telinga, menolak tekstur makanan tertentu, atau terus bergerak untuk mencari sensasi taktil tertentu tanpa lelah.</p>
+                        </div>
+            `;
+
+            if (!isLogged) {
+                // GUEST LIMIT BLUR CARD
+                detailHtml += `
+                        <!-- Blur fade effect -->
+                        <div class="relative pt-6 pb-20 mt-4 border-t border-outline-variant/10 text-center">
+                            <div class="absolute inset-x-0 bottom-0 top-0 bg-gradient-to-t from-white via-white/80 to-transparent backdrop-blur-[1px] flex flex-col justify-end items-center p-6">
+                                <div class="bg-white p-6 rounded-3xl border border-outline-variant/30 shadow-lg max-w-sm">
+                                    <span class="material-symbols-outlined text-coral text-3xl mb-2" style="font-variation-settings: 'FILL' 1;">lock</span>
+                                    <h5 class="text-sm font-extrabold text-on-surface mb-2">Ingin Membaca Panduan Lengkap?</h5>
+                                    <p class="text-[10px] text-on-surface-variant font-semibold mb-4">Daftar akun gratis RONA untuk mengakses bab Aktivitas Mandiri, Kesalahan Umum, Checklist Harian, dan FAQ lengkap.</p>
+                                    <a href="register.html" class="block w-full py-2.5 bg-primary text-white rounded-full text-xs font-bold shadow-md hover:opacity-90 transition-opacity mb-2">Daftar Akun Gratis</a>
+                                    <a href="login.html" class="text-[10px] font-bold text-outline hover:underline">Sudah punya akun? Masuk</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+            } else {
+                // PARENT FULL ACCESS CONTENT
+                detailHtml += `
+                        <div>
+                            <h4 class="font-bold text-sm text-primary mb-1">4. Contoh Perilaku Sehari-hari</h4>
+                            <p>Tantrum saat mandi karena air dirasa terlalu dingin/panas, atau menolak memakai pakaian berbahan wol tebal karena sensitivitas taktil yang sensitif.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-sm text-primary mb-1">5. Aktivitas Regulasi & Stimulasi Mandiri</h4>
+                            <p>Berikan sikat sensorik (sensory brushing), melatih pernapasan perut bersama, atau menyusun slime/playdough sebagai medium penyaluran energi motorik halus.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-sm text-primary mb-1">6. Kesalahan Umum Orang Tua</h4>
+                            <p>Memaksa anak untuk langsung menoleransi kebisingan tanpa persiapan peredam suara, atau memarahi anak saat mengalami meltdown sensorik.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-sm text-primary mb-1">7. Langkah Kecil Hari Ini</h4>
+                            <p>Sediakan satu 'calming corner' atau pojok tenang yang aman dari suara berisik di sudut kamar tidur si kecil.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-sm text-primary mb-1">8. Kesimpulan & FAQ</h4>
+                            <div class="mt-2 space-y-3 bg-surface p-4 rounded-2xl border border-outline-variant/15">
+                                <p><strong>Q: Apakah ini bisa sembuh?</strong><br>A: Regulasi sensorik bukan penyakit melainkan keunikan pemrosesan sensorik. Anak akan belajar menoleransi stimulus seiring bertambahnya usia.</p>
+                                <p><strong>Q: Berapa lama sikat sensorik dilakukan?</strong><br>A: 3-5 menit sehari secara rutin sudah cukup membantu ketegangan taktil anak.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Checklist tips -->
+                    <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                        <p class="text-xs font-bold text-[#0d6a5c] mb-2 flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">check_box</span> Checklist Tips Praktis:</p>
+                        <ul class="text-[10px] font-semibold text-on-surface-variant space-y-1.5 pl-5 list-disc">
+                            <li>Sediakan calming corner kedap suara tipis</li>
+                            <li>Gunakan sikat sensory secara lembut di tangan</li>
+                            <li>Hindari stimulasi layar (gadget) 2 jam sebelum tidur</li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-4 border-t border-outline-variant/20 flex flex-wrap gap-1.5">
+                        ${(art.tags || "").split(',').map(tag => `<span class="bg-surface-container text-on-surface-variant font-bold text-[9px] px-2.5 py-0.5 rounded-full">${tag.trim()}</span>`).join('')}
+                    </div>
+                </div>
+                `;
+            }
+
+            container.innerHTML = detailHtml;
+            document.getElementById('readModal').style.display = 'flex';
+            
+            if (isLogged) {
+                loadContinueReading();
+            }
+        }
+
+        function closeReadModal() {
+            document.getElementById('readModal').style.display = 'none';
+        }
+
+        // LOAD CONTINUE READING TRAY (Hide if Guest)
+        function loadContinueReading() {
+            const bar = document.getElementById('continueReadingBar');
+            const list = document.getElementById('continueReadingList');
+
+            if (!isLogged || recentlyRead.length === 0) {
+                bar.classList.add('hidden');
+                return;
+            }
+
+            bar.classList.remove('hidden');
+            list.innerHTML = '';
+
+            recentlyRead.forEach(id => {
+                const art = db.articles.find(a => a.id === id);
+                if (art) {
+                    list.innerHTML += `
+                        <div onclick="openArticleReader('${art.id}')" class="flex items-center gap-3 p-3 bg-surface hover:bg-surface-container-low border border-outline-variant/20 rounded-xl cursor-pointer shrink-0 max-w-[240px]">
+                            <img src="${art.thumbnail}" class="w-10 h-10 object-cover rounded-lg shrink-0">
+                            <div class="min-w-0">
+                                <h5 class="text-[11px] font-extrabold text-on-surface truncate">${art.title}</h5>
+                                <span class="text-[9px] text-outline font-semibold block">${art.category}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        // Close modal clicking backdrop
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        }
+
+        // Start
+        loadArticles();
+        if (isLogged) {
+            loadContinueReading();
+        }
+    </script>
+</body>
+</html>
