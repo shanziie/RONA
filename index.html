@@ -14,22 +14,23 @@
         theme: {
           extend: {
             "colors": {
-                    "primary": "#0d6a5c",
+                    "primary": "#c65f47",
                     "on-primary": "#ffffff",
-                    "primary-container": "#57a695",
-                    "secondary": "#28695d",
-                    "surface": "#f7faf7",
-                    "on-surface": "#181c1b",
-                    "on-surface-variant": "#3f4946",
-                    "outline-variant": "#bec9c5",
-                    "surface-container": "#ebefec",
-                    "coral": "#FF9B85",
-                    "aman-cream": "#FBF7F0"
+                    "primary-container": "#7da095",
+                    "secondary": "#7da095",
+                    "surface": "#f6f0e5",
+                    "on-surface": "#243130",
+                    "on-surface-variant": "#4a5b57",
+                    "outline-variant": "#dfd8cb",
+                    "surface-container": "#fbf7f0",
+                    "coral": "#c65f47",
+                    "aman-cream": "#f6f0e5",
+                    "dark-bg": "#243130"
             },
             "borderRadius": {
                     "xl": "0.75rem",
                     "2xl": "1rem",
-                    "card": "20px",
+                    "card": "24px",
                     "full": "9999px"
             }
           }
@@ -38,25 +39,25 @@
     </script>
 <style>
         body {
-            background-color: #FBF7F0; /* Aman Cream */
-            color: #2D3A3A;
+            background-color: #fbf7f0; /* Soft Cream */
+            color: #243130; /* Dark Slate Teal */
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
         .card-shadow {
-            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.04);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
         .card-shadow-hover:hover {
-            box-shadow: 0 10px 25px rgba(13, 106, 92, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             transform: translateY(-2px);
         }
         .glass-nav {
-            background: rgba(251, 247, 240, 0.85);
+            background: rgba(251, 247, 240, 0.95);
             backdrop-filter: blur(12px);
         }
         .coral-gradient {
-            background: linear-gradient(135deg, #FF9B85 0%, #0d6a5c 100%);
+            background: linear-gradient(135deg, #c65f47 0%, #243130 100%);
         }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -66,7 +67,7 @@
             display: none; 
             position: fixed; 
             inset: 0;
-            background: rgba(0,0,0,0.5); 
+            background: rgba(0,0,0,0.6); 
             backdrop-filter: blur(4px);
             z-index: 2000; 
             justify-content: center; 
@@ -74,6 +75,10 @@
         }
         .modal-content { 
             animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            background-color: #f6f0e5;
+            color: #243130;
+            border: 3px solid #dfd8cb;
+            border-radius: 24px;
         }
         @keyframes slideUp { 
             from { transform: translateY(20px) scale(0.95); opacity: 0; } 
@@ -203,181 +208,179 @@
         function renderGuestView() {
             viewContainer.innerHTML = `
                 <!-- Empathetic Hero -->
-                <section class="max-w-[1200px] mx-auto px-4 md:px-6 pt-8 pb-10 md:pt-12 md:pb-16 lg:pt-16 lg:pb-20">
-                    <div class="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-10 lg:gap-16 items-center">
+                <section class="max-w-[1200px] mx-auto px-4 md:px-6 pt-4 pb-10 md:pt-6 md:pb-12 lg:pt-8 lg:pb-16">
+                    <div class="deckle-banner w-full p-6 md:p-12 flex flex-col md:flex-row gap-8 md:gap-10 lg:gap-16 items-center">
                         <!-- Text side -->
-                        <div class="space-y-5 md:space-y-6">
-                            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-primary/5 text-primary text-[10px] font-bold rounded-full border border-primary/15 tracking-wide uppercase">
-                                <span class="material-symbols-outlined text-[13px] text-coral" style="font-variation-settings: 'FILL' 1;">favorite</span>
-                                Kamu Tidak Berjalan Sendiri
-                            </span>
-                            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-on-surface leading-tight">
-                                Memahami si Kecil <br><span class="text-primary">dengan Sepenuh Hati.</span>
+                        <div class="w-full md:w-1/2 space-y-5 md:space-y-6">
+                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold font-vintage text-[#c65f47] leading-none">
+                                Memahami <br>si Kecil <br><span class="italic text-[#7da095]">Sepenuh Hati.</span>
                             </h1>
-                            <p class="text-sm font-semibold text-on-surface-variant leading-relaxed max-w-lg">
+                            <p class="text-sm font-semibold text-[#243130]/80 leading-relaxed max-w-lg">
                                 RONA hadir menemani langkah Anda. Catat perilaku, kenali kecenderungan stimulasi sensorik, dan peroleh saran ramah untuk menenangkan hari-hari buah hati Anda.
                             </p>
-                            <div class="flex flex-wrap gap-3">
-                                <a href="register.html" class="px-7 py-3.5 bg-primary text-white text-xs font-bold rounded-full shadow-lg hover:scale-105 transition-transform text-center">Mulai Bersama RONA</a>
-                                <a href="#cerita" class="px-5 py-3.5 bg-white text-primary text-xs font-bold rounded-full border border-outline-variant/30 hover:bg-surface transition-colors flex items-center gap-1">
+                            <div class="flex flex-wrap gap-3 pt-2">
+                                <a href="register.html" class="px-8 py-3.5 bg-[#243130] text-[#f6f0e5] text-xs font-bold rounded-full hover:scale-105 transition-transform text-center font-childish shadow-md">Mulai Bersama RONA</a>
+                                <a href="#cerita" class="px-5 py-3.5 bg-transparent text-[#243130] text-xs font-bold rounded-full border border-[#243130]/20 hover:bg-[#243130]/5 transition-colors flex items-center gap-1 font-childish">
                                     Lihat Caranya <span class="material-symbols-outlined text-[16px]">arrow_downward</span>
                                 </a>
                             </div>
                         </div>
-                        <!-- Image side — below text on mobile, right side on md+ -->
-                        <div class="relative order-first md:order-last w-full">
-                            <div class="absolute inset-0 bg-primary/5 rounded-full blur-3xl -z-10"></div>
-                            <img class="w-full max-h-[260px] md:max-h-none md:aspect-[4/3] lg:aspect-[4/3] rounded-card shadow-xl object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcfs8hdPrZTR6PKnsAtxrw5FsGUeJuFq6RhVVrKo8uAzsama-ML-FrfHCXD4FS2ESj5s7HpMAK2Bmm7FlXrIWYsM4k1M9b4-fHNeXJee3xA0e_SNRPHZ0LNSKCZytsndaXm0EhuCpxCjwlbLG-Y3KkcabQL-E6YoYXfwOVvpIESDsGRRjBVoqmXC3nUh200frQSAL4LMOwVeFVO0XzFPkH21pywLQT9V_TgSijEmYjopZnS_3QrlsVjn17u84uyjlBOEzNYev3fj_Z" />
+                        <!-- Image side — styled illustrated frame -->
+                        <div class="w-full md:w-1/2 flex justify-center order-first md:order-last">
+                            <div class="illustrated-frame w-full max-w-[480px]">
+                                <img class="w-full h-auto rounded-lg border border-[#243130]/10 object-contain bg-[#fbf7f0]" src="hero-art.png" alt="RONA Calming Hero Illustration" />
+                            </div>
                         </div>
                     </div>
                 </section>
 
                 <!-- Cerita Perjalanan RONA (Narrative, Not Features) -->
-                <section id="cerita" class="bg-white/50 border-y border-outline-variant/20 py-12 md:py-16 lg:py-20 px-4 md:px-6">
+                <section id="cerita" class="py-12 md:py-16 lg:py-20 px-4 md:px-6">
                     <div class="max-w-[1200px] mx-auto">
                         <div class="text-center max-w-xl mx-auto mb-8 md:mb-12">
-                            <h2 class="text-xl md:text-2xl lg:text-3xl font-extrabold text-on-surface mb-3">Langkah Sederhana Bersama RONA</h2>
-                            <p class="text-xs font-bold text-on-surface-variant leading-relaxed">Sebuah ruang perlindungan yang dirancang khusus untuk memandu pengasuhan buah hati Anda secara tenang.</p>
+                            <span class="text-xs font-bold text-[#c65f47] uppercase tracking-wider block mb-2 font-childish">CARA KERJA</span>
+                            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold font-vintage text-[#243130] mb-3">Langkah Sederhana Bersama RONA</h2>
+                            <p class="text-xs font-semibold text-[#243130]/80 leading-relaxed">Sebuah ruang perlindungan yang dirancang khusus untuk memandu pengasuhan buah hati Anda secara tenang.</p>
                         </div>
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
-                            <div class="space-y-3 p-4 md:p-5 bg-white rounded-2xl border border-outline-variant/10 shadow-sm">
-                                <div class="w-9 h-9 md:w-10 md:h-10 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center font-extrabold text-xs md:text-sm shadow-inner">01</div>
-                                <h3 class="font-extrabold text-xs text-on-surface">Memahami Kondisi</h3>
-                                <p class="text-[10px] font-semibold text-on-surface-variant leading-relaxed hidden md:block">Mengenali sensitivitas sensorik & tingkat atensi si kecil secara tenang tanpa label medis.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5">
+                            <div class="space-y-4 p-6 paper-card">
+                                <div class="w-10 h-10 rounded-full bg-[#c65f47] text-white flex items-center justify-center font-extrabold text-sm shadow-md">01</div>
+                                <h3 class="font-bold text-sm text-[#243130] font-childish">Memahami Kondisi</h3>
+                                <p class="text-[11px] font-semibold text-[#243130]/70 leading-relaxed">Mengenali sensitivitas sensorik & tingkat atensi si kecil secara tenang tanpa label medis.</p>
                             </div>
-                            <div class="space-y-3 p-4 md:p-5 bg-white rounded-2xl border border-outline-variant/10 shadow-sm">
-                                <div class="w-9 h-9 md:w-10 md:h-10 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-extrabold text-xs md:text-sm shadow-inner">02</div>
-                                <h3 class="font-extrabold text-xs text-on-surface">Mencatat Pola</h3>
-                                <p class="text-[10px] font-semibold text-on-surface-variant leading-relaxed hidden md:block">Menulis rentang fokus, emosi, atau tantrum harian untuk melihat pola pemicu.</p>
+                            <div class="space-y-4 p-6 paper-card">
+                                <div class="w-10 h-10 rounded-full bg-[#7da095] text-white flex items-center justify-center font-extrabold text-sm shadow-md">02</div>
+                                <h3 class="font-bold text-sm text-[#243130] font-childish">Mencatat Pola</h3>
+                                <p class="text-[11px] font-semibold text-[#243130]/70 leading-relaxed">Menulis rentang fokus, emosi, atau tantrum harian untuk melihat pola pemicu.</p>
                             </div>
-                            <div class="space-y-3 p-4 md:p-5 bg-white rounded-2xl border border-outline-variant/10 shadow-sm">
-                                <div class="w-9 h-9 md:w-10 md:h-10 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center font-extrabold text-xs md:text-sm shadow-inner">03</div>
-                                <h3 class="font-extrabold text-xs text-on-surface">Membaca Insight</h3>
-                                <p class="text-[10px] font-semibold text-on-surface-variant leading-relaxed hidden md:block">Mendapat analisis mingguan yang ramah untuk dikonsultasikan dengan dokter spesialis.</p>
+                            <div class="space-y-4 p-6 paper-card">
+                                <div class="w-10 h-10 rounded-full bg-[#74878e] text-white flex items-center justify-center font-extrabold text-sm shadow-md">03</div>
+                                <h3 class="font-bold text-sm text-[#243130] font-childish">Membaca Insight</h3>
+                                <p class="text-[11px] font-semibold text-[#243130]/70 leading-relaxed">Mendapat analisis mingguan yang ramah untuk dikonsultasikan dengan dokter spesialis.</p>
                             </div>
-                            <div class="space-y-3 p-4 md:p-5 bg-white rounded-2xl border border-outline-variant/10 shadow-sm">
-                                <div class="w-9 h-9 md:w-10 md:h-10 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center font-extrabold text-xs md:text-sm shadow-inner">04</div>
-                                <h3 class="font-extrabold text-xs text-on-surface">Rekomendasi Teruji</h3>
-                                <p class="text-[10px] font-semibold text-on-surface-variant leading-relaxed hidden md:block">Memperoleh saran aktivitas stimulasi sensori & kurasi alat bantu dari psikolog.</p>
+                            <div class="space-y-4 p-6 paper-card">
+                                <div class="w-10 h-10 rounded-full bg-[#c65f47] text-white flex items-center justify-center font-extrabold text-sm shadow-md">04</div>
+                                <h3 class="font-bold text-sm text-[#243130] font-childish">Rekomendasi Teruji</h3>
+                                <p class="text-[11px] font-semibold text-[#243130]/70 leading-relaxed">Memperoleh saran aktivitas stimulasi sensori & kurasi alat bantu dari psikolog.</p>
                             </div>
-                            <div class="space-y-3 p-4 md:p-5 bg-white rounded-2xl border border-outline-variant/10 shadow-sm col-span-2 md:col-span-1">
-                                <div class="w-9 h-9 md:w-10 md:h-10 rounded-2xl bg-rose-50 text-rose-700 flex items-center justify-center font-extrabold text-xs md:text-sm shadow-inner">05</div>
-                                <h3 class="font-extrabold text-xs text-on-surface">Pendampingan</h3>
-                                <p class="text-[10px] font-semibold text-on-surface-variant leading-relaxed hidden md:block">Mendampingi kemajuan tumbuh kembang si kecil secara terencana dan bertahap.</p>
+                            <div class="space-y-4 p-6 paper-card">
+                                <div class="w-10 h-10 rounded-full bg-[#7da095] text-white flex items-center justify-center font-extrabold text-sm shadow-md">05</div>
+                                <h3 class="font-bold text-sm text-[#243130] font-childish">Pendampingan</h3>
+                                <p class="text-[11px] font-semibold text-[#243130]/70 leading-relaxed">Mendampingi kemajuan tumbuh kembang si kecil secara terencana dan bertahap.</p>
                             </div>
                         </div>
                     </div>
                 </section>
 
                 <!-- Interactive Previews (Preview of features before joining) -->
-                <section class="max-w-[1200px] mx-auto px-4 md:px-6 py-12 md:py-16 lg:py-20">
+                <section class="max-w-[1200px] mx-auto px-4 md:px-6 py-12 md:py-16 lg:py-20 border-t border-[#dfd8cb]/10">
                     <div class="grid lg:grid-cols-2 gap-8 md:gap-10 lg:gap-16 items-center">
                         <div class="space-y-5 md:space-y-6">
-                            <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface leading-tight">Melihat RONA bekerja untuk Anda</h2>
-                            <p class="text-xs font-semibold text-on-surface-variant leading-relaxed">Kami menyederhanakan data perkembangan yang kompleks menjadi visual ramah dan cerita yang menyentuh hati.</p>
+                            <h2 class="text-3xl font-bold font-vintage text-[#c65f47] leading-tight">Melihat RONA bekerja untuk Anda</h2>
+                            <p class="text-sm font-semibold text-[#243130]/80 leading-relaxed">Kami menyederhanakan data perkembangan yang kompleks menjadi visual ramah dan cerita yang menyentuh hati.</p>
                             
-                            <div class="space-y-4">
-                                <div class="p-5 bg-white rounded-2xl border border-outline-variant/20 shadow-sm">
-                                    <h4 class="font-extrabold text-sm text-primary mb-1 flex items-center gap-1.5">
-                                        <span class="material-symbols-outlined text-[18px]">favorite</span> Ringkasan Tumbuh Kembang Lembut
+                            <div class="space-y-5 pt-2">
+                                <div class="p-6 paper-card">
+                                    <h4 class="font-bold text-base text-[#c65f47] mb-2 flex items-center gap-1.5 font-childish">
+                                        <span class="material-symbols-outlined text-[20px]">favorite</span> Ringkasan Tumbuh Kembang Lembut
                                     </h4>
-                                    <p class="text-[11px] font-semibold text-on-surface-variant">Grafik radar tradisional kami gantikan dengan peta afeksi emosi anak yang menenangkan dan mudah dibaca.</p>
+                                    <p class="text-xs font-semibold text-[#243130]/85 leading-relaxed">Grafik radar tradisional kami gantikan dengan peta afeksi emosi anak yang menenangkan dan mudah dibaca.</p>
                                 </div>
-                                <div class="p-5 bg-white rounded-2xl border border-outline-variant/20 shadow-sm">
-                                    <h4 class="font-extrabold text-sm text-primary mb-1 flex items-center gap-1.5">
-                                        <span class="material-symbols-outlined text-[18px]">library_books</span> Ruang Edukasi Bebas Stigma
+                                <div class="p-6 paper-card">
+                                    <h4 class="font-bold text-base text-[#7da095] mb-2 flex items-center gap-1.5 font-childish">
+                                        <span class="material-symbols-outlined text-[20px]">library_books</span> Ruang Edukasi Bebas Stigma
                                     </h4>
-                                    <p class="text-[11px] font-semibold text-on-surface-variant">Artikel informatif bebas dari bahasa klinis yang dingin. Semuanya ditulis untuk memeluk hati orang tua.</p>
+                                    <p class="text-xs font-semibold text-[#243130]/85 leading-relaxed">Artikel informatif bebas dari bahasa klinis yang dingin. Semuanya ditulis untuk memeluk hati orang tua.</p>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Interactive Preview Mockup Card -->
-                        <div class="bg-white p-6 rounded-card shadow-lg border border-outline-variant/30 space-y-4">
-                            <div class="flex justify-between items-center pb-3 border-b border-outline-variant/20">
-                                <span class="text-xs font-bold text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">child_care</span> Rara (4 tahun)</span>
-                                <span class="px-2.5 py-1 bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-bold rounded-full">Streak: 5 Hari</span>
+                        <div class="paper-card p-6 space-y-5">
+                            <div class="flex justify-between items-center pb-3 border-b border-[#243130]/10">
+                                <span class="text-xs font-bold text-[#c65f47] flex items-center gap-1 font-childish"><span class="material-symbols-outlined text-[18px]">child_care</span> Rara (4 tahun)</span>
+                                <span class="px-2.5 py-1 bg-[#7da095]/15 border border-[#7da095]/30 text-[#243130] text-[10px] font-bold rounded-full font-childish">Streak: 5 Hari</span>
                             </div>
-                            <div class="bg-surface p-4 rounded-2xl border border-outline-variant/10 space-y-3">
-                                <span class="text-[10px] font-bold text-outline">MOOD TERAKHIR</span>
-                                <p class="text-xs font-extrabold text-on-surface">"Rara terlihat tenang saat bermain sensory brush, sensitivitas auditori stabil."</p>
-                                <div class="flex gap-2">
-                                    <span class="bg-[#ebefec] text-[#0d6a5c] px-3 py-1 rounded-full text-[9px] font-bold border border-[#0d6a5c]/20">Taktil Terpenuhi</span>
-                                    <span class="bg-[#ebefec] text-[#0d6a5c] px-3 py-1 rounded-full text-[9px] font-bold border border-[#0d6a5c]/20">Suara Aman</span>
+                            <div class="bg-[#243130]/5 p-5 rounded-2xl border border-[#243130]/10 space-y-3">
+                                <span class="text-[9px] font-bold text-[#243130]/55 uppercase tracking-wider block font-childish">MOOD TERAKHIR</span>
+                                <p class="text-sm font-bold text-[#243130]">"Rara terlihat tenang saat bermain sensory brush, sensitivitas auditori stabil."</p>
+                                <div class="flex gap-2 pt-1">
+                                    <span class="bg-[#7da095]/20 text-[#243130] px-3 py-1 rounded-full text-[9px] font-bold border border-[#7da095]/30 font-childish">Taktil Terpenuhi</span>
+                                    <span class="bg-[#7da095]/20 text-[#243130] px-3 py-1 rounded-full text-[9px] font-bold border border-[#7da095]/30 font-childish">Suara Aman</span>
                                 </div>
                             </div>
-                            <div class="text-center pt-2">
-                                <a href="register.html" class="inline-block text-xs font-bold text-primary hover:underline">Ingin mencoba pada anak Anda? Daftar Gratis Sekarang →</a>
+                            <div class="text-center pt-1">
+                                <a href="register.html" class="inline-block text-xs font-bold text-[#c65f47] hover:underline font-childish">Ingin mencoba pada anak Anda? Daftar Gratis Sekarang →</a>
                             </div>
                         </div>
                     </div>
                 </section>
 
                 <!-- Top Articles Preview -->
-                <section class="bg-surface-container-low/50 border-t border-outline-variant/20 py-12 md:py-16 lg:py-20 px-4 md:px-6">
+                <section class="border-t border-[#dfd8cb]/10 py-12 md:py-16 lg:py-20 px-4 md:px-6">
                     <div class="max-w-[1200px] mx-auto">
                         <div class="flex justify-between items-center mb-6 md:mb-10">
-                            <h2 class="text-xl md:text-2xl font-extrabold text-on-surface">Artikel Pendamping Terpopuler</h2>
-                            <a href="artikel.html" class="text-xs font-bold text-primary hover:underline whitespace-nowrap ml-4">Buka Ruang Belajar</a>
+                            <h2 class="text-2xl font-bold font-vintage text-[#c65f47]">Artikel Pendamping Terpopuler</h2>
+                            <a href="artikel.html" class="text-xs font-bold text-[#c65f47] hover:underline whitespace-nowrap ml-4 font-childish">Buka Ruang Belajar</a>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 lg:gap-8" id="guestArticlesGrid">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" id="guestArticlesGrid">
                             <!-- Injected dynamically from localStorage seed -->
                         </div>
                     </div>
                 </section>
 
                 <!-- Top Products Preview -->
-                <section class="max-w-[1200px] mx-auto px-4 md:px-6 py-12 md:py-16 lg:py-20">
+                <section class="max-w-[1200px] mx-auto px-4 md:px-6 py-12 md:py-16 lg:py-20 border-t border-[#dfd8cb]/10">
                     <div class="flex justify-between items-center mb-6 md:mb-10">
-                        <h2 class="text-xl md:text-2xl font-extrabold text-on-surface">Rekomendasi Alat Bantu Teruji</h2>
-                        <a href="katalog.html" class="text-xs font-bold text-primary hover:underline whitespace-nowrap ml-4">Lihat Selengkapnya</a>
+                        <h2 class="text-2xl font-bold font-vintage text-[#c65f47]">Rekomendasi Alat Bantu Teruji</h2>
+                        <a href="katalog.html" class="text-xs font-bold text-[#c65f47] hover:underline whitespace-nowrap ml-4 font-childish">Lihat Selengkapnya</a>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 lg:gap-8" id="guestProductsGrid">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" id="guestProductsGrid">
                         <!-- Injected dynamically -->
                     </div>
                 </section>
 
                 <!-- Parental Testimonials -->
-                <section class="bg-white/50 border-t border-outline-variant/20 py-12 md:py-16 lg:py-20 px-4 md:px-6">
+                <section class="border-t border-[#dfd8cb]/10 py-12 md:py-16 lg:py-20 px-4 md:px-6">
                     <div class="max-w-[1200px] mx-auto">
-                        <h2 class="text-xl md:text-2xl font-extrabold text-on-surface text-center mb-8 md:mb-12">Cerita Nyata dari Orang Tua</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
-                            <div class="bg-white p-6 rounded-card border border-outline-variant/10 shadow-sm relative space-y-4">
-                                <span class="material-symbols-outlined text-primary/20 text-4xl absolute right-6 top-6">format_quote</span>
-                                <p class="text-xs font-semibold text-on-surface-variant leading-relaxed italic">"Dengan RONA, saya akhirnya sadar jika meltdown anak saya dipicu suara mesin blender di pagi hari. Langkah kecil ini mengubah rutinitas sarapan kami."</p>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden shrink-0 border border-outline-variant/20">
+                        <h2 class="text-3xl font-bold font-vintage text-[#c65f47] text-center mb-8 md:mb-12">Cerita Nyata dari Orang Tua</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                            <div class="paper-card p-6 relative space-y-4">
+                                <span class="material-symbols-outlined text-[#c65f47]/20 text-4xl absolute right-6 top-6">format_quote</span>
+                                <p class="text-xs font-semibold text-[#243130]/85 leading-relaxed italic">"Dengan RONA, saya akhirnya sadar jika meltdown anak saya dipicu suara mesin blender di pagi hari. Langkah kecil ini mengubah rutinitas sarapan kami."</p>
+                                <div class="flex items-center gap-3 pt-2">
+                                    <div class="w-10 h-10 rounded-full bg-[#243130]/10 overflow-hidden shrink-0 border border-[#dfd8cb]">
                                         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV5XiLayPA1pSSLoO7H_yAIKGz3zWhssmR2_V9z1ZowaFqr3e-PuSINEt0dmoMcWwN6xCPbeoKDEqtyOd2e01fzsvUbP6xlqywIqKmPw3jRf0Yz-kp1URIGtXrdjzhdvE_YYCanTEalgE9rUYQtbWdsxOQ1GJV9XVdasp8JEBSWvGfhvYcVt_JGh9tN0Xr2WrkLRbN0a6WyIxiZlGdI2_BgC4fC-I-f3MEVG4AkzAsxGIlSKMwOk7aQhQxjj3bGSZb6H1JGoG-TxHF" class="w-full h-full object-cover">
                                     </div>
                                     <div>
-                                        <strong class="text-xs text-on-surface block">Ibu Sarah</strong>
-                                        <span class="text-[10px] text-outline font-bold">Jakarta Selatan</span>
+                                        <strong class="text-xs text-[#243130] block font-childish">Ibu Sarah</strong>
+                                        <span class="text-[10px] text-[#243130]/50 font-bold">Jakarta Selatan</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-white p-6 rounded-card border border-outline-variant/10 shadow-sm relative space-y-4">
-                                <span class="material-symbols-outlined text-primary/20 text-4xl absolute right-6 top-6">format_quote</span>
-                                <p class="text-xs font-semibold text-on-surface-variant leading-relaxed italic">"Terapinya jadi lebih terstruktur karena kami mencatat kemajuan setiap malam. Dan sikat sensori Wilbarger yang direkomendasikan RONA bekerja sangat baik."</p>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden shrink-0 border border-outline-variant/20">
+                            <div class="paper-card p-6 relative space-y-4">
+                                <span class="material-symbols-outlined text-[#c65f47]/20 text-4xl absolute right-6 top-6">format_quote</span>
+                                <p class="text-xs font-semibold text-[#243130]/85 leading-relaxed italic">"Terapinya jadi lebih terstruktur karena kami mencatat kemajuan setiap malam. Dan sikat sensori Wilbarger yang direkomendasikan RONA bekerja sangat baik."</p>
+                                <div class="flex items-center gap-3 pt-2">
+                                    <div class="w-10 h-10 rounded-full bg-[#243130]/10 overflow-hidden shrink-0 border border-[#dfd8cb]">
                                         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDb242Wc_l_yFsch8M1B34Ky83XB_FfzvzuX1yQITrYDEF969s3XQXY1lMLm7ClXhmqBGbIAZf_-FWBcERdyW5ux4xGr9-TDWURkOaFL_q_moORcYUlIYB7lHnRoufeJoAYbXCEDUHNXbC95vsPxh0Agk6gCNpOi38Wdqi3ZzSCgiUReLkX0aCgriPj_iEaZRRPwrUsatQevBt84sdAiu8crqlgqjE6ZDhYCOyFBWuDOuLceNHskpIH_xmFRUiEiPtvwFC7LNSe-_oK" class="w-full h-full object-cover">
                                     </div>
                                     <div>
-                                        <strong class="text-xs text-on-surface block">Bapak Aris</strong>
-                                        <span class="text-[10px] text-outline font-bold">Bandung</span>
+                                        <strong class="text-xs text-[#243130] block font-childish">Bapak Aris</strong>
+                                        <span class="text-[10px] text-[#243130]/50 font-bold">Bandung</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-white p-6 rounded-card border border-outline-variant/10 shadow-sm relative space-y-4">
-                                <span class="material-symbols-outlined text-primary/20 text-4xl absolute right-6 top-6">format_quote</span>
-                                <p class="text-xs font-semibold text-on-surface-variant leading-relaxed italic">"Selimut RONA Calming Blanket melatih regulasi emosi anak saya secara alami sebelum tidur. Sangat bersyukur menemukan ekosistem sehangat ini."</p>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden shrink-0 border border-outline-variant/20">
+                            <div class="paper-card p-6 relative space-y-4">
+                                <span class="material-symbols-outlined text-[#c65f47]/20 text-4xl absolute right-6 top-6">format_quote</span>
+                                <p class="text-xs font-semibold text-[#243130]/85 leading-relaxed italic">"Selimut RONA Calming Blanket melatih regulasi emosi anak saya secara alami sebelum tidur. Sangat bersyukur menemukan ekosistem sehangat ini."</p>
+                                <div class="flex items-center gap-3 pt-2">
+                                    <div class="w-10 h-10 rounded-full bg-[#243130]/10 overflow-hidden shrink-0 border border-[#dfd8cb]">
                                         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAUiQIsKTOnxHt90Snv9BPZE3leA58ioc7LRFqzvwGvAlMuW5ws7p8Yg0hN2AvLFgSQ1duXa5l060kvK82rnInMacut3gl5HfRrvHGGTWTYgHz3myvybCX4taYuaPDa3t7q7dRxNP8TlotNiGAjaZn2JxOTn079Nm4ve0KCjGhjMluN8HP6-c7uQNzOsmrEwHZV3dCFl9KajOLDeO_k1NN0f-8nabtV_oK5j2VPLH4gXXQbs5poZfWI14uGRUoDtnqb-L9vz3YMe6X" class="w-full h-full object-cover">
                                     </div>
                                     <div>
-                                        <strong class="text-xs text-on-surface block">Ibu Maya</strong>
-                                        <span class="text-[10px] text-outline font-bold">Surabaya</span>
+                                        <strong class="text-xs text-[#243130] block font-childish">Ibu Maya</strong>
+                                        <span class="text-[10px] text-[#243130]/50 font-bold">Surabaya</span>
                                     </div>
                                 </div>
                             </div>
@@ -390,17 +393,17 @@
             const guestArtGrid = document.getElementById('guestArticlesGrid');
             db.articles.slice(0, 3).forEach(art => {
                 guestArtGrid.innerHTML += `
-                    <div class="bg-white rounded-card overflow-hidden border border-outline-variant/20 shadow-sm flex flex-col hover:scale-[1.01] transition-transform">
+                    <div class="paper-card overflow-hidden flex flex-col hover:scale-[1.01] transition-transform">
                         <div class="w-full aspect-[16/9] bg-surface overflow-hidden">
                             <img src="${art.thumbnail}" class="w-full h-full object-cover">
                         </div>
                         <div class="p-4 md:p-5 lg:p-6 flex-grow flex flex-col justify-between space-y-3">
                             <div>
-                                <span class="text-[9px] font-bold bg-primary/5 text-primary border border-primary/20 px-2 py-0.5 rounded-full">${art.category}</span>
-                                <h3 class="text-sm font-extrabold text-on-surface leading-tight mt-2 hover:text-primary transition-colors"><a href="artikel.html">${art.title}</a></h3>
-                                <p class="text-[11px] font-semibold text-on-surface-variant mt-1.5 leading-relaxed line-clamp-2">${art.summary}</p>
+                                <span class="text-[9px] font-bold bg-[#c65f47]/10 text-[#c65f47] border border-[#c65f47]/20 px-2 py-0.5 rounded-full font-childish">${art.category}</span>
+                                <h3 class="text-sm font-bold font-vintage text-[#243130] leading-tight mt-2 hover:text-[#c65f47] transition-colors"><a href="artikel.html">${art.title}</a></h3>
+                                <p class="text-[11px] font-semibold text-[#243130]/75 mt-1.5 leading-relaxed line-clamp-2">${art.summary}</p>
                             </div>
-                            <span class="text-[10px] text-outline font-bold">Ditulis oleh: ${art.author}</span>
+                            <span class="text-[10px] text-[#243130]/50 font-bold">Ditulis oleh: ${art.author}</span>
                         </div>
                     </div>
                 `;
@@ -409,19 +412,19 @@
             const guestProdGrid = document.getElementById('guestProductsGrid');
             db.products.slice(0, 3).forEach(prod => {
                 guestProdGrid.innerHTML += `
-                    <div class="bg-white rounded-card overflow-hidden border border-outline-variant/20 shadow-sm flex flex-col">
+                    <div class="paper-card overflow-hidden flex flex-col">
                         <div class="w-full aspect-[4/3] bg-surface overflow-hidden relative">
                             <img src="${prod.image}" class="w-full h-full object-cover">
-                            <span class="absolute top-3 left-3 bg-white/95 px-2.5 py-1 rounded-full text-[9px] font-bold text-primary shadow-sm border border-primary/10">${prod.category}</span>
+                            <span class="absolute top-3 left-3 bg-[#f6f0e5] px-2.5 py-1 rounded-full text-[9px] font-bold text-[#c65f47] shadow-sm border border-[#c65f47]/10 font-childish">${prod.category}</span>
                         </div>
                         <div class="p-4 md:p-5 lg:p-6 flex-grow flex flex-col justify-between space-y-3">
                             <div>
-                                <h3 class="text-sm font-extrabold text-on-surface leading-tight">${prod.name}</h3>
-                                <p class="text-[10px] text-primary font-bold mt-1 bg-emerald-50/50 p-2 rounded-lg border border-emerald-100/50 hidden md:block">❤️ ${prod.benefits.substring(0, 60)}...</p>
+                                <h3 class="text-sm font-bold font-vintage text-[#243130] leading-tight">${prod.name}</h3>
+                                <p class="text-[10px] text-[#c65f47] font-bold mt-1 bg-[#c65f47]/5 p-2 rounded-lg border border-[#c65f47]/10 hidden md:block">❤️ ${prod.benefits.substring(0, 60)}...</p>
                             </div>
-                            <div class="flex justify-between items-center pt-2 border-t border-outline-variant/10 text-xs font-extrabold">
-                                <span class="text-primary">Rp ${prod.price.toLocaleString('id-ID')}</span>
-                                <span class="text-outline text-[10px] hidden sm:block">Rekom. ${prod.ageRecommendation}</span>
+                            <div class="flex justify-between items-center pt-2 border-t border-[#243130]/10 text-xs font-bold font-childish">
+                                <span class="text-[#c65f47]">Rp ${prod.price.toLocaleString('id-ID')}</span>
+                                <span class="text-[#243130]/50 text-[10px] hidden sm:block">Rekom. ${prod.ageRecommendation}</span>
                             </div>
                         </div>
                     </div>
@@ -443,15 +446,15 @@
 
             viewContainer.innerHTML = `
                 <!-- Personal Welcome Area -->
-                <section class="max-w-[1200px] mx-auto px-4 md:px-6 py-6 md:py-8">
-                    <div class="bg-gradient-to-br from-primary to-secondary text-white p-6 md:p-8 rounded-[24px] md:rounded-[32px] shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 relative overflow-hidden">
+                <section class="max-w-[1200px] mx-auto px-4 md:px-6 py-6 md:py-8 animate-fade-in">
+                    <div class="bg-gradient-to-br from-[#c65f47] to-[#7da095] text-white p-6 md:p-8 rounded-[24px] md:rounded-[32px] shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 relative overflow-hidden">
                         <div class="absolute -right-16 -top-16 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
                         <div class="relative z-10">
-                            <h2 class="text-2xl md:text-3xl font-extrabold">Halo, Bunda ${activeParent.parentName.split(' ')[0]} 👋</h2>
+                            <h2 class="text-2xl md:text-3xl font-bold font-vintage">Halo, Bunda ${activeParent.parentName.split(' ')[0]} 👋</h2>
                             <p class="text-xs font-semibold text-white/90 mt-1">Senang melihat Anda kembali.</p>
-                            <p class="text-sm font-extrabold text-white mt-2">Bagaimana kabar ${childName} hari ini?</p>
+                            <p class="text-sm font-bold text-white mt-2">Bagaimana kabar ${childName} hari ini?</p>
                         </div>
-                        <button onclick="openQuickLogModal()" class="relative z-10 bg-white text-primary px-5 md:px-6 py-3 md:py-3.5 rounded-full font-bold hover:scale-[1.02] active:scale-95 transition-transform flex items-center gap-2 text-xs shadow-md shrink-0 w-full sm:w-auto justify-center sm:justify-start">
+                        <button onclick="openQuickLogModal()" class="relative z-10 bg-[#f6f0e5] text-[#243130] px-5 md:px-6 py-3 md:py-3.5 rounded-full font-bold hover:scale-[1.02] active:scale-95 transition-transform flex items-center gap-2 text-xs shadow-md shrink-0 w-full sm:w-auto justify-center sm:justify-start font-childish border border-[#dfd8cb]">
                             <span class="material-symbols-outlined text-[18px]">add</span>
                             Tambah Catatan Hari Ini
                         </button>
@@ -461,14 +464,14 @@
                 <!-- Kid Profile Card -->
                 <section class="max-w-[1200px] mx-auto px-4 md:px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-10">
                     <!-- Kid info card with avatar -->
-                    <div class="bg-white p-6 rounded-[28px] border border-outline-variant/30 shadow-sm flex items-center gap-4">
-                        <div class="w-16 h-16 rounded-2xl bg-teal-50 border border-teal-200 overflow-hidden shrink-0 flex items-center justify-center font-extrabold text-primary text-2xl">
-                            <span class="material-symbols-outlined text-[36px] text-primary">face</span>
+                    <div class="paper-card p-6 flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-2xl bg-[#7da095]/15 border border-[#7da095]/30 overflow-hidden shrink-0 flex items-center justify-center font-bold text-[#c65f47] text-2xl">
+                            <span class="material-symbols-outlined text-[36px]">face</span>
                         </div>
                         <div class="space-y-1">
-                            <h3 class="font-extrabold text-sm text-on-surface">${childName}</h3>
-                            <span class="text-[10px] text-outline font-bold uppercase block">${childAge} • ${activeParent.location}</span>
-                            <div class="flex items-center gap-3 pt-1 text-[10px] font-bold text-primary">
+                            <h3 class="font-bold text-base text-[#243130] font-vintage">${childName}</h3>
+                            <span class="text-[10px] text-[#243130]/50 font-bold uppercase block">${childAge} • ${activeParent.location}</span>
+                            <div class="flex items-center gap-3 pt-1 text-[10px] font-bold text-[#c65f47] font-childish">
                                 <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[14px]">local_fire_department</span> Streak: ${journalCount} Hari</span>
                                 <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[14px]">award</span> ${journalCount * 10} poin</span>
                             </div>
@@ -476,69 +479,69 @@
                     </div>
 
                     <!-- Last Activity and Mood -->
-                    <div class="bg-white p-6 rounded-[28px] border border-outline-variant/30 shadow-sm flex flex-col justify-center space-y-1.5">
-                        <span class="text-[9px] font-bold text-outline uppercase tracking-wider block">Kondisi & Mood Terakhir</span>
-                        <div class="text-xs font-semibold text-on-surface leading-normal">
+                    <div class="paper-card p-6 flex flex-col justify-center space-y-1.5">
+                        <span class="text-[9px] font-bold text-[#243130]/50 uppercase tracking-wider block font-childish">Kondisi & Mood Terakhir</span>
+                        <div class="text-xs font-semibold text-[#243130] leading-normal">
                             <p><strong>Aktivitas:</strong> Bermain Sensory Sand</p>
                             <p class="mt-0.5"><strong>Mood:</strong> ${condition}</p>
                         </div>
                     </div>
 
                     <!-- Progress action -->
-                    <div class="bg-white p-6 rounded-[28px] border border-outline-variant/30 shadow-sm flex items-center justify-between gap-4">
+                    <div class="paper-card p-6 flex items-center justify-between gap-4">
                         <div class="space-y-1">
-                            <h4 class="text-xs font-extrabold text-on-surface">Progress Kecil Minggu Ini</h4>
-                            <p class="text-[10px] text-on-surface-variant font-semibold">Sensorik & Fokus membaik 15%</p>
+                            <h4 class="text-xs font-bold text-[#243130] font-vintage">Progress Kecil Minggu Ini</h4>
+                            <p class="text-[10px] text-[#243130]/70 font-semibold">Sensorik & Fokus membaik 15%</p>
                         </div>
-                        <a href="dashboard-parent.html" class="px-4 py-2.5 bg-primary/5 text-primary text-xs font-bold rounded-xl border border-primary/20 hover:bg-primary/10 transition-colors shrink-0">Lihat Detail</a>
+                        <a href="dashboard-parent.html" class="px-4 py-2.5 bg-[#c65f47]/10 text-[#c65f47] text-xs font-bold rounded-xl border border-[#c65f47]/30 hover:bg-[#c65f47]/20 transition-colors shrink-0 font-childish">Lihat Detail</a>
                     </div>
                 </section>
 
                 <!-- Lanjutkan Aktivitas Section -->
                 <section class="max-w-[1200px] mx-auto px-6 mb-12">
-                    <h3 class="text-sm font-extrabold text-on-surface mb-6 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary text-[20px]">directions_run</span>
+                    <h3 class="text-sm font-bold text-[#243130] mb-6 flex items-center gap-2 font-vintage text-base">
+                        <span class="material-symbols-outlined text-[#c65f47] text-[20px]">directions_run</span>
                         Lanjutkan Aktivitas
                     </h3>
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                        <a href="history.html" class="bg-white p-5 rounded-2xl border border-outline-variant/20 shadow-sm flex flex-col justify-between h-32 card-shadow-hover transition-all">
-                            <div class="w-10 h-10 bg-teal-50 text-teal-700 rounded-xl flex items-center justify-center shrink-0">
+                        <a href="history.html" class="paper-card p-5 flex flex-col justify-between h-32 transition-all">
+                            <div class="w-10 h-10 bg-[#7da095]/20 text-[#243130] rounded-xl flex items-center justify-center shrink-0">
                                 <span class="material-symbols-outlined">timeline</span>
                             </div>
                             <div>
-                                <h3 class="text-xs font-extrabold text-on-surface block">Tracking Hari Ini</h3>
+                                <h3 class="text-xs font-bold text-[#243130] block font-childish">Tracking Hari Ini</h3>
                             </div>
                         </a>
-                        <a href="artikel.html" class="bg-white p-5 rounded-2xl border border-outline-variant/20 shadow-sm flex flex-col justify-between h-32 card-shadow-hover transition-all">
-                            <div class="w-10 h-10 bg-rose-50 text-rose-700 rounded-xl flex items-center justify-center shrink-0">
+                        <a href="artikel.html" class="paper-card p-5 flex flex-col justify-between h-32 transition-all">
+                            <div class="w-10 h-10 bg-[#c65f47]/20 text-[#c65f47] rounded-xl flex items-center justify-center shrink-0">
                                 <span class="material-symbols-outlined">menu_book</span>
                             </div>
                             <div>
-                                <h3 class="text-xs font-extrabold text-on-surface block">Artikel Untuk ${childName}</h3>
+                                <h3 class="text-xs font-bold text-[#243130] block font-childish">Artikel Untuk ${childName}</h3>
                             </div>
                         </a>
-                        <a href="katalog.html" class="bg-white p-5 rounded-2xl border border-outline-variant/20 shadow-sm flex flex-col justify-between h-32 card-shadow-hover transition-all">
-                            <div class="w-10 h-10 bg-amber-50 text-amber-700 rounded-xl flex items-center justify-center shrink-0">
+                        <a href="katalog.html" class="paper-card p-5 flex flex-col justify-between h-32 transition-all">
+                            <div class="w-10 h-10 bg-amber-100 text-amber-800 rounded-xl flex items-center justify-center shrink-0">
                                 <span class="material-symbols-outlined">shopping_basket</span>
                             </div>
                             <div>
-                                <h3 class="text-xs font-extrabold text-on-surface block">Produk Rekomendasi</h3>
+                                <h3 class="text-xs font-bold text-[#243130] block font-childish">Produk Rekomendasi</h3>
                             </div>
                         </a>
-                        <a href="history.html" class="bg-white p-5 rounded-2xl border border-outline-variant/20 shadow-sm flex flex-col justify-between h-32 card-shadow-hover transition-all">
-                            <div class="w-10 h-10 bg-indigo-50 text-indigo-700 rounded-xl flex items-center justify-center shrink-0">
+                        <a href="history.html" class="paper-card p-5 flex flex-col justify-between h-32 transition-all">
+                            <div class="w-10 h-10 bg-indigo-100 text-indigo-800 rounded-xl flex items-center justify-center shrink-0">
                                 <span class="material-symbols-outlined">sports_esports</span>
                             </div>
                             <div>
-                                <h3 class="text-xs font-extrabold text-on-surface block">Aktivitas Hari Ini</h3>
+                                <h3 class="text-xs font-bold text-[#243130] block font-childish">Aktivitas Hari Ini</h3>
                             </div>
                         </a>
-                        <a href="dashboard-parent.html" class="bg-white p-5 rounded-2xl border border-outline-variant/20 shadow-sm flex flex-col justify-between h-32 card-shadow-hover transition-all">
-                            <div class="w-10 h-10 bg-purple-50 text-purple-700 rounded-xl flex items-center justify-center shrink-0">
+                        <a href="dashboard-parent.html" class="paper-card p-5 flex flex-col justify-between h-32 transition-all">
+                            <div class="w-10 h-10 bg-purple-100 text-purple-800 rounded-xl flex items-center justify-center shrink-0">
                                 <span class="material-symbols-outlined">leaderboard</span>
                             </div>
                             <div>
-                                <h3 class="text-xs font-extrabold text-on-surface block">Lihat Progress</h3>
+                                <h3 class="text-xs font-bold text-[#243130] block font-childish">Lihat Progress</h3>
                             </div>
                         </a>
                     </div>
@@ -547,106 +550,129 @@
                 <!-- Perjalanan Minggu Ini & Jurnal Orang Tua -->
                 <section class="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
                     <!-- Perjalanan Minggu Ini -->
-                    <div class="bg-white p-6 rounded-[32px] border border-outline-variant/30 shadow-sm lg:col-span-2 flex flex-col justify-between gap-6">
+                    <div class="paper-card p-6 flex flex-col justify-between gap-6">
                         <div>
-                            <div class="flex justify-between items-center pb-3 border-b border-outline-variant/20">
-                                <h4 class="font-extrabold text-sm text-on-surface flex items-center gap-1.5">
-                                    <span class="material-symbols-outlined text-secondary">insights</span> Perjalanan Minggu Ini
+                            <div class="flex justify-between items-center pb-3 border-b border-[#243130]/10">
+                                <h4 class="font-bold text-sm text-[#243130] flex items-center gap-1.5 font-vintage">
+                                    <span class="material-symbols-outlined text-[#7da095]">insights</span> Perjalanan Minggu Ini
                                 </h4>
-                                <span class="text-[10px] font-bold bg-primary/5 text-primary border border-primary/20 px-2 py-0.5 rounded-full">Kondisi ${childName}</span>
+                                <span class="text-[9px] font-bold bg-[#c65f47]/10 text-[#c65f47] border border-[#c65f47]/20 px-2 py-0.5 rounded-full font-childish">Kondisi ${childName}</span>
                             </div>
                             
                             <!-- Simple soft insight narrative -->
-                            <div class="mt-4 p-5 bg-teal-50/50 rounded-2xl border border-teal-100 flex items-start gap-3">
-                                <span class="material-symbols-outlined text-teal-700 text-[20px] shrink-0 mt-0.5">lightbulb</span>
-                                <p class="text-xs font-semibold text-on-surface-variant leading-relaxed">
+                            <div class="mt-4 p-5 bg-[#7da095]/10 rounded-2xl border border-[#7da095]/20 flex items-start gap-3">
+                                <span class="material-symbols-outlined text-[#7da095] text-[20px] shrink-0 mt-0.5">lightbulb</span>
+                                <p class="text-xs font-semibold text-[#243130]/80 leading-relaxed">
                                     Minggu ini fokus meningkat saat rutinitas pagi lebih konsisten. Aktivitas sensorik terlihat membantu waktu tidur buah hati.
                                 </p>
                             </div>
                         </div>
 
                         <!-- Small graphic visual -->
-                        <div class="bg-surface p-5 rounded-2xl border border-outline-variant/15">
-                            <span class="text-[9px] font-bold text-outline block mb-3">TREN REGULASI EMOSI</span>
+                        <div class="bg-[#243130]/5 p-5 rounded-2xl border border-[#243130]/10">
+                            <span class="text-[9px] font-bold text-[#243130]/50 block mb-3 font-childish">TREN REGULASI EMOSI</span>
                             <div class="flex items-end justify-between h-20 px-4">
-                                <div class="flex flex-col items-center gap-1.5"><div class="w-8 bg-primary/20 rounded-t-lg h-[40%]"></div><span class="text-[9px] font-bold text-outline">Sen</span></div>
-                                <div class="flex flex-col items-center gap-1.5"><div class="w-8 bg-primary/30 rounded-t-lg h-[55%]"></div><span class="text-[9px] font-bold text-outline">Sel</span></div>
-                                <div class="flex flex-col items-center gap-1.5"><div class="w-8 bg-primary/40 rounded-t-lg h-[65%]"></div><span class="text-[9px] font-bold text-outline">Rab</span></div>
-                                <div class="flex flex-col items-center gap-1.5"><div class="w-8 bg-primary/60 rounded-t-lg h-[75%]"></div><span class="text-[9px] font-bold text-outline">Kam</span></div>
-                                <div class="flex flex-col items-center gap-1.5"><div class="w-8 bg-primary rounded-t-lg h-[90%]"></div><span class="text-[9px] font-bold text-outline">Jum</span></div>
+                                <div class="flex flex-col items-center gap-1.5"><div class="w-8 bg-[#c65f47]/30 rounded-t-lg h-[40%]"></div><span class="text-[9px] font-bold text-[#243130]/40">Sen</span></div>
+                                <div class="flex flex-col items-center gap-1.5"><div class="w-8 bg-[#c65f47]/50 rounded-t-lg h-[55%]"></div><span class="text-[9px] font-bold text-[#243130]/40">Sel</span></div>
+                                <div class="flex flex-col items-center gap-1.5"><div class="w-8 bg-[#c65f47]/70 rounded-t-lg h-[65%]"></div><span class="text-[9px] font-bold text-[#243130]/40">Rab</span></div>
+                                <div class="flex flex-col items-center gap-1.5"><div class="w-8 bg-[#c65f47]/90 rounded-t-lg h-[75%]"></div><span class="text-[9px] font-bold text-[#243130]/40">Kam</span></div>
+                                <div class="flex flex-col items-center gap-1.5"><div class="w-8 bg-[#c65f47] rounded-t-lg h-[90%]"></div><span class="text-[9px] font-bold text-[#243130]/40">Jum</span></div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Jurnal Orang Tua -->
-                    <div class="bg-white p-6 rounded-[32px] border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+                    <div class="paper-card p-6 flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center gap-1.5 mb-3 pb-2 border-b border-outline-variant/20">
-                                <span class="material-symbols-outlined text-secondary">book</span>
-                                <h4 class="font-extrabold text-sm text-on-surface">Jurnal Orang Tua</h4>
+                            <div class="flex items-center gap-1.5 mb-3 pb-2 border-b border-[#243130]/10">
+                                <span class="material-symbols-outlined text-[#7da095]">book</span>
+                                <h4 class="font-bold text-sm text-[#243130] font-vintage">Jurnal Orang Tua</h4>
                             </div>
-                            <p class="text-[10px] font-semibold text-on-surface-variant mb-4">Mencatat refleksi harian & momen berharga tumbuh kembang bersama.</p>
+                            <p class="text-[10px] font-semibold text-[#243130]/60 mb-4">Mencatat refleksi harian & momen berharga tumbuh kembang bersama.</p>
                             
                             <form id="diaryForm" onsubmit="saveDiaryEntry(event)" class="space-y-3">
-                                <textarea id="diaryContent" required rows="3" class="w-full p-3 border border-outline-variant/30 rounded-2xl text-xs font-semibold resize-none outline-none focus:ring-1 focus:ring-primary" placeholder="Tulis cerita atau refleksi harian hari ini..."></textarea>
+                                <textarea id="diaryContent" required rows="3" class="w-full p-3 border border-[#243130]/20 rounded-2xl text-xs font-semibold resize-none outline-none focus:ring-1 focus:ring-[#c65f47] bg-[#fbf7f0] text-[#243130]" placeholder="Tulis cerita atau refleksi harian hari ini..."></textarea>
                                 <div class="flex items-center justify-between gap-2">
-                                    <label class="cursor-pointer bg-surface hover:bg-surface-container px-3 py-2 rounded-xl border border-outline-variant/30 text-[9px] font-bold text-on-surface-variant flex items-center gap-1.5 shrink-0">
+                                    <label class="cursor-pointer bg-[#243130]/5 hover:bg-[#243130]/10 px-3 py-2 rounded-xl border border-[#243130]/20 text-[9px] font-bold text-[#243130]/70 flex items-center gap-1.5 shrink-0 font-childish">
                                         <span class="material-symbols-outlined text-[14px]">add_a_photo</span>
                                         <span>Unggah Foto</span>
                                         <input type="file" id="diaryPhotoInput" accept="image/*" class="hidden" onchange="previewDiaryPhoto(event)">
                                     </label>
-                                    <span id="diaryPhotoName" class="text-[8px] text-outline font-semibold truncate max-w-[120px]"></span>
+                                    <span id="diaryPhotoName" class="text-[8px] text-[#243130]/50 font-semibold truncate max-w-[120px]"></span>
                                 </div>
-                                <div id="diaryPhotoPreviewBox" class="hidden relative w-16 h-16 rounded-xl overflow-hidden border border-outline-variant/20">
+                                <div id="diaryPhotoPreviewBox" class="hidden relative w-16 h-16 rounded-xl overflow-hidden border border-[#243130]/10">
                                     <img id="diaryPhotoPreview" class="w-full h-full object-cover">
                                     <button type="button" onclick="clearDiaryPhoto()" class="absolute top-1 right-1 bg-black/60 text-white rounded-full p-0.5"><span class="material-symbols-outlined text-[12px]">close</span></button>
                                 </div>
-                                <button type="submit" class="w-full py-2.5 bg-primary text-white rounded-full text-xs font-bold hover:opacity-90 transition-opacity">Simpan Jurnal</button>
+                                <button type="submit" class="w-full py-2.5 bg-[#c65f47] text-white rounded-full text-xs font-bold hover:bg-[#c65f47]/90 transition-colors font-childish">Simpan Jurnal</button>
                             </form>
                         </div>
 
                         <!-- List of diary logs -->
-                        <div class="mt-4 pt-4 border-t border-outline-variant/20 max-h-[140px] overflow-y-auto" id="diaryHistoryBox">
+                        <div class="mt-4 pt-4 border-t border-[#243130]/10 max-h-[140px] overflow-y-auto" id="diaryHistoryBox">
                             <!-- Loaded dynamically -->
                         </div>
                     </div>
-                </div>
+
+                    <!-- Rekomendasi Hari Ini (Stacked in third column in paper layout or matches size) -->
+                    <div class="paper-card p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-1.5 mb-3 pb-2 border-b border-[#243130]/10">
+                                <span class="material-symbols-outlined text-[#7da095]">recommend</span>
+                                <h4 class="font-bold text-sm text-[#243130] font-vintage">Tips Regulasi Hari Ini</h4>
+                            </div>
+                            <p class="text-[10px] font-semibold text-[#243130]/60 mb-4">Tips ramah pemicu stimulasi untuk mendukung keseharian anak.</p>
+                            
+                            <div class="space-y-4">
+                                <div class="bg-[#243130]/5 p-3 rounded-xl border border-[#243130]/10">
+                                    <strong class="text-[9px] text-[#c65f47] uppercase tracking-wider block font-childish">Tips Pengasuhan</strong>
+                                    <p class="text-[10px] font-bold text-[#243130] mt-0.5">Redupkan Cahaya Sebelum Tidur</p>
+                                    <p class="text-[9px] text-[#243130]/70 font-semibold mt-0.5">Matikan lampu utama dan gunakan lampu redup hangat 30 menit sebelum tidur.</p>
+                                </div>
+                                <div class="bg-[#243130]/5 p-3 rounded-xl border border-[#243130]/10">
+                                    <strong class="text-[9px] text-[#7da095] uppercase tracking-wider block font-childish">Stimulasi Sensori</strong>
+                                    <p class="text-[10px] font-bold text-[#243130] mt-0.5">Sikat Sensori Wilbarger</p>
+                                    <p class="text-[9px] text-[#243130]/70 font-semibold mt-0.5">Gunakan tekanan lembut pada lengan & punggung untuk regulasi emosi.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="text-[8px] text-[#243130]/40 font-bold italic pt-4 block text-center">Teruji oleh Psikolog RONA</span>
+                    </div>
                 </section>
                 
-                <!-- Rekomendasi Hari Ini -->
+                <!-- Rekomendasi Hari Ini (Detailed Horizontal Layout) -->
                 <section class="max-w-[1200px] mx-auto px-6 mb-12 animate-fade-in">
-                    <h3 class="text-sm font-extrabold text-on-surface mb-6 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary text-[20px]">recommend</span>
-                        Rekomendasi Hari Ini
+                    <h3 class="text-sm font-bold text-[#243130] mb-6 flex items-center gap-2 font-vintage text-base">
+                        <span class="material-symbols-outlined text-[#c65f47] text-[20px]">recommend</span>
+                        Alat & Bacaan Pilihan
                     </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Artikel Rekomendasi -->
-                        <div class="bg-white p-5 rounded-2xl border border-outline-variant/20 shadow-sm flex flex-col justify-between space-y-3 card-shadow-hover transition-all">
-                            <span class="text-[9px] font-bold text-coral uppercase tracking-wider block">Artikel Pilihan</span>
-                            <h4 class="text-xs font-extrabold text-on-surface leading-snug">Pentingnya Stimulasi Sensorik pada Balita</h4>
-                            <p class="text-[10px] text-on-surface-variant font-medium">Panduan praktis melatih respon motorik & defensivitas taktil anak.</p>
-                            <a href="artikel.html" class="text-[10px] font-bold text-primary hover:underline flex items-center gap-0.5 pt-2">Mulai Membaca <span class="material-symbols-outlined text-[12px]">chevron_right</span></a>
+                        <div class="paper-card p-5 flex flex-col justify-between space-y-3">
+                            <div>
+                                <span class="text-[9px] font-bold text-[#c65f47] uppercase tracking-wider block font-childish">Artikel Pilihan</span>
+                                <h4 class="text-xs font-bold text-[#243130] leading-snug mt-1 font-vintage">Pentingnya Stimulasi Sensorik pada Balita</h4>
+                                <p class="text-[10px] text-[#243130]/70 font-semibold mt-1">Panduan praktis melatih respon motorik & defensivitas taktil anak.</p>
+                            </div>
+                            <a href="artikel.html" class="text-[10px] font-bold text-[#c65f47] hover:underline flex items-center gap-0.5 pt-2 font-childish">Mulai Membaca <span class="material-symbols-outlined text-[12px]">chevron_right</span></a>
                         </div>
                         <!-- Aktivitas Rekomendasi -->
-                        <div class="bg-white p-5 rounded-2xl border border-outline-variant/20 shadow-sm flex flex-col justify-between space-y-3 card-shadow-hover transition-all">
-                            <span class="text-[9px] font-bold text-[#28695d] uppercase tracking-wider block">Aktivitas Harian</span>
-                            <h4 class="text-xs font-extrabold text-on-surface leading-snug">Meremas Pasir Kinetik (Sensory Play)</h4>
-                            <p class="text-[10px] text-on-surface-variant font-medium">Lakukan selama 15 menit setelah sesi belajar pagi untuk regulasi fokus.</p>
-                            <a href="history.html" class="text-[10px] font-bold text-primary hover:underline flex items-center gap-0.5 pt-2">Buka Jurnal <span class="material-symbols-outlined text-[12px]">chevron_right</span></a>
+                        <div class="paper-card p-5 flex flex-col justify-between space-y-3">
+                            <div>
+                                <span class="text-[9px] font-bold text-[#7da095] uppercase tracking-wider block font-childish">Aktivitas Harian</span>
+                                <h4 class="text-xs font-bold text-[#243130] leading-snug mt-1 font-vintage">Meremas Pasir Kinetik (Sensory Play)</h4>
+                                <p class="text-[10px] text-[#243130]/70 font-semibold mt-1">Lakukan selama 15 menit setelah sesi belajar pagi untuk regulasi fokus.</p>
+                            </div>
+                            <a href="history.html" class="text-[10px] font-bold text-[#c65f47] hover:underline flex items-center gap-0.5 pt-2 font-childish">Buka Jurnal <span class="material-symbols-outlined text-[12px]">chevron_right</span></a>
                         </div>
                         <!-- Produk Rekomendasi -->
-                        <div class="bg-white p-5 rounded-2xl border border-outline-variant/20 shadow-sm flex flex-col justify-between space-y-3 card-shadow-hover transition-all">
-                            <span class="text-[9px] font-bold text-amber-600 uppercase tracking-wider block">Alat Pendukung</span>
-                            <h4 class="text-xs font-extrabold text-on-surface leading-snug">Rona Sensory Calming Blanket</h4>
-                            <p class="text-[10px] text-on-surface-variant font-medium">Meningkatkan produksi hormon penenang untuk tidur malam yang rileks.</p>
-                            <a href="detail-produk.html?sku=RONA-BLKT-02" class="text-[10px] font-bold text-primary hover:underline flex items-center gap-0.5 pt-2">Lihat Detail <span class="material-symbols-outlined text-[12px]">chevron_right</span></a>
-                        </div>
-                        <!-- Tips Kecil -->
-                        <div class="bg-white p-5 rounded-2xl border border-outline-variant/20 shadow-sm flex flex-col justify-between space-y-3 card-shadow-hover transition-all">
-                            <span class="text-[9px] font-bold text-purple-600 uppercase tracking-wider block">Tips Pengasuhan</span>
-                            <h4 class="text-xs font-extrabold text-on-surface leading-snug">Redupkan Cahaya Sebelum Tidur</h4>
-                            <p class="text-[10px] text-on-surface-variant font-medium">Matikan lampu utama dan gunakan lampu redup hangat 30 menit sebelum tidur.</p>
-                            <span class="text-[9px] text-outline font-bold italic pt-2">Teruji oleh Psikolog Anak</span>
+                        <div class="paper-card p-5 flex flex-col justify-between space-y-3">
+                            <div>
+                                <span class="text-[9px] font-bold text-amber-700 uppercase tracking-wider block font-childish">Alat Pendukung</span>
+                                <h4 class="text-xs font-bold text-[#243130] leading-snug mt-1 font-vintage">Rona Sensory Calming Blanket</h4>
+                                <p class="text-[10px] text-[#243130]/70 font-semibold mt-1">Meningkatkan produksi hormon penenang untuk tidur malam yang rileks.</p>
+                            </div>
+                            <a href="detail-produk.html?sku=RONA-BLKT-02" class="text-[10px] font-bold text-[#c65f47] hover:underline flex items-center gap-0.5 pt-2 font-childish">Lihat Detail <span class="material-symbols-outlined text-[12px]">chevron_right</span></a>
                         </div>
                     </div>
                 </section>

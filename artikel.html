@@ -14,22 +14,23 @@
             theme: {
                 extend: {
                     "colors": {
-                        "primary": "#0d6a5c",
+                        "primary": "#c65f47",
                         "on-primary": "#ffffff",
-                        "primary-container": "#57a695",
-                        "secondary": "#28695d",
-                        "surface": "#f7faf7",
-                        "on-surface": "#181c1b",
-                        "on-surface-variant": "#3f4946",
-                        "outline-variant": "#bec9c5",
-                        "surface-container": "#ebefec",
-                        "coral": "#FF9B85",
-                        "aman-cream": "#FBF7F0"
+                        "primary-container": "#7da095",
+                        "secondary": "#7da095",
+                        "surface": "#f6f0e5",
+                        "on-surface": "#243130",
+                        "on-surface-variant": "#4a5b57",
+                        "outline-variant": "#dfd8cb",
+                        "surface-container": "#fbf7f0",
+                        "coral": "#c65f47",
+                        "aman-cream": "#f6f0e5",
+                        "dark-bg": "#243130"
                     },
                     "borderRadius": {
                         "xl": "0.75rem",
                         "2xl": "1rem",
-                        "card": "20px",
+                        "card": "24px",
                         "full": "9999px"
                     }
                 }
@@ -38,21 +39,21 @@
     </script>
 <style>
         body {
-            background-color: #FBF7F0; /* Aman Cream */
-            color: #2D3A3A;
+            background-color: #fbf7f0; /* Soft Cream */
+            color: #243130; /* Dark Slate Teal */
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
         .card-shadow {
-            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.04);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
         .card-shadow-hover:hover {
-            box-shadow: 0 8px 24px rgba(13, 106, 92, 0.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
             transform: translateY(-2px);
         }
         .glass-nav {
-            background: rgba(251, 247, 240, 0.85);
+            background: rgba(251, 247, 240, 0.95);
             backdrop-filter: blur(12px);
         }
         .material-symbols-outlined {
@@ -63,7 +64,7 @@
             display: none; 
             position: fixed; 
             inset: 0;
-            background: rgba(0,0,0,0.5); 
+            background: rgba(0,0,0,0.6); 
             backdrop-filter: blur(4px);
             z-index: 2000; 
             justify-content: center; 
@@ -71,6 +72,10 @@
         }
         .modal-content { 
             animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            background-color: #f6f0e5;
+            color: #243130;
+            border: 3px solid #dfd8cb;
+            border-radius: 24px;
         }
         @keyframes slideUp { 
             from { transform: translateY(20px) scale(0.95); opacity: 0; } 
@@ -85,27 +90,27 @@
     <main class="max-w-[1200px] mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-16 md:pb-20">
         <!-- Header -->
         <div class="mb-6 md:mb-10 text-center max-w-xl mx-auto space-y-2">
-            <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface leading-tight">Ruang Belajar &amp; Informasi</h2>
-            <p class="text-xs font-semibold text-on-surface-variant leading-relaxed">Temukan ratusan panduan asuh dari psikolog anak &amp; dokter spesialis RONA, bebas dari istilah medis yang rumit.</p>
+            <h2 class="text-3xl md:text-4xl font-bold font-vintage text-[#c65f47] leading-tight">Ruang Belajar &amp; Informasi</h2>
+            <p class="text-xs font-semibold text-[#243130]/80 leading-relaxed">Temukan ratusan panduan asuh dari psikolog anak &amp; dokter spesialis RONA, bebas dari istilah medis yang rumit.</p>
         </div>
 
         <!-- CONTINUE READING (LANJUT BACA) BAR -->
-        <div id="continueReadingBar" class="bg-white p-4 md:p-5 rounded-2xl md:rounded-3xl border border-outline-variant/20 card-shadow mb-6 md:mb-8 hidden">
-            <h4 class="text-xs font-extrabold text-primary flex items-center gap-1 mb-3"><span class="material-symbols-outlined text-[16px]">menu_book</span> LANJUT BACA TERAKHIR</h4>
+        <div id="continueReadingBar" class="paper-card p-5 mb-6 md:mb-8 hidden">
+            <h4 class="text-xs font-bold text-[#c65f47] flex items-center gap-1 mb-3 font-childish"><span class="material-symbols-outlined text-[16px]">menu_book</span> LANJUT BACA TERAKHIR</h4>
             <div id="continueReadingList" class="flex gap-3 overflow-x-auto pb-1">
                 <!-- Loaded dynamically -->
             </div>
         </div>
 
         <!-- FILTERS AND SEARCH BAR -->
-        <div class="flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center mb-6 md:mb-8 bg-white p-3 md:p-4 rounded-2xl border border-outline-variant/25 card-shadow">
-            <div class="flex gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0" id="filterTabsContainer">
+        <div class="flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center mb-6 md:mb-8 paper-card p-4">
+            <div class="flex gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 font-childish" id="filterTabsContainer">
                 <!-- Injected dynamically -->
             </div>
             
             <div class="relative w-full sm:w-auto sm:min-w-[200px] group shrink-0">
-                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary text-[18px]">search</span>
-                <input type="text" id="articleSearch" oninput="loadArticles()" class="w-full pl-9 pr-4 py-2 border border-outline-variant rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary" placeholder="Cari materi...">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#243130]/55 group-focus-within:text-[#c65f47] text-[18px]">search</span>
+                <input type="text" id="articleSearch" oninput="loadArticles()" class="w-full pl-9 pr-4 py-2 border border-[#243130]/20 rounded-xl text-xs outline-none focus:ring-1 focus:ring-[#c65f47] bg-[#fbf7f0] text-[#243130]" placeholder="Cari materi...">
             </div>
         </div>
 
@@ -269,28 +274,28 @@
                 const peerHelpCount = Math.floor(art.views / 25) + 12;
 
                 grid.innerHTML += `
-                    <div class="bg-white rounded-[20px] md:rounded-[28px] overflow-hidden border border-outline-variant/20 shadow-sm card-shadow-hover transition-all">
+                    <div class="paper-card overflow-hidden flex flex-col hover:scale-[1.01] transition-transform">
                         <!-- Mobile: horizontal card | Desktop: vertical card -->
                         <div class="flex md:flex-col">
-                            <div class="w-28 shrink-0 md:w-full md:aspect-[16/9] aspect-square bg-surface overflow-hidden relative">
+                            <div class="w-28 shrink-0 md:w-full md:aspect-[16/9] aspect-square bg-[#243130]/5 overflow-hidden relative border-r md:border-r-0 md:border-b border-[#243130]/10">
                                 <img src="${art.thumbnail}" class="w-full h-full object-cover">
-                                <button onclick="toggleSaveArticle('${art.id}', event)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-white/90 p-1.5 rounded-full shadow-sm hover:scale-110 transition-transform flex items-center justify-center">
+                                <button onclick="toggleSaveArticle('${art.id}', event)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-[#f6f0e5]/95 p-1.5 rounded-full shadow-sm hover:scale-110 transition-transform flex items-center justify-center border border-[#dfd8cb]">
                                     <span class="material-symbols-outlined text-[16px] md:text-[18px] ${bookmarkColor}">${bookmarkIcon}</span>
                                 </button>
                             </div>
                             <div class="p-3 md:p-5 flex-grow flex flex-col justify-between space-y-2 md:space-y-4">
                                 <div class="space-y-1.5 md:space-y-2">
-                                    <div class="flex justify-between items-center text-[9px] font-bold text-outline">
+                                    <div class="flex justify-between items-center text-[9px] font-bold text-[#243130]/50 font-childish">
                                         <span class="hidden md:inline">${art.date}</span>
-                                        <span class="bg-[#ebefec] text-[#0d6a5c] px-2 py-0.5 rounded-full border border-[#0d6a5c]/20">${art.category}</span>
+                                        <span class="bg-[#c65f47]/10 text-[#c65f47] px-2 py-0.5 rounded-full border border-[#c65f47]/20">${art.category}</span>
                                     </div>
-                                    <h3 class="font-extrabold text-xs md:text-sm text-on-surface leading-tight hover:text-primary cursor-pointer transition-colors line-clamp-2 md:line-clamp-3" onclick="openArticleReader('${art.id}')">${art.title}</h3>
-                                    <p class="text-[10px] md:text-[11px] font-semibold text-on-surface-variant leading-relaxed line-clamp-2 md:line-clamp-3 hidden sm:block">${art.summary}</p>
+                                    <h3 class="font-bold text-sm md:text-base text-[#243130] leading-tight hover:text-[#c65f47] cursor-pointer transition-colors line-clamp-2 md:line-clamp-3 font-vintage" onclick="openArticleReader('${art.id}')">${art.title}</h3>
+                                    <p class="text-[10px] md:text-[11px] font-semibold text-[#243130]/75 leading-relaxed line-clamp-2 md:line-clamp-3 hidden sm:block">${art.summary}</p>
                                 </div>
                                 
-                                <div class="pt-2 md:pt-3 border-t border-outline-variant/10 flex justify-between items-center text-[10px] font-bold">
-                                    <span class="text-outline hidden md:inline">Oleh: ${art.author}</span>
-                                    <span class="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 flex items-center gap-0.5">
+                                <div class="pt-2 md:pt-3 border-t border-[#243130]/10 flex justify-between items-center text-[10px] font-bold">
+                                    <span class="text-[#243130]/50 hidden md:inline">Oleh: ${art.author}</span>
+                                    <span class="text-[#7da095] bg-[#7da095]/10 px-2 py-0.5 rounded-full border border-[#7da095]/30 flex items-center gap-0.5 font-childish">
                                         <span class="material-symbols-outlined text-[11px] font-fill-1">thumb_up</span> ${peerHelpCount}+ Ibu
                                     </span>
                                 </div>

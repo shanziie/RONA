@@ -1,36 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Quicksand:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 /* =========================================
-   GLOBAL & SMOOTH BEHAVIOR
+   GLOBAL & DESIGN SYSTEM DEFAULTS
    ========================================= */
+:root {
+    --color-dark-teal: #243130;
+    --color-terracotta: #c65f47;
+    --color-cream: #f6f0e5;
+    --color-sage: #7da095;
+    --color-blue: #74878e;
+    --color-tan: #dfd8cb;
+    --color-light-cream: #fbf7f0;
+}
+
 html {
-    scroll-behavior: smooth; /* Smooth scroll bawaan untuk navigasi anchor */
+    scroll-behavior: smooth;
 }
 
 body {
-    background-color: #FBF7F0;
-    color: #2D3A3A;
+    background-color: var(--color-light-cream); /* Soft Light Cream */
+    color: var(--color-dark-teal); /* Dark Slate Teal */
     font-family: 'Plus Jakarta Sans', sans-serif;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Typography helper classes */
+.font-vintage {
+    font-family: 'Fraunces', Georgia, serif;
+}
+
+.font-childish {
+    font-family: 'Quicksand', sans-serif;
 }
 
 /* =========================================
-   NAVBAR (Background berubah saat scroll)
+   VINTAGE & DECKLE EDGE STYLING
+   ========================================= */
+/* Paper Card with hand-drawn retro feel */
+.paper-card {
+    background-color: #ffffff;
+    color: var(--color-dark-teal);
+    border-radius: 24px 20px 24px 20px / 20px 24px 20px 24px;
+    border: 3px solid var(--color-tan);
+    box-shadow: 0 12px 28px rgba(36, 49, 48, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.paper-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(36, 49, 48, 0.15);
+}
+
+/* Wavy illustration border matching deckle edge */
+.illustrated-frame {
+    border-radius: 12px 18px 10px 14px / 18px 12px 14px 10px;
+    border: 3px solid var(--color-tan);
+    box-shadow: 0 8px 24px rgba(36, 49, 48, 0.06);
+    background-color: var(--color-light-cream);
+    padding: 6px;
+}
+
+/* Ripped/Deckle edge banner simulator */
+.deckle-banner {
+    background-color: var(--color-cream);
+    color: var(--color-dark-teal);
+    border: 4px solid var(--color-tan);
+    border-radius: 32px 28px 30px 32px / 28px 32px 30px 28px;
+    box-shadow: 0 16px 36px rgba(36, 49, 48, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Solid navigation round dot indicators */
+.dot-btn-orange {
+    background-color: var(--color-terracotta);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white !important;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.dot-btn-sage {
+    background-color: var(--color-sage);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white !important;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.dot-btn-blue {
+    background-color: var(--color-blue);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white !important;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.dot-btn-orange:hover, .dot-btn-sage:hover, .dot-btn-blue:hover {
+    transform: scale(1.08);
+    opacity: 0.95;
+}
+
+/* =========================================
+   NAVBAR (Deep background and glass)
    ========================================= */
 .glass-nav {
-    background: transparent;
-    backdrop-filter: blur(0px);
-    border-bottom: 1px solid transparent;
+    background: rgba(251, 247, 240, 0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid rgba(198, 95, 71, 0.15);
     transition: all 0.4s ease-in-out;
 }
 
 .glass-nav.scrolled {
-    background: rgba(251, 247, 240, 0.85);
-    backdrop-filter: blur(16px);
-    box-shadow: 0 4px 30px rgba(13, 106, 92, 0.08);
-    border-bottom: 1px solid rgba(13, 106, 92, 0.1);
+    background: rgba(251, 247, 240, 0.95);
+    box-shadow: 0 8px 32px rgba(36, 49, 48, 0.08);
+    border-bottom: 2px solid rgba(198, 95, 71, 0.3);
 }
 
 /* =========================================
-   HOVER EFFECTS (Underline & Glow)
+   HOVER EFFECTS
    ========================================= */
 .hover-underline {
     position: relative;
@@ -45,7 +143,7 @@ body {
     height: 2px;
     bottom: -4px;
     left: 0;
-    background-color: currentColor;
+    background-color: var(--color-terracotta);
     transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     border-radius: 2px;
 }
@@ -54,14 +152,12 @@ body {
     width: 100%;
 }
 
-/* Input/Button Glow Effect */
 .glow-on-hover:hover {
-    box-shadow: 0 0 15px rgba(87, 166, 149, 0.5);
+    box-shadow: 0 0 15px rgba(198, 95, 71, 0.4);
     transform: translateY(-2px);
     transition: all 0.3s ease;
 }
 
-/* Icon Muter Dikit (Rotate on Hover) */
 .icon-spin:hover .material-symbols-outlined {
     transform: rotate(15deg) scale(1.1);
     transition: transform 0.3s ease;
@@ -69,18 +165,17 @@ body {
 
 /* Card Shadow Hover Modern */
 .card-shadow {
-    box-shadow: 0 4px 20px rgba(13, 106, 92, 0.05);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .card-shadow-hover:hover {
-    box-shadow: 0 12px 30px rgba(13, 106, 92, 0.15);
-    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    transform: translateY(-4px);
 }
 
 /* =========================================
-   ANIMATIONS (Floating & Parallax)
+   ANIMATIONS
    ========================================= */
-/* Infinite Floating */
 .float-anim {
     animation: floating 4s ease-in-out infinite;
 }
@@ -91,35 +186,24 @@ body {
 
 @keyframes floating {
     0% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+    50% { transform: translateY(-12px); }
     100% { transform: translateY(0px); }
 }
 
-/* =========================================
-   REVEAL ON SCROLL (Fade & Slide)
-   ========================================= */
 .reveal-up {
     opacity: 0;
-    transform: translateY(40px) scale(0.98);
-    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.reveal-left {
-    opacity: 0;
-    transform: translateX(-50px);
-    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-}
-
-.reveal-right {
-    opacity: 0;
-    transform: translateX(50px);
-    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+.reveal-up.active {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* =========================================
    RESPONSIVE MODAL BOTTOM SHEET & UTILITIES
    ========================================= */
-/* Bottom Sheet Modal (Mobile) */
 @media (max-width: 767px) {
   .modal {
     align-items: flex-end;
@@ -139,14 +223,23 @@ body {
   to { transform: translateY(0); }
 }
 
-/* Touch-friendly minimum tap target */
 .btn-touch {
   min-height: 44px;
   min-width: 44px;
 }
 
-/* Consistent image containers */
 .img-product { aspect-ratio: 4/3; object-fit: cover; }
 .img-article { aspect-ratio: 16/9; object-fit: cover; }
 .img-hero-mobile { max-height: 260px; }
 
+/* Styling for tables in custom pages */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+th, td {
+    border-bottom: 1px solid rgba(36, 49, 48, 0.1);
+}
+tr:last-child td {
+    border-bottom: none;
+}

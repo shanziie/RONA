@@ -23,7 +23,7 @@
             scrollbar-width: none;
         }
         .product-card-shadow {
-            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.05);
+            box-shadow: 0 4px 20px rgba(198, 95, 71, 0.05);
         }
         .active-tab-border {
             position: relative;
@@ -35,7 +35,7 @@
             left: 0;
             right: 0;
             height: 2px;
-            background-color: #0d6a5c;
+            background-color: #c65f47;
             border-radius: 2px;
         }
     </style>
@@ -46,55 +46,55 @@
         theme: {
           extend: {
             "colors": {
-                    "tertiary-fixed": "#e7deff",
-                    "primary": "#0d6a5c",
-                    "inverse-primary": "#86d5c3",
-                    "primary-fixed": "#a2f2df",
-                    "on-secondary": "#ffffff",
-                    "secondary-fixed": "#aeefe0",
-                    "on-tertiary-fixed": "#1e1440",
-                    "primary-fixed-dim": "#86d5c3",
-                    "on-primary-fixed-variant": "#005145",
-                    "surface": "#f7faf7",
-                    "on-error": "#ffffff",
-                    "inverse-on-surface": "#eef1ef",
-                    "error": "#ba1a1a",
-                    "on-primary-fixed": "#00201a",
-                    "tertiary-fixed-dim": "#ccbff6",
                     "surface-container-lowest": "#ffffff",
-                    "on-tertiary-fixed-variant": "#4a406e",
-                    "on-primary-container": "#00382f",
-                    "background": "#f7faf7",
-                    "surface-container-high": "#e6e9e6",
-                    "surface-container-low": "#f1f4f2",
+                    "secondary-fixed": "#aeefe0",
+                    "on-surface": "#243130",
+                    "on-secondary": "#ffffff",
                     "on-tertiary": "#ffffff",
-                    "on-background": "#181c1b",
-                    "primary-container": "#57a695",
-                    "on-surface": "#181c1b",
+                    "background": "#fbf7f0",
+                    "surface-variant": "#dfd8cb",
+                    "surface-tint": "#c65f47",
+                    "tertiary": "#74878e",
+                    "surface-container-high": "#dfd8cb",
+                    "surface-container": "#f6f0e5",
+                    "surface-container-low": "#fbf7f0",
+                    "secondary-fixed-dim": "#93d3c4",
+                    "on-primary": "#ffffff",
+                    "primary": "#c65f47",
+                    "on-background": "#243130",
+                    "surface-bright": "#ffffff",
+                    "surface-container-highest": "#dfd8cb",
+                    "surface-dim": "#dfd8cb",
+                    "primary-fixed-dim": "#86d5c3",
+                    "inverse-on-surface": "#f6f0e5",
+                    "on-primary-container": "#ffffff",
+                    "on-tertiary-container": "#ffffff",
+                    "tertiary-fixed-dim": "#ccbff6",
                     "on-secondary-fixed-variant": "#035045",
                     "on-secondary-fixed": "#00201b",
-                    "secondary-fixed-dim": "#93d3c4",
-                    "on-tertiary-container": "#332a56",
-                    "secondary": "#28695d",
-                    "surface-tint": "#0d6a5c",
-                    "outline-variant": "#bec9c5",
-                    "on-error-container": "#93000a",
-                    "surface-container": "#ebefec",
+                    "outline-variant": "#dfd8cb",
                     "error-container": "#ffdad6",
-                    "secondary-container": "#aeefe0",
-                    "surface-dim": "#d7dbd8",
-                    "on-surface-variant": "#3f4946",
-                    "on-primary": "#ffffff",
-                    "outline": "#6f7976",
+                    "tertiary-fixed": "#e7deff",
+                    "inverse-surface": "#243130",
+                    "primary-container": "#c65f47",
+                    "secondary": "#7da095",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#a2f2df",
+                    "outline": "#74878e",
+                    "on-primary-fixed": "#00201a",
+                    "on-error": "#ffffff",
                     "tertiary-container": "#9d91c5",
-                    "surface-container-highest": "#e0e3e1",
-                    "tertiary": "#625887",
-                    "surface-variant": "#e0e3e1",
+                    "on-surface-variant": "#4a5b57",
                     "on-secondary-container": "#2f6f63",
-                    "inverse-surface": "#2d3130",
-                    "surface-bright": "#f7faf7",
-                    "hangat-coral": "#FF8A71",
-                    "aman-cream": "#FBF7F0"
+                    "on-primary-fixed-variant": "#005145",
+                    "secondary-container": "#aeefe0",
+                    "on-tertiary-fixed-variant": "#4a406e",
+                    "surface": "#fbf7f0",
+                    "on-tertiary-fixed": "#1e1440",
+                    "inverse-primary": "#86d5c3",
+                    "on-error-container": "#93000a",
+                    "hangat-coral": "#c65f47",
+                    "aman-cream": "#f6f0e5"
             },
             "borderRadius": {
                     "DEFAULT": "0.25rem",
@@ -129,293 +129,8 @@
     </script>
 </head>
 <body class="bg-aman-cream text-on-surface font-body-md overflow-x-hidden">
-<!-- TopNavBar -->
-<nav class="fixed top-0 w-full z-50 bg-aman-cream/80 backdrop-blur-md shadow-sm">
-<div class="flex justify-between items-center w-full px-4 md:px-[40px] py-3 md:py-4 max-w-[1200px] mx-auto">
-<a href="index.html" class="text-headline-md font-headline-md font-bold text-primary text-xl">RONA</a>
-<div class="hidden lg:flex items-center space-x-lg">
-<a class="text-on-surface-variant font-label-md hover:text-primary transition-colors duration-200" href="index.html">Beranda</a>
-<a class="text-on-surface-variant font-label-md hover:text-primary transition-colors duration-200" href="artikel.html">Artikel</a>
-<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md" href="katalog.html">Produk</a>
-<a class="text-on-surface-variant font-label-md hover:text-primary transition-colors duration-200" href="history.html">Tracking</a>
-</div>
-<div class="flex items-center space-x-2 md:space-x-4">
-<a href="keranjang.html" class="relative p-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span class="absolute top-0 right-0 bg-hangat-coral text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
-</a>
-<a href="login.html" class="hidden lg:block text-primary font-label-md hover:opacity-80 transition-opacity">Masuk</a>
-<a href="register.html" class="hidden md:block bg-primary text-on-primary px-5 py-2 rounded-full font-label-md hover:opacity-90 transition-opacity shadow-md text-sm">Daftar</a>
-<!-- Hamburger -->
-<button onclick="document.getElementById('detailMobileMenu').classList.toggle('hidden')" class="lg:hidden p-2 rounded-xl hover:bg-surface-container transition-colors">
-<span class="material-symbols-outlined text-primary text-[24px]">menu</span>
-</button>
-</div>
-</div>
-<!-- Mobile dropdown menu -->
-<div id="detailMobileMenu" class="hidden lg:hidden bg-aman-cream border-t border-outline-variant/20 px-4 py-3 space-y-2">
-<a class="flex items-center gap-2 py-2.5 text-sm font-semibold text-on-surface-variant" href="index.html">Beranda</a>
-<a class="flex items-center gap-2 py-2.5 text-sm font-semibold text-on-surface-variant" href="artikel.html">Artikel</a>
-<a class="flex items-center gap-2 py-2.5 text-sm font-bold text-primary" href="katalog.html">Produk</a>
-<a class="flex items-center gap-2 py-2.5 text-sm font-semibold text-on-surface-variant" href="history.html">Tracking</a>
-<div class="pt-2 pb-1 flex gap-3">
-    <a href="login.html" class="flex-1 py-2.5 border-2 border-primary text-primary text-xs font-bold rounded-full text-center">Masuk</a>
-    <a href="register.html" class="flex-1 py-2.5 bg-primary text-white text-xs font-bold rounded-full text-center shadow-md">Daftar Gratis</a>
-</div>
-</div>
-</nav>
-<!-- Main Content Canvas -->
-<main class="pt-20 md:pt-24 pb-24 md:pb-xl max-w-[1200px] mx-auto px-4 md:px-[40px]">
-<!-- Breadcrumb -->
-<nav class="flex items-center space-x-2 text-label-sm text-on-surface-variant mb-base">
-<a class="hover:text-primary" href="katalog.html">Marketplace</a>
-<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
-<a class="hover:text-primary" href="katalog.html">Mainan Sensori</a>
-<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
-<span class="text-primary font-semibold">Fidget Spinner Terapi</span>
-</nav>
-<!-- Product Hero Section -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-xl items-start mb-6 md:mb-xl">
-<!-- Left Column: Gallery -->
-<div class="space-y-3 md:space-y-md">
-<div class="w-full aspect-square max-h-[360px] md:max-h-none bg-surface-container-lowest rounded-2xl overflow-hidden product-card-shadow">
-<img class="w-full h-full object-cover" data-alt="A high-quality studio photograph of a premium fidget spinner designed for sensory therapy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASob24nAjpcAZB0Q0nZFIKkz6jMXSpx27c1vt9Xl4SUYrFW-vyOdI6hSadcO1IfGnAnViyhxbl3xbp6jl1xfXxDjopRSwQBJxfdRietK86AF4ua3Gb_SikiZ2K3fap3Ix7WgK0nqP9t-c0q4hGkiDAtrncXVuk5aOu5ix1wx6cW_bmp55HGD1VD9n9m1M43zGFM-nmFz0tI7Ke5XXJGAqgQ__zrbOHftQ6hys9tATptmTbPrcGIaEY8ACC7lB5oCt6XRoR6QAR3np6"/>
-</div>
-<div class="flex space-x-sm no-scrollbar overflow-x-auto pb-2">
-<button class="w-20 h-20 rounded-xl overflow-hidden border-2 border-primary shrink-0 transition-transform hover:scale-105">
-<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAET5Hlarjj_-BdFl5pfVoVhsGYsbDtXn4RBZyt4OcYnJpt-eshG_UeBnSekohUCIVMrcBEZt9DkRoXwZ8eQxyopl31KOHxoeb5i3wQB7FOIPNXwy030BuybDYg7yhZxxIGgj47xaZ5Hb-9PShqOSBhHQ2kVT4GtWKhdyev77pZmd5TPPsaoNrY_HC4PphyGDw_vsTb28i-F26FYHv0rj-TYboC45xVJoOgeAOBmRaMZnXfnK8-3NcizxxsC06gEZH7r2NYZKJv7Ok6"/>
-</button>
-<button class="w-20 h-20 rounded-xl overflow-hidden border border-surface-container-high shrink-0 transition-transform hover:scale-105">
-<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAAioTYCHNu7tR34SoBOHL1pGP4WFYDlcXxp_f7YzHuPhbJLw-ZqKitdG-TWk50yISvAhDqJStMlPhAKHCNp6oLobOJ67L5Hr-xLqc3maInuWI8LyPz9jhS6KDQskutgLUaPMBtnYzyWOkaPGfh5LWlh_6QBkC4XChH0T1hyK0cmLsTed4xe1jVmUuUWRFjrW-BYBD4PfO2Kk3upWHBapeyRl_yhdu71N2oJnntkqw7BAQQW6itXVKDXF4kDwHOGgXOYFnEOCDeNdC"/>
-</button>
-<button class="w-20 h-20 rounded-xl overflow-hidden border border-surface-container-high shrink-0 transition-transform hover:scale-105">
-<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeQOKA4hhU2GYpCwQXQNneeYiaPOAlK6ShMSnbint-pt1SM-Lte0CqV3sgnOeOLR_muolqnPFRDIWAj2t9PjcmwuUYYvS5qucrI-IsNCQTkIptnAPdBMZcAvf0sQYi_28jWK0iQtTjHTc8GLr1XKt_458lyOA4Hvaf6oSpZbIcZEHQ6zwzlghG9qNc8MifjxtVBNwBK6ZMkbeDOsq3V7d3xBwbwsiR_oX7EK_96xYqK7gTvuDxavFDkELIGIlzBj7kfvM0JvyWwrN2"/>
-</button>
-<button class="w-20 h-20 rounded-xl overflow-hidden border border-surface-container-high shrink-0 transition-transform hover:scale-105">
-<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCg4f3YBNnhgE3P5cshXw9cwc0lyf4owshfMwvtIhj5EY6locC70wmL1zT9ke2rgQj339mxTB5bhkyQ2HujpSrZaaS13CG4tpLFwduUBAvPYubPnnglvk4b6bYzi3uxIUZueUU4C2LBjQtiByno_L0TLvRA4YJJWnm4NoQEL7QPyGE04tc--gQwPHTSaxEFb6OpKlf9KtLBqnAX47bvOEUDgefRGm5DNmgmmU7gaMxKwshoNNa_gS4ZgdFkvWrmzRirK5WukXETa9No"/>
-</button>
-</div>
-</div>
-<!-- Right Column: Info -->
-<div class="flex flex-col space-y-md">
-<div>
-<span class="inline-block bg-tertiary-fixed text-on-tertiary-fixed-variant px-4 py-1 rounded-full font-label-sm mb-sm">Mainan Sensori</span>
-<h1 class="font-headline-lg text-headline-lg text-on-surface leading-tight mb-xs">Fidget Spinner Terapi Sensorik</h1>
-<div class="flex items-center space-x-md">
-<div class="flex items-center text-orange-400">
-<span class="material-symbols-outlined filled-icon text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined text-[18px]" data-icon="star_half">star_half</span>
-<span class="ml-1 text-on-surface font-bold">4.8</span>
-</div>
-<span class="text-on-surface-variant font-label-md">(124 Ulasan)</span>
-</div>
-</div>
-<div class="text-headline-md font-bold text-primary">Rp 89.000</div>
-<div class="bg-secondary-container/30 border border-secondary-container p-md rounded-2xl flex items-start space-x-md">
-<span class="material-symbols-outlined text-primary" data-icon="lightbulb">lightbulb</span>
-<p class="text-body-md text-on-secondary-container">
-<span class="font-bold">Tips RONA:</span> Cocok untuk anak dengan profil <span class="text-primary font-bold">Sensory Seeker</span> untuk membantu regulasi diri dan meningkatkan konsentrasi saat belajar.
-                    </p>
-</div>
-<div class="space-y-sm pt-md">
-<label class="font-label-md text-on-surface">Jumlah</label>
-<div class="flex items-center space-x-lg">
-<div class="flex items-center bg-surface-container border border-outline-variant rounded-full p-1">
-<button class="w-8 h-8 flex items-center justify-center rounded-full bg-white text-primary hover:bg-primary-fixed transition-colors">
-<span class="material-symbols-outlined" data-icon="remove">remove</span>
-</button>
-<span class="px-6 font-bold text-on-surface">1</span>
-<button class="w-8 h-8 flex items-center justify-center rounded-full bg-white text-primary hover:bg-primary-fixed transition-colors">
-<span class="material-symbols-outlined" data-icon="add">add</span>
-</button>
-</div>
-<span class="text-on-surface-variant font-label-sm">Stok: 42 buah</span>
-</div>
-</div>
-<!-- CTA: hidden on mobile (sticky bar is used instead), visible on md+ -->
-<div class="hidden md:grid grid-cols-1 md:grid-cols-2 gap-md pt-md">
-<button class="border-2 border-primary text-primary font-bold py-3.5 rounded-full hover:bg-primary/5 transition-all flex items-center justify-center space-x-2" onclick="addToCartAndRedirect()">
-<span class="material-symbols-outlined" data-icon="add_shopping_cart">add_shopping_cart</span>
-<span>Tambah ke Keranjang</span>
-</button>
-<button class="bg-hangat-coral text-white font-bold py-3.5 rounded-full shadow-lg hover:opacity-90 transition-all flex items-center justify-center space-x-2" onclick="addToCartAndCheckout()">
-<span>Beli Sekarang</span>
-<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
-</button>
-</div>
-<div class="flex items-center justify-between pt-sm text-on-surface-variant font-label-sm">
-<div class="flex items-center space-x-1">
-<span class="material-symbols-outlined text-[18px]" data-icon="verified_user">verified_user</span>
-<span>Garansi 30 Hari</span>
-</div>
-<div class="flex items-center space-x-1">
-<span class="material-symbols-outlined text-[18px]" data-icon="local_shipping">local_shipping</span>
-<span>Pengiriman Cepat</span>
-</div>
-<div class="flex items-center space-x-1">
-<span class="material-symbols-outlined text-[18px]" data-icon="security">security</span>
-<span>Pembayaran Aman</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Details Tab Section -->
-<div class="mt-xl border-b border-outline-variant">
-<div class="flex space-x-lg overflow-x-auto no-scrollbar">
-<button class="pb-4 font-bold text-primary active-tab-border whitespace-nowrap">Deskripsi</button>
-<button class="pb-4 font-label-md text-on-surface-variant hover:text-on-surface whitespace-nowrap">Spesifikasi</button>
-<button class="pb-4 font-label-md text-on-surface-variant hover:text-on-surface whitespace-nowrap">Ulasan (124)</button>
-</div>
-</div>
-<div class="py-lg max-w-[800px]">
-<h3 class="font-headline-sm text-headline-sm mb-md">Manfaat & Cara Kerja</h3>
-<p class="text-body-lg text-on-surface-variant mb-md leading-relaxed">
-                Fidget Spinner Terapi Sensorik RONA dirancang khusus dengan distribusi berat yang presisi untuk memberikan input proprioceptive yang menenangkan. Alat ini bukan sekadar mainan, melainkan bantuan regulasi yang efektif untuk anak-anak (dan orang dewasa) dengan ADHD atau gangguan pemrosesan sensorik.
-            </p>
-<ul class="space-y-sm text-body-md text-on-surface-variant">
-<li class="flex items-start space-x-2">
-<span class="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span>Membantu meningkatkan durasi fokus saat mengerjakan tugas kognitif.</span>
-</li>
-<li class="flex items-start space-x-2">
-<span class="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span>Mengurangi kecemasan dan perilaku gelisah melalui gerakan ritmis.</span>
-</li>
-<li class="flex items-start space-x-2">
-<span class="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span>Material ABS BPA-Free yang aman dan tahan banting.</span>
-</li>
-<li class="flex items-start space-x-2">
-<span class="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span>Putaran yang sangat tenang (Ultra-Quiet), tidak mengganggu di dalam kelas.</span>
-</li>
-</ul>
-</div>
-<!-- Reviews Section -->
-<section class="mt-xl">
-<div class="flex flex-col md:flex-row md:items-center justify-between mb-lg gap-md">
-<h3 class="font-headline-sm text-headline-sm">Ulasan Orang Tua</h3>
-<div class="flex items-center space-x-md">
-<div class="text-right hidden md:block">
-<div class="font-bold text-headline-sm">4.8/5</div>
-<div class="text-label-sm text-on-surface-variant">Berdasarkan 124 ulasan</div>
-</div>
-<button class="bg-surface-container-high text-on-surface px-6 py-2.5 rounded-full font-label-md hover:bg-outline-variant transition-colors">Tulis Ulasan</button>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
-<!-- Review Card 1 -->
-<div class="bg-white p-lg rounded-2xl product-card-shadow flex flex-col space-y-md">
-<div class="flex items-center justify-between">
-<div class="flex items-center space-x-md">
-<div class="w-12 h-12 rounded-full overflow-hidden bg-primary-fixed">
-<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKw3ArTO06JbzgAE-zX3mS_gocNmcyBy3wkbIscrNFMDwNCU-0iuFdbmBYoA_v_fdmgcKv_bKAZeQXIGNN9ilv24tEwxDmWfYbDT3aKnzCJ2PlT4fr5FVJHyajp5KMF9DvqMm7QzkEh3qwozwleycpctBQizRo1hkrJtqju1Lfd91OW31xzXQfGy1aiJ0D1WP82H7N9YAhqeTzxznQIvODBnWtD264pN0NbY7h41jDx3sC2RsOa0yk4zss3ljPg1jI9GC3HZZfsdbl"/>
-</div>
-<div>
-<div class="font-bold text-on-surface">Bunda Sari</div>
-<div class="text-label-sm text-on-surface-variant">Verified Buyer • 2 hari yang lalu</div>
-</div>
-</div>
-<div class="flex text-orange-400">
-<span class="material-symbols-outlined filled-icon text-[16px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon text-[16px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon text-[16px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon text-[16px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon text-[16px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-</div>
-</div>
-<p class="text-body-md text-on-surface-variant">"Sangat membantu anak saya saat belajar di rumah. Biasanya dia sering menggoyang-goyangkan kaki, tapi dengan spinner ini dia jadi lebih tenang dan bisa fokus lebih lama. Materialnya bagus banget!"</p>
-</div>
-<!-- Review Card 2 -->
-<div class="bg-white p-lg rounded-2xl product-card-shadow flex flex-col space-y-md">
-<div class="flex items-center justify-between">
-<div class="flex items-center space-x-md">
-<div class="w-12 h-12 rounded-full overflow-hidden bg-secondary-container">
-<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4vSkGubhCMSbTqQo2LELlWxFJhTy333rKKVIcZl0MRCm8_Uy4Uie1wMGGoxGfmHmcedw3cgVtWiaiGUTrXZw1BJUoJFzhIaoixVfRHv6ad9eD5W7MA_0xOjzNExSqqfPnh6vmsm_zPAUgH0nfo0-fjlrXdaG0Z0gZvHbCR7MXClYEtmgk6hTPQzXGGd7ixa_Mhc1xAJ-fsdS8Pz27zTNDPkekYXZxlDAutTMQ-h14yWPXsFyVwKi42b-Cx0ulh-79uj97CVaVY3Aq"/>
-</div>
-<div>
-<div class="font-bold text-on-surface">Pak Budi</div>
-<div class="text-label-sm text-on-surface-variant">Verified Buyer • 1 minggu yang lalu</div>
-</div>
-</div>
-<div class="flex text-orange-400">
-<span class="material-symbols-outlined filled-icon text-[16px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon text-[16px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon text-[16px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined filled-icon text-[16px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined text-[16px]" data-icon="star">star</span>
-</div>
-</div>
-<p class="text-body-md text-on-surface-variant">"Anak saya suka warnanya yang kalem. Silent banget jadi gak ganggu waktu dia dengerin guru di kelas online. Recomended buat para orang tua!"</p>
-</div>
-</div>
-<button class="w-full mt-lg py-3 border border-outline-variant text-on-surface-variant rounded-full hover:bg-surface-container-low transition-colors font-label-md">Lihat Semua Ulasan</button>
-</section>
-<!-- Related Products -->
-<section class="mt-xl">
-<div class="flex items-center justify-between mb-lg">
-<h3 class="font-headline-sm text-headline-sm">Produk Terkait</h3>
-<div class="flex space-x-md">
-<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:border-primary hover:text-primary transition-all">
-<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
-</button>
-<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:border-primary hover:text-primary transition-all">
-<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
-</button>
-</div>
-</div>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-md md:gap-lg">
-<!-- Related Product 1 -->
-<div class="group cursor-pointer" onclick="window.location.href='detail-produk.html'">
-<div class="aspect-square rounded-2xl bg-surface-container-lowest overflow-hidden product-card-shadow mb-sm relative">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJxY8K2mYCBHteI2GKDMIbr-L5W5aPbAT-B11sMQKkk8al4HwRceWM1MZXV4ENTCJeX2-4IOo5IbB1HghdxDckjzBG-sdECeQzmGKyLBB96eZa0UG3cFkzRwo0BVMT1TEFKuNJeXfhPyjZY4-46csqXMICzJMsf5LOJrl4mxvCXytzQ-UBZs59penxA7DL-qWGjLOZ52YUMQuYLGMbdxyBjiBADn8GIKFNvoMoJOpNhmdt1D5B1mE74MPE-jmWgS3IGkO1RWyxFGP9"/>
-<button class="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-<span class="material-symbols-outlined text-[18px]" data-icon="add_shopping_cart">add_shopping_cart</span>
-</button>
-</div>
-<div class="text-label-sm text-on-surface-variant mb-1">Deep Pressure</div>
-<h4 class="font-bold text-on-surface leading-tight mb-1 group-hover:text-primary transition-colors">Weighted Blanket Junior</h4>
-<div class="flex items-center justify-between">
-<span class="font-bold text-primary">Rp 450.000</span>
-<div class="flex items-center text-orange-400">
-<span class="material-symbols-outlined filled-icon text-[14px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="ml-1 text-[12px] font-bold text-on-surface">4.9</span>
-</div>
-</div>
-</div>
-<!-- Related Product 2 -->
-<div class="group cursor-pointer" onclick="window.location.href='detail-produk.html'">
-<div class="aspect-square rounded-2xl bg-surface-container-lowest overflow-hidden product-card-shadow mb-sm relative">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-bPGn2It5kJfZGdbuIkwmgZLGw-GNKVYDCbrw5uMt15bUeqrA9iG0boOL4otLAQ8KW2IkWr8zjoeN4Ip-0zqaWwzfoBk-L30g2nPN8TPRIVxObQbVvK2lNMyaQBFGQyoYd-P0Yb57NrjI1JJd1_SszDiQ16JHnDEBFRdmKAydKyxVAddOdxyL0SjJM9Lqe-MfytCyjHUE3mEeQZIIAbHMeup8d2zasiJzRH_714tqelvKrlSIK8aZ6DZraxUvCt7yRwnpiq3H0PLK"/>
-<button class="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-<span class="material-symbols-outlined text-[18px]" data-icon="add_shopping_cart">add_shopping_cart</span>
-</button>
-</div>
-<div class="text-label-sm text-on-surface-variant mb-1">Oral Sensory</div>
-<h4 class="font-bold text-on-surface leading-tight mb-1 group-hover:text-primary transition-colors">Chewlery Teardrop Set</h4>
-<div class="flex items-center justify-between">
-<span class="font-bold text-primary">Rp 65.000</span>
-<div class="flex items-center text-orange-400">
-<span class="material-symbols-outlined filled-icon text-[14px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="ml-1 text-[12px] font-bold text-on-surface">4.7</span>
-</div>
-</div>
-</div>
-<!-- Related Product 3 -->
-<div class="group cursor-pointer" onclick="window.location.href='detail-produk.html'">
-<div class="aspect-square rounded-2xl bg-surface-container-lowest overflow-hidden product-card-shadow mb-sm relative">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDos8KGDzeF0pKugltS9_j3uklZrfFn0fo6HM6oShtg_yC9UACCYaRYI0A23trvmZY9he5kgNjx7gKLCJ6O7eIxwjMWxzVoSCOgTr4W57L4j3gGUTPX1on7gwqkY_JiNHRuyipUZCNlrG8Yg0lHOu2poeBpHqTkRzTfPZOZbeVs1uVtt2HnRKs1qXsjqOjLoCFGtE0BCCRnNv1lnHO6ciijPqan2lnZOVOpI0PBQTNXNpyw24ToZti9lN-VC-tVL6W16_YNbm1D93pu"/>
-<button class="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-<span class="material-symbols-outlined text-[18px]" data-icon="add_shopping_cart">add_shopping_cart</span>
-</button>
-</div>
-<div class="text-label-sm text-on-surface-variant mb-1">Auditory Support</div>
-<h4 class="font-bold text-on-surface leading-tight mb-1 group-hover:text-primary transition-colors">QuietZone Headphones</h4>
-<!-- TopNavBar Container -->
-<div id="navbarContainer"></div>
+    <!-- Top Navigation Bar Container -->
+    <div id="navbarContainer"></div>
 
 <!-- Main Content Canvas -->
 <main id="productDetailMain" class="pt-32 pb-xl max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
@@ -588,7 +303,9 @@
                             <span class="text-amber-500 flex items-center gap-0.5 text-xs font-bold">
                                 <span class="material-symbols-outlined text-[14px] font-fill-1">star</span> ${prod.rating || '4.8'}
                             </span>
-                            <span class="text-outline text-[11px] font-bold">(${prod.reviews.length} Ulasan Orang Tua)</span>
+                            <span class="text-primary hover:underline text-[11px] font-bold cursor-pointer flex items-center gap-0.5" onclick="handleWriteReviewClick()">
+                                <span class="material-symbols-outlined text-[14px]">edit_note</span> (${prod.reviews.length} Ulasan Orang Tua - Tulis Ulasan)
+                            </span>
                             <span class="text-outline text-[11px] font-bold">•</span>
                             <span class="text-outline text-[11px] font-bold">Usia Rujukan: ${prod.ageRecommendation}</span>
                         </div>

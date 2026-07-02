@@ -14,246 +14,171 @@
         theme: {
           extend: {
             "colors": {
-                    "surface-container": "#ebefec",
-                    "surface-tint": "#0d6a5c",
-                    "surface-container-high": "#e6e9e6",
-                    "on-secondary": "#ffffff",
-                    "on-primary-fixed": "#00201a",
+                    "primary": "#c65f47",
                     "on-primary": "#ffffff",
-                    "tertiary": "#625887",
-                    "secondary-fixed": "#aeefe0",
-                    "on-tertiary-fixed": "#1e1440",
-                    "surface-container-lowest": "#ffffff",
-                    "on-secondary-container": "#2f6f63",
-                    "primary-fixed": "#a2f2df",
-                    "error-container": "#ffdad6",
-                    "surface-container-highest": "#e0e3e1",
-                    "on-surface-variant": "#3f4946",
-                    "surface-dim": "#d7dbd8",
-                    "tertiary-fixed": "#e7deff",
-                    "secondary-fixed-dim": "#93d3c4",
-                    "on-background": "#181c1b",
-                    "outline-variant": "#bec9c5",
-                    "on-tertiary-fixed-variant": "#4a406e",
-                    "on-error": "#ffffff",
-                    "background": "#fbf7f0",
-                    "on-error-container": "#93000a",
-                    "inverse-primary": "#86d5c3",
-                    "primary": "#0d6a5c",
-                    "on-tertiary": "#ffffff",
-                    "on-secondary-fixed-variant": "#035045",
-                    "tertiary-container": "#9d91c5",
-                    "secondary-container": "#aeefe0",
-                    "on-secondary-fixed": "#00201b",
-                    "inverse-surface": "#2d3130",
-                    "secondary": "#28695d",
-                    "on-primary-container": "#00382f",
-                    "surface-variant": "#e0e3e1",
-                    "surface": "#f7faf7",
-                    "on-primary-fixed-variant": "#005145",
-                    "surface-bright": "#f7faf7",
-                    "inverse-on-surface": "#eef1ef",
-                    "primary-fixed-dim": "#86d5c3",
-                    "on-tertiary-container": "#332a56",
-                    "primary-container": "#57a695",
-                    "error": "#ba1a1a",
-                    "on-surface": "#181c1b",
-                    "outline": "#6f7976",
-                    "tertiary-fixed-dim": "#ccbff6",
-                    "surface-container-low": "#f1f4f2"
+                    "primary-container": "#7da095",
+                    "secondary": "#7da095",
+                    "surface": "#f6f0e5",
+                    "on-surface": "#243130",
+                    "on-surface-variant": "#4a5b57",
+                    "outline-variant": "#dfd8cb",
+                    "surface-container": "#fbf7f0",
+                    "coral": "#c65f47",
+                    "aman-cream": "#f6f0e5",
+                    "dark-bg": "#243130"
             },
             "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
                     "xl": "0.75rem",
-                    "20": "20px",
-                    "24": "24px",
+                    "2xl": "1rem",
+                    "card": "24px",
                     "full": "9999px"
-            },
-            "spacing": {
-                    "sm": "12px",
-                    "xl": "48px",
-                    "gutter": "16px",
-                    "md": "20px",
-                    "margin-mobile": "20px",
-                    "base": "8px",
-                    "margin-desktop": "40px",
-                    "xs": "4px",
-                    "lg": "32px"
-            },
-            "fontFamily": {
-                    "label-sm": ["Plus Jakarta Sans"],
-                    "label-md": ["Plus Jakarta Sans"],
-                    "body-lg": ["Plus Jakarta Sans"],
-                    "headline-md": ["Plus Jakarta Sans"],
-                    "headline-lg-mobile": ["Plus Jakarta Sans"],
-                    "body-md": ["Plus Jakarta Sans"],
-                    "headline-lg": ["Plus Jakarta Sans"],
-                    "headline-sm": ["Plus Jakarta Sans"]
-            },
-            "fontSize": {
-                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
-                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
-                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
             }
-          },
-        },
+          }
+        }
       }
     </script>
 <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .ambient-card-shadow {
-            box-shadow: 0 4px 20px rgba(13, 106, 92, 0.05);
-        }
-        .ambient-interactive-shadow {
-            box-shadow: 0 8px 24px rgba(13, 106, 92, 0.12);
+            vertical-align: middle;
         }
         body {
-            background-color: #FBF7F0; /* Aman Cream */
+            background-color: #fbf7f0; /* Soft Cream */
+            color: #243130; /* Dark Slate Teal */
             scroll-behavior: smooth;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
         .article-content p {
             margin-bottom: 1.5rem;
             line-height: 1.6;
         }
-        .glass-nav {
-            background: rgba(251, 247, 240, 0.8);
-            backdrop-filter: blur(12px);
-        }
-        .coral-gradient {
-            background: linear-gradient(135deg, #FF9B85 0%, #57A695 100%);
-        }
     </style>
 </head>
-<body class="font-body-md text-on-background selection:bg-primary-container selection:text-on-primary-container">
+<body class="selection:bg-[#c65f47]/20 selection:text-white">
 <!-- TopNavBar -->
-<nav class="fixed top-0 w-full z-50 glass-nav shadow-sm">
-<div class="max-w-[1200px] mx-auto px-margin-desktop py-4 flex justify-between items-center">
-<div class="flex items-center gap-2">
-<img alt="RONA Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgIbGSRqH0qZyiuiq7hoVM0edbPazkiGScH5SQu4WqqTQoAzxBF4k2MxfZr2lOdz-BD3DZeoL4sim82ViCc-91D0g5X4D-zs9Qznw0ru8uYt5VV0xi3awAVeUziJVn1J6gkngp7PbIOVsKZccNPkHRPNZAfoTR1nJKUvZjtOkVTqOMvqHhLDojhHI9S41CsLP4p0AAiqxLp1EBwZ42xgBqIwIaE0Srqr5kjHHSWDFD3SGki6T1hzlw0W-tlrAAeZdqu82g4v88Q258"/>
-<span class="font-headline-md text-headline-md font-extrabold text-primary">RONA</span>
+<nav class="fixed top-0 w-full z-50 bg-[#fbf7f0] border-b border-[#dfd8cb] py-4 shadow-sm">
+<div class="max-w-[1200px] mx-auto px-4 md:px-6 flex justify-between items-center">
+<div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+<img alt="RONA Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgIbGSRqH0qZyiuiq7hoVM0edbPazkiGScH5SQu4WqqTQoAzxBF4k2MxfZr2lOdz-BD3DZeoL4sim82ViCc-91D0g5X4D-zs9Qznw0ru8uYt5VV0xi3awAVeUziJVn1J6gkngp7PbIOVsKZccNPkHRPNZAfoTR1nJKUvZjtOkVTqOMvqHhLDojhHI9S41CsLP4p0AAiqxLp1EBwZ42xgBqIwIaE0Srqr5kjHHSWDFD3SGki6T1hzlw0W-tlrAAeZdqu82g4v88Q258"/>
+<span class="text-2xl font-bold italic text-[#c65f47]" style="font-family: 'Fraunces', serif;">rona</span>
 </div>
-<div class="hidden md:flex gap-lg items-center">
-<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="index.html">Beranda</a>
-<a class="font-label-md text-primary font-bold border-b-2 border-primary pb-1" href="artikel.html">Artikel</a>
-<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="katalog.html">Produk</a>
-<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="history.html">Tracking</a>
+<div class="hidden md:flex gap-8 items-center font-bold" style="font-family: 'Quicksand', sans-serif;">
+<a class="text-[#243130]/75 hover:text-[#c65f47] transition-colors text-sm" href="index.html">Beranda</a>
+<a class="text-[#c65f47] text-sm border-b-2 border-[#c65f47] pb-1" href="artikel.html">Artikel</a>
+<a class="text-[#243130]/75 hover:text-[#c65f47] transition-colors text-sm" href="katalog.html">Produk</a>
+<a class="text-[#243130]/75 hover:text-[#c65f47] transition-colors text-sm" href="history.html">Tracking</a>
 </div>
-<div class="flex items-center gap-4">
-<a href="login.html" class="hidden md:block font-label-md text-primary px-5 py-2 rounded-full border-2 border-primary hover:bg-primary/5 transition-all text-center">Masuk</a>
-<a href="register.html" class="font-label-md text-white px-6 py-2 rounded-full bg-[#FF9B85] hover:opacity-90 shadow-md transition-all text-center">Daftar Gratis</a>
+<div class="flex items-center gap-3">
+    <!-- Artisan Navigation dots -->
+    <div class="w-3 h-3 rounded-full bg-[#c65f47] shadow-sm"></div>
+    <div class="w-3 h-3 rounded-full bg-[#7da095] shadow-sm"></div>
+    <div class="w-3 h-3 rounded-full bg-[#74878e] shadow-sm"></div>
 </div>
 </div>
 </nav>
 <main class="pt-32 pb-24 px-margin-mobile md:px-margin-desktop">
 <div class="max-w-[1200px] mx-auto">
 <!-- Breadcrumbs -->
-<nav class="flex items-center gap-2 mb-6 text-on-surface-variant font-label-sm">
-<a class="hover:text-primary" href="#">Beranda</a>
+<nav class="flex items-center gap-2 mb-6 text-[#243130]/75 font-childish text-xs">
+<a class="hover:text-[#c65f47]" href="index.html">Beranda</a>
 <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<a class="hover:text-primary" href="#">Artikel</a>
+<a class="hover:text-[#c65f47]" href="artikel.html">Artikel</a>
 <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span class="text-primary font-bold">Edukasi</span>
+<span class="text-[#c65f47] font-bold">Edukasi</span>
 </nav>
 <!-- Article Header -->
 <section class="max-w-4xl mx-auto mb-10 text-center md:text-left">
-<span class="inline-block bg-secondary-container text-on-secondary-container px-4 py-1.5 rounded-full font-label-sm mb-4">
+<span class="inline-block bg-[#7da095]/15 text-[#7da095] border border-[#7da095]/30 px-4 py-1.5 rounded-full text-xs font-bold mb-4 font-childish">
                     Tanda Awal ADHD
                 </span>
-<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-6">
+<h1 class="font-vintage text-3xl md:text-4xl text-[#243130] font-bold mb-6">
                     Mengenali Tanda Awal ADHD pada Anak Usia Dini
                 </h1>
-<div class="flex flex-col md:flex-row items-center justify-between gap-6 border-y border-outline-variant py-6">
+<div class="flex flex-col md:flex-row items-center justify-between gap-6 border-y border-[#243130]/10 py-6">
 <div class="flex items-center gap-4">
-<div class="w-12 h-12 rounded-full overflow-hidden ambient-card-shadow">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-[#dfd8cb]">
 <img class="w-full h-full object-cover" data-alt="A professional headshot of Dr. Indah Sari, a child psychologist in her late 30s with a kind and approachable expression, wearing a minimalist white coat. The background is a soft, blurred therapist office with natural sunlight, maintaining the warm and calm aesthetic of the RONA brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGlYHVUb2MzHxBeU6XVq0WP6qr34nAO2G4UHdMLu-tSJ3-G20onyWKzzvNvakQ-v6rjS7VM6IqVNFWpkH6oCI8sykEmant8HiN02pXW-Y-GoOE5mfM6aGBaCt-j2f2szbOtCJP2YkNJdaLVfJnvFEu6yRwYvPpAa-eug3pe2zq_bS3p7R57Bs_pKeFfzIjE356SIlndV_o7N5bXayfVLMqswHGZ6M9LBost6kxyK_U8vdpu9gQ1FbZs7FzAvZwiYMsXrKd5Hp8p9Cm"/>
 </div>
 <div class="text-left">
-<p class="font-label-md text-on-surface">Dr. Indah Sari</p>
-<p class="font-label-sm text-on-surface-variant">12 Okt 2024 • 7 menit baca</p>
+<p class="font-bold text-[#243130] text-sm">Dr. Indah Sari</p>
+<p class="text-xs text-[#243130]/65 font-childish">12 Okt 2024 • 7 menit baca</p>
 </div>
 </div>
 <div class="flex items-center gap-4">
-<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary-container hover:text-on-primary-container transition-all">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-[#243130]/5 border border-[#243130]/10 text-[#243130] hover:bg-[#c65f47] hover:border-[#c65f47] hover:text-white transition-all">
 <span class="material-symbols-outlined">bookmark</span>
 </button>
-<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary-container hover:text-on-primary-container transition-all">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-[#243130]/5 border border-[#243130]/10 text-[#243130] hover:bg-[#c65f47] hover:border-[#c65f47] hover:text-white transition-all">
 <span class="material-symbols-outlined">share</span>
 </button>
 </div>
 </div>
 </section>
 <!-- Hero Image -->
-<div class="max-w-5xl mx-auto mb-16 h-[300px] md:h-[500px] rounded-24 overflow-hidden ambient-card-shadow">
+<div class="max-w-5xl mx-auto mb-16 h-[300px] md:h-[500px] rounded-24 overflow-hidden border-2 border-[#dfd8cb] shadow-lg">
 <img class="w-full h-full object-cover" data-alt="A heartwarming, high-quality photograph showing a caring mother sitting on a soft rug, quietly observing her young son playing with wooden building blocks in a sunlit, minimalist living room. The lighting is golden and soft, creating a sense of peace and emotional safety. The colors are muted and earthy, following the RONA cream and teal palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuARCNU6eg3eHGCsagPG66Bm50xHYUqiL3L5zVA2lWCZbQr3X99_UJOuCwxA23ZCw_n5BoiMeP4TN-PDPohKKv1rLLMOvPuY-Cocnp38A_Ns_XbHtgQMzWKSqfByWi1KNKd1itaOzNe1FnqVuhS2idOTJo9vSSFlAWiUuMEhCH7SibnQyZJS39haN_wkq7YpAR0ASFo71C8yTcl3wn6q2PrxsE3jDydG-Szi2j7PrrQmVCL2RjyE6g8J1od_4Y7tJw0V5LVZt7VgG6Sf"/>
 </div>
-<!-- Article Body -->
-<article class="max-w-[800px] mx-auto article-content text-on-surface">
-<p class="font-body-lg text-body-lg text-primary mb-8 leading-relaxed">
+<!-- Article Body ( क्रीम पेपर कार्ड में लिपटे ) -->
+<article class="max-w-[800px] mx-auto paper-card p-6 md:p-10 text-[#243130] article-content">
+<p class="font-vintage text-[#c65f47] text-lg font-bold mb-8 leading-relaxed">
                     Setiap anak berkembang dengan kecepatan yang berbeda-beda. Namun, bagi sebagian orang tua, mengamati perilaku anak yang sangat aktif atau sulit fokus sering kali menimbulkan pertanyaan: "Apakah ini fase normal, atau ada hal lain yang perlu diperhatikan?"
                 </p>
-<h2 class="font-headline-sm text-headline-sm mb-4">Memahami ADHD Lebih Dekat</h2>
+<h2 class="font-vintage text-[#243130] text-xl font-bold mb-4">Memahami ADHD Lebih Dekat</h2>
 <p>
                     ADHD (Attention Deficit Hyperactivity Disorder) adalah kondisi neurodevelopmental yang memengaruhi cara kerja otak dalam mengatur atensi dan kontrol diri. Penting untuk diingat bahwa diagnosis dini bukanlah label negatif, melainkan kunci untuk membuka dukungan yang tepat bagi potensi unik si kecil.
                 </p>
 <!-- Quote Callout -->
-<div class="my-10 p-8 bg-[#E9F2F0] rounded-20 relative overflow-hidden border-l-4 border-primary">
-<span class="material-symbols-outlined absolute top-4 right-6 text-primary/10 text-6xl select-none">format_quote</span>
-<blockquote class="font-headline-sm text-primary italic relative z-10">
+<div class="my-10 p-8 bg-[#7da095]/10 rounded-20 relative overflow-hidden border-l-4 border-[#c65f47]">
+<span class="material-symbols-outlined absolute top-4 right-6 text-[#c65f47]/10 text-6xl select-none">format_quote</span>
+<blockquote class="font-vintage text-[#c65f47] font-bold italic relative z-10">
                         "Setiap anak memiliki ritme perkembangan yang unik. Memahami adalah langkah pertama untuk mendukung potensi mereka."
                     </blockquote>
 </div>
-<h2 class="font-headline-sm text-headline-sm mb-4">Beberapa Tanda yang Perlu Diperhatikan</h2>
+<h2 class="font-vintage text-[#243130] text-xl font-bold mb-4">Beberapa Tanda yang Perlu Diperhatikan</h2>
 <p>Beberapa perilaku yang sering muncul pada usia dini antara lain:</p>
 <ul class="list-disc pl-6 space-y-3 mb-8">
-<li><strong class="text-primary">Kesulitan Menunggu Antrean:</strong> Terlihat sangat tidak sabar bahkan untuk hal-hal kecil.</li>
-<li><strong class="text-primary">Aktivitas Fisik Berlebih:</strong> Selalu bergerak seolah-olah "didorong oleh mesin" dan sulit untuk duduk tenang saat makan atau bercerita.</li>
-<li><strong class="text-primary">Distraksi Mudah:</strong> Perhatiannya mudah teralihkan oleh suara atau gerakan di sekitarnya saat sedang mengerjakan satu tugas.</li>
+<li><strong class="text-[#c65f47]">Kesulitan Menunggu Antrean:</strong> Terlihat sangat tidak sabar bahkan untuk hal-hal kecil.</li>
+<li><strong class="text-[#c65f47]">Aktivitas Fisik Berlebih:</strong> Selalu bergerak seolah-olah "didorong oleh mesin" dan sulit untuk duduk tenang saat makan atau bercerita.</li>
+<li><strong class="text-[#c65f47]">Distraksi Mudah:</strong> Perhatiannya mudah teralihkan oleh suara atau gerakan di sekitarnya saat sedang mengerjakan satu tugas.</li>
 </ul>
 <!-- Inline Image -->
-<div class="my-12 rounded-20 overflow-hidden ambient-card-shadow border border-surface-container">
+<div class="my-12 rounded-20 overflow-hidden border border-[#243130]/10">
 <img class="w-full h-auto" data-alt="A gentle and minimalist digital illustration of focus patterns using soft teal and lavender circles. The illustration shows a central point of light surrounded by radiating waves, symbolizing a calm and supportive environment for cognitive growth. The style is clean, modern, and non-clinical, using the RONA brand colors and soft gradients." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCI3u954M9Lt4B53XDfuraJQCWZd_QKXnAtytBeHGk99100FRffkyO74QTvr0UYGUkJzAstRG6lstGgbQSwezflu4rUJ8aKwOkhNvUXl2WIMRDGLU-hrGGgqVNpCqBpdAySeExyE_rbZmmf4rpn1K1IVmHhKM577w85e8IEINUAqCpLzy9Gt2wv0WWJ8ShUqWPO4Mdm-oM8yIzPXwEga-yCxRPPSt-jtCJIpBF8D4m895QxihZxZnXkQtybkUWbNXBr39WPtC5cVtJf"/>
-<p class="text-center py-4 bg-surface-container-low text-on-surface-variant font-label-sm italic">Ilustrasi pola fokus dan stimulasi pada perkembangan anak.</p>
+<p class="text-center py-4 bg-[#243130]/5 text-[#243130]/70 text-xs font-semibold italic">Ilustrasi pola fokus dan stimulasi pada perkembangan anak.</p>
 </div>
-<h2 class="font-headline-sm text-headline-sm mb-4">Langkah Pertama yang Bisa Dilakukan</h2>
+<h2 class="font-vintage text-[#243130] text-xl font-bold mb-4">Langkah Pertama yang Bisa Dilakukan</h2>
 <ol class="list-decimal pl-6 space-y-4 mb-8">
 <li><strong>Observasi dan Catat:</strong> Perhatikan dalam situasi apa perilaku tersebut muncul paling sering.</li>
 <li><strong>Konsultasi Profesional:</strong> Bicarakan dengan psikolog anak atau dokter spesialis untuk mendapatkan panduan medis yang akurat.</li>
 <li><strong>Ciptakan Lingkungan Terstruktur:</strong> Jadwal harian yang rutin sangat membantu anak merasa aman dan teratur.</li>
 </ol>
 <!-- Share Section -->
-<div class="mt-16 pt-8 border-t border-outline-variant flex flex-col items-center gap-4">
-<p class="font-label-md text-on-surface-variant">Bagikan artikel ini</p>
+<div class="mt-16 pt-8 border-t border-[#243130]/10 flex flex-col items-center gap-4">
+<p class="font-bold text-xs text-[#243130]/75 uppercase tracking-wide font-childish">Bagikan artikel ini</p>
 <div class="flex gap-4">
-<button class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center text-primary hover:bg-primary-container hover:text-on-primary-container transition-all">
+<button class="w-12 h-12 rounded-full border border-[#243130]/20 flex items-center justify-center text-[#243130] hover:bg-[#c65f47] hover:text-white hover:border-[#c65f47] transition-colors">
 <span class="material-symbols-outlined">chat</span>
 </button>
-<button class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center text-primary hover:bg-primary-container hover:text-on-primary-container transition-all">
+<button class="w-12 h-12 rounded-full border border-[#243130]/20 flex items-center justify-center text-[#243130] hover:bg-[#c65f47] hover:text-white hover:border-[#c65f47] transition-colors">
 <span class="material-symbols-outlined">face_nod</span>
 </button>
-<button class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center text-primary hover:bg-primary-container hover:text-on-primary-container transition-all">
+<button class="w-12 h-12 rounded-full border border-[#243130]/20 flex items-center justify-center text-[#243130] hover:bg-[#c65f47] hover:text-white hover:border-[#c65f47] transition-colors">
 <span class="material-symbols-outlined">link</span>
 </button>
 </div>
 </div>
 <!-- Author Bio Card -->
-<div class="mt-16 bg-white p-8 rounded-20 ambient-card-shadow flex flex-col md:flex-row items-center md:items-start gap-8">
-<div class="w-24 h-24 rounded-full overflow-hidden flex-shrink-0 ambient-card-shadow">
+<div class="mt-16 bg-[#243130]/5 p-6 md:p-8 rounded-2xl border border-[#243130]/10 flex flex-col md:flex-row items-center md:items-start gap-8">
+<div class="w-24 h-24 rounded-full overflow-hidden flex-shrink-0 border border-[#dfd8cb]">
 <img class="w-full h-full object-cover" data-alt="Detailed portrait of Dr. Indah Sari for her author bio. She is smiling warmly at the camera, wearing a soft pastel blouse. The lighting is natural and bright, conveying her expertise and empathetic nature in child psychology. Minimalist studio background with a hint of warm cream tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCxA9EbrcBNecTs5hS13Ct5pbpBPXFakwOWk0HoPgAhCbXucfOO_fPWM224W_1ZhVFL9wZpi7jcdcjHYae3zlSglM_Iv7ndz_6ozxHDXjekVY4kyzndNrMtpJkQO8zJZKNQXkk5yc6SVClWPoMJg18sb46SOYYIqt7xOuqgl1lfhjynmrXO3hJoqd4kvmzr12B-HpklnGLCHEThrqlLBpu43YT-FDfSIUvpaxlg8-yov3jXvYc74nc2QWclLwA1HUXHqYu4WsxRBAd"/>
 </div>
-<div class="text-center md:text-left">
-<h3 class="font-headline-sm text-primary mb-2">Dr. Indah Sari, M.Psi.</h3>
-<p class="text-on-surface-variant leading-relaxed mb-4">
+<div class="text-center md:text-left flex-grow">
+<h3 class="font-vintage text-[#c65f47] text-lg font-bold mb-2">Dr. Indah Sari, M.Psi.</h3>
+<p class="text-xs text-[#243130]/75 leading-relaxed mb-4">
                             Seorang psikolog klinis anak dengan pengalaman lebih dari 10 tahun mendampingi keluarga dengan neurodivergensi. Beliau aktif dalam penelitian mengenai pola asuh positif untuk anak dengan ADHD.
                         </p>
-<button class="text-primary font-label-md flex items-center gap-2 hover:underline">
+<button class="text-[#c65f47] font-bold font-childish text-xs flex items-center gap-2 hover:underline">
                             Lihat profil lengkap <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
 </button>
 </div>
@@ -262,41 +187,41 @@
 <!-- Related Articles -->
 <section class="mt-32">
 <div class="flex justify-between items-end mb-8">
-<h2 class="font-headline-md text-on-background">Artikel Terkait</h2>
-<a class="text-primary font-label-md hover:underline" href="#">Lihat Semua</a>
+<h2 class="font-vintage text-2xl text-[#f6f0e5] font-bold">Artikel Terkait</h2>
+<a class="text-[#c65f47] font-bold font-childish text-sm hover:underline" href="artikel.html">Lihat Semua</a>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
 <!-- Related Card 1 -->
-<div class="bg-white rounded-20 overflow-hidden ambient-card-shadow hover:scale-[1.02] transition-transform cursor-pointer">
-<div class="h-48">
+<div class="paper-card overflow-hidden hover:scale-[1.01] transition-transform cursor-pointer" onclick="window.location.href='detail-artikel.html'">
+<div class="h-48 border-b border-[#243130]/10">
 <img class="w-full h-full object-cover" data-alt="A clean and calm image of a neatly organized child's desk with colorful drawers and a small plant. The lighting is bright and cheerful, suggesting a productive and stress-free environment for learning. Minimalist aesthetic, soft colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0MtUIDCozGa7MRk3LGMAhZjg2MQxHfRr5g_jzWYzBV_as2EGEJgekoxBNKkj-TdWIdE0Aj_mNbraIOmGoqTgWmdVKE-2YQ1C_xmgVxG97FhNwOJVa4Mw7GlSbpHRhkZ2lBr62f3sowSsbhPvV9IVU1fId6OMF7_KLnBL-flZRDgJ8T63BGrr2RfJX9PSKKKB4_sP8q8wskGZ_LlomRhSyFmB-YrnT2BU7DH-qDzUKZMf5l9QoEHfKB8rOqVaSr0vUUdbDtWnHZZvJ"/>
 </div>
 <div class="p-6">
-<span class="text-primary-container-on font-label-sm bg-primary-container/20 px-3 py-1 rounded-full text-primary mb-3 inline-block">Tips Parenting</span>
-<h4 class="font-headline-sm text-[18px] mb-3 leading-tight">Membangun Rutinitas yang Menenangkan</h4>
-<p class="text-on-surface-variant font-label-sm">5 menit baca</p>
+<span class="px-3 py-1 rounded-full bg-[#7da095]/10 text-[#7da095] border border-[#7da095]/20 text-[10px] font-bold mb-3 inline-block font-childish">Tips Parenting</span>
+<h4 class="font-vintage text-base font-bold text-[#243130] mb-3 leading-tight">Membangun Rutinitas yang Menenangkan</h4>
+<p class="text-[#243130]/55 font-bold font-childish text-[10px]">5 menit baca</p>
 </div>
 </div>
 <!-- Related Card 2 -->
-<div class="bg-white rounded-20 overflow-hidden ambient-card-shadow hover:scale-[1.02] transition-transform cursor-pointer">
-<div class="h-48">
+<div class="paper-card overflow-hidden hover:scale-[1.01] transition-transform cursor-pointer" onclick="window.location.href='detail-artikel.html'">
+<div class="h-48 border-b border-[#243130]/10">
 <img class="w-full h-full object-cover" data-alt="A parent and child's hands working together to sort brightly colored wooden beads into different jars. A high-angle shot focusing on the collaborative and focused activity. Warm light-mode photography with soft teal accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTtM11gNWp2NYFrSUUe-4ocOG0l39h0wnYthB7zRaa5_ukx_QyPmwRu7g00Hi5aNxbLDYKzc6msea-tAhXQA6rFIqoGuGN2S1zCMU4_9q6PKufEcXXROwy6p2gfr09adTTth6rxUuFwrdtSUKQofIl8v_VXO06uydwKPfS-jq5ooU0cnCIgdSMlQC1Wk_cGNWdkBGp6hzkkctDhTiTgcF9P41-p-qNJLkA5OI8yB4VxO7bXQoJUBXkKrwueiN4wyJ6j2dxAv8ppOF1"/>
 </div>
 <div class="p-6">
-<span class="text-primary-container-on font-label-sm bg-primary-container/20 px-3 py-1 rounded-full text-primary mb-3 inline-block">Aktivitas</span>
-<h4 class="font-headline-sm text-[18px] mb-3 leading-tight">5 Permainan Sensori untuk Fokus Anak</h4>
-<p class="text-on-surface-variant font-label-sm">8 menit baca</p>
+<span class="px-3 py-1 rounded-full bg-[#7da095]/10 text-[#7da095] border border-[#7da095]/20 text-[10px] font-bold mb-3 inline-block font-childish">Aktivitas</span>
+<h4 class="font-vintage text-base font-bold text-[#243130] mb-3 leading-tight">5 Permainan Sensori untuk Fokus Anak</h4>
+<p class="text-[#243130]/55 font-bold font-childish text-[10px]">8 menit baca</p>
 </div>
 </div>
 <!-- Related Card 3 -->
-<div class="bg-white rounded-20 overflow-hidden ambient-card-shadow hover:scale-[1.02] transition-transform cursor-pointer">
-<div class="h-48">
+<div class="paper-card overflow-hidden hover:scale-[1.01] transition-transform cursor-pointer" onclick="window.location.href='detail-artikel.html'">
+<div class="h-48 border-b border-[#243130]/10">
 <img class="w-full h-full object-cover" data-alt="A macro photograph of fresh green leaves with droplets of water, representing growth and the natural development of life. The image is bright, crisp, and calming, aligning with the RONA brand's focus on natural support and mental clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzLmlkbBClbXNhlkMMmh92idIQP3g7Jkg68cuDvdPQzS_akL2Ta4gpJYDk1J4d7wcFO8R-PmhOpLbMNh42XBRnznBqbsgf2nkINTm6X587PSKxggQR4NGBYin_UxmrbCZHvky32WEptaOGaoDE1CFtfHwxanN6dxzbB1yz5ZxQM_lMnkBXnMqEibF8F0892doX-1tZqStf2D5Q4pvKueO_bFm71wRVBtDn88shEuJxo6Yr8aODHFh2aLbA6P0pn8Z52upZ9UEQ57_I"/>
 </div>
 <div class="p-6">
-<span class="text-primary-container-on font-label-sm bg-primary-container/20 px-3 py-1 rounded-full text-primary mb-3 inline-block">Kesehatan</span>
-<h4 class="font-headline-sm text-[18px] mb-3 leading-tight">Nutrisi Otak untuk Pertumbuhan Optimal</h4>
-<p class="text-on-surface-variant font-label-sm">6 menit baca</p>
+<span class="px-3 py-1 rounded-full bg-[#7da095]/10 text-[#7da095] border border-[#7da095]/20 text-[10px] font-bold mb-3 inline-block font-childish">Kesehatan</span>
+<h4 class="font-vintage text-base font-bold text-[#243130] mb-3 leading-tight">Nutrisi Otak untuk Pertumbuhan Optimal</h4>
+<p class="text-[#243130]/55 font-bold font-childish text-[10px]">6 menit baca</p>
 </div>
 </div>
 </div>

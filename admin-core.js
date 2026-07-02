@@ -7,12 +7,12 @@
         {
             sku: "RONA-SPIN-01",
             name: "Fidget Spinner Terapi Sensorik",
-            category: "Focus",
+            category: "Fokus & Motorik",
             price: 145000,
             stock: 12,
             active: true,
             rating: 4.8,
-            image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAJ-4ShPNQvrQSzt78m-oAC5BVdJweA1ggsl_OPavMk2FzcvUo6RN77YO5dLYFJbKJXobJHACHTiuVTM2KRCpBw6FVN2xUUeOWwCqc8r8PEwbqtiQtIFUsyow9zckf3uv5LNqkDJ69BJUNiYA5jCqm0yS6prIWJDy9UpG8lQgSznkeCxTlnxvbuXc7gMAGrO4jgIaO1uJAd-J8Uf23i70SaQixs5Bf9omxTAhRUSkTql9IbjX-6K1-Q5mz1r9FrpeeuXSfcegNvqut7",
+            image: "images/spinner.png",
             description: "Fidget spinner kayu dirancang khusus untuk meningkatkan konsentrasi anak-anak dengan kecenderungan ADHD dan meredakan ketegangan motorik halus.",
             benefits: "Membantu menstabilkan fokus, menyalurkan energi motorik berlebih, meredakan kecemasan.",
             instructions: "Pegang di bagian tengah dan putar perlahan menggunakan jari tangan kanan atau kiri. Gunakan selama 5-10 menit saat anak mulai terlihat gelisah.",
@@ -22,7 +22,7 @@
         {
             sku: "RONA-BLKT-02",
             name: "Rona Sensory Calming Blanket",
-            category: "Calming",
+            category: "Tidur & Tenang",
             price: 249000,
             stock: 4, // Critical stock warning trigger (< 5)
             active: true,
@@ -37,12 +37,12 @@
         {
             sku: "RONA-POPB-03",
             name: "Fidget Pop-It Board Premium",
-            category: "Sensory",
+            category: "Taktil & Kunyah",
             price: 45000,
             stock: 35,
             active: true,
             rating: 4.6,
-            image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=400&q=80",
+            image: "images/popit.png",
             description: "Papan silikon pop-it dengan feedback taktil lembut. Cocok digunakan di sekolah atau selama perjalanan untuk menjaga stabilitas emosi anak.",
             benefits: "Menstimulasi sensor taktil pada ujung jari, mengalihkan kebiasaan merusak barang saat tantrum.",
             instructions: "Tekan gelembung secara berurutan. Setelah semua tertekan, balikkan papan untuk mulai menekan kembali dari sisi sebaliknya.",
@@ -52,12 +52,12 @@
         {
             sku: "RONA-SNDM-04",
             name: "CalmBounds Sound Machine White Noise",
-            category: "Calming",
+            category: "Tidur & Tenang",
             price: 320000,
             stock: 8,
             active: true,
             rating: 4.7,
-            image: "https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=400&q=80",
+            image: "images/sound.jpg",
             description: "Mesin terapi audio portable dengan pilihan white noise, suara hujan, dan detak jantung ibu untuk membantu anak rileks sebelum tidur.",
             benefits: "Menyamarkan kebisingan luar yang mengganggu sensitivitas auditori anak sensory-avoidance.",
             instructions: "Letakkan dalam jarak 1-2 meter dari ranjang anak. Nyalakan mode white noise atau suara alam dengan volume sedang 30 menit sebelum jam tidur.",
@@ -67,12 +67,12 @@
         {
             sku: "RONA-BRSH-05",
             name: "Sensory Therapy Brush (Wilbarger)",
-            category: "Sensory",
+            category: "Taktil & Kunyah",
             price: 65000,
             stock: 2, // Critical Stock
             active: true,
             rating: 4.5,
-            image: "https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=400&q=80",
+            image: "images/brush.jpg",
             description: "Sikat terapi sensori khusus untuk metode Wilbarger Deep Pressure. Bulu sikat lembut namun kokoh untuk menstimulasi sensor taktil kulit.",
             benefits: "Membantu mengatasi defensivitas taktil (anak sensitif terhadap sentuhan pakaian/tekstur tertentu).",
             instructions: "Gunakan sikat dengan tekanan konstan sepanjang lengan, punggung, dan kaki anak secara berulang. Hindari bagian wajah dan dada.",
@@ -82,12 +82,12 @@
         {
             sku: "RONA-VIBR-06",
             name: "Oral Motor Vibrating Chew Tool",
-            category: "Sensory",
+            category: "Taktil & Kunyah",
             price: 120000,
             stock: 14,
             active: true,
             rating: 4.7,
-            image: "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=400&q=80",
+            image: "images/chew.png",
             description: "Alat pengunyah terapi oral dengan getaran mikro untuk merangsang reseptor sensori mulut anak.",
             benefits: "Menyediakan input propioseptif oral, mengurangi kebiasaan menggigit kuku atau pakaian.",
             instructions: "Masukkan ujung silikon lembut ke dalam mulut anak dan biarkan anak mengunyah secara perlahan saat belajar.",
@@ -97,12 +97,12 @@
         {
             sku: "RONA-BALL-07",
             name: "Weighted Sensory Ball",
-            category: "Calming",
+            category: "Tidur & Tenang",
             price: 85000,
             stock: 3, // Critical Stock
             active: true,
             rating: 4.6,
-            image: "https://images.unsplash.com/photo-1559251606-c623743a6d76?auto=format&fit=crop&w=400&q=80",
+            image: "images/ball.png",
             description: "Bola pemberat taktil berisi butiran khusus untuk meredakan ketegangan motorik halus anak.",
             benefits: "Menenangkan sistem saraf yang hiperaktif melalui terapi tekanan taktil.",
             instructions: "Squeeze atau genggam bola secara konstan saat anak merasa cemas atau bosan.",
@@ -112,12 +112,12 @@
         {
             sku: "RONA-SWNG-08",
             name: "Sensory Therapy Hammock Swing",
-            category: "Calming",
+            category: "Tidur & Tenang",
             price: 380000,
             stock: 7,
             active: true,
             rating: 4.9,
-            image: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=400&q=80",
+            image: "images/swing.png",
             description: "Ayunan gantung terapi sensori dalam ruangan berbahan elastis tinggi.",
             benefits: "Menyediakan stimulus vestibular mendalam untuk menenangkan anak ADHD.",
             instructions: "Gantungkan ayunan pada plafon atau palang yang kuat. Biarkan anak duduk atau berbaring di dalamnya.",
@@ -127,12 +127,12 @@
         {
             sku: "RONA-RING-09",
             name: "Taktil Sensory Rings Set",
-            category: "Focus",
+            category: "Taktil & Kunyah",
             price: 30000,
             stock: 45,
             active: true,
             rating: 4.4,
-            image: "https://images.unsplash.com/photo-1581579438747-1dc8d1e0ca96?auto=format&fit=crop&w=400&q=80",
+            image: "images/rings.png",
             description: "Cincin jari taktil bertekstur bergerigi mikro untuk mengalihkan kecemasan motorik.",
             benefits: "Meningkatkan sirkulasi motorik halus dan atensi visual.",
             instructions: "Gulung cincin naik turun pada jari anak selama proses terapi belajar.",
@@ -142,12 +142,12 @@
         {
             sku: "RONA-SAND-10",
             name: "Therapeutic Kinetic Play Sand Set",
-            category: "Sensory",
+            category: "Taktil & Kunyah",
             price: 95000,
             stock: 19,
             active: true,
             rating: 4.8,
-            image: "https://images.unsplash.com/photo-1508847154043-be12a62861c1?auto=format&fit=crop&w=400&q=80",
+            image: "images/sand.png",
             description: "Pasir kinetik terapeutik dengan wadah cetakan khusus terapi taktil sensorik anak.",
             benefits: "Melatih motorik halus dan imajinasi visual anak autis/ADHD.",
             instructions: "Biarkan anak membentuk pasir kinetik menggunakan tangan atau cetakan di atas wadah.",
@@ -159,7 +159,7 @@
     const defaultArticles = [
         {
             id: "ART-01",
-            thumbnail: "https://lh3.googleusercontent.com/aida-public/AB6AXuAVfyPse9S2ICPmIBapATaEEDEDuYVO-nevUlaq5H4GmZkXJXeR6qVxe_9Lz58kld-QQL3SlKE81KZX0kXJdTUEGcddaxc06wrqjfXPnb_9y5YXmXci-nP5bShf4cDjIhXm6R6nHHn4514TYMH2lpVqfC9cmtQ5Sr8G3-ZHDQuwU5mySqbqJ96VLtJVAzAj62B8QJ0MTVmZjeJ0DqCar6EiuUNBJWc0La-asRvVMc5RVs4Z8-L3G53hgbuNiJ8VPUyzIP2EI3kPvfdj",
+            thumbnail: "images/art_stimulation.jpg",
             title: "Pentingnya Stimulasi Sensorik pada Balita",
             author: "dr. Shima Maharani, Sp.A",
             date: "28 Juni 2026",
@@ -172,7 +172,7 @@
         },
         {
             id: "ART-02",
-            thumbnail: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=400&q=80",
+            thumbnail: "images/art_focus.png",
             title: "Meningkatkan Fokus Anak dengan Terapi Bermain",
             author: "dr. Shima Maharani, Sp.A",
             date: "29 Juni 2026",
@@ -185,7 +185,7 @@
         },
         {
             id: "ART-03",
-            thumbnail: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80",
+            thumbnail: "images/art_tantrum.png",
             title: "Strategi Menenangkan Anak yang Mengalami Tantrum",
             author: "Nabila Fitria, M.Psi",
             date: "30 Juni 2026",
@@ -198,7 +198,7 @@
         },
         {
             id: "ART-04",
-            thumbnail: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=400&q=80",
+            thumbnail: "images/art_sensory.jpg",
             title: "Sensory-Avoidance vs Sensory-Seeking pada ADHD",
             author: "dr. Shima Maharani, Sp.A",
             date: "27 Juni 2026",
@@ -224,7 +224,7 @@
         },
         {
             id: "ART-06",
-            thumbnail: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80",
+            thumbnail: "images/art_motoric.jpg",
             title: "Aktivitas Motorik Kasar di Rumah untuk Anak Hiperaktif",
             author: "Nabila Fitria, M.Psi",
             date: "24 Juni 2026",
@@ -237,7 +237,7 @@
         },
         {
             id: "ART-07",
-            thumbnail: "https://images.unsplash.com/photo-1537655780520-1e392edd816a?auto=format&fit=crop&w=400&q=80",
+            thumbnail: "images/art_toys.png",
             title: "Cara Memilih Mainan Sensorik Berdasarkan Usia",
             author: "Rian Hidayat, S.Tr.T",
             date: "22 Juni 2026",
@@ -250,7 +250,7 @@
         },
         {
             id: "ART-08",
-            thumbnail: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=400&q=80",
+            thumbnail: "images/art_speech.png",
             title: "Kolaborasi Terapis Wicara dengan Orang Tua",
             author: "dr. Shima Maharani, Sp.A",
             date: "20 Juni 2026",
@@ -537,7 +537,7 @@
             status: "Dikirim",
             resi: "JNE8893902345",
             courier: "JNE REG",
-            items: [{ name: "Therapeutic Kinetic Play Sand Set", price: 95000, qty: 1, image: "https://images.unsplash.com/photo-1508847154043-be12a62861c1?auto=format&fit=crop&w=100" }],
+            items: [{ name: "Therapeutic Kinetic Play Sand Set", price: 95000, qty: 1, image: "images/sand.png" }],
             file: "",
             refundReason: "",
             rejectReason: "",
@@ -559,7 +559,7 @@
             status: "Diterima",
             resi: "JNT99008811",
             courier: "J&T Express",
-            items: [{ name: "Sensory Therapy Hammock Swing", price: 380000, qty: 1, image: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=100" }],
+            items: [{ name: "Sensory Therapy Hammock Swing", price: 380000, qty: 1, image: "images/swing.png" }],
             file: "",
             refundReason: "",
             rejectReason: "",
@@ -582,8 +582,8 @@
             resi: "JNT77881122",
             courier: "J&T Express",
             items: [
-                { name: "Weighted Sensory Ball", price: 85000, qty: 1, image: "https://images.unsplash.com/photo-1559251606-c623743a6d76?auto=format&fit=crop&w=100" },
-                { name: "Taktil Sensory Rings Set", price: 30000, qty: 2, image: "https://images.unsplash.com/photo-1581579438747-1dc8d1e0ca96?auto=format&fit=crop&w=100" }
+                { name: "Weighted Sensory Ball", price: 85000, qty: 1, image: "images/ball.png" },
+                { name: "Taktil Sensory Rings Set", price: 30000, qty: 2, image: "images/rings.png" }
             ],
             file: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C4AAAAASUVORK5CYII=",
             refundReason: "Cincin jari taktil robek saat pertama kali dibuka dari kemasan.",
@@ -609,10 +609,10 @@
             status: "Refund Ditolak",
             resi: "JNT77221199",
             courier: "J&T Express",
-            items: [{ name: "Weighted Sensory Ball", price: 85000, qty: 1, image: "https://images.unsplash.com/photo-1559251606-c623743a6d76?auto=format&fit=crop&w=100" }],
+            items: [{ name: "Weighted Sensory Ball", price: 85000, qty: 1, image: "images/ball.png" }],
             file: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C4AAAAASUVORK5CYII=",
             refundReason: "Ingin ditukar dengan produk lain karena anak bosan.",
-            rejectReason: "Refund hanya berlaku untuk produk cacat produksi atau salah kirim. Produk yang sudah sesuai deskripsi dan digunakan tidak bisa direfund hanya karena anak bosan.",
+            rejectReason: "Refund hanya berlaku untuk produk cacat produksi atau salah kirim. Produk yang sudah sesuai deskripsi and digunakan tidak bisa direfund hanya karena anak bosan.",
             statusHistory: [
                 { status: "Diterima", time: "27 Juni 2026, 12:00", note: "Konfirmasi penerimaan kurir." },
                 { status: "Refund Diproses", time: "27 Juni 2026, 14:00", note: "Pelanggan mengajukan refund dengan alasan anak bosan." },
@@ -630,7 +630,7 @@
             status: "Selesai",
             resi: "JNT77883344",
             courier: "J&T Express",
-            items: [{ name: "Fidget Spinner Terapi Sensorik", price: 145000, qty: 1, image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAJ-4ShPNQvrQSzt78m-oAC5BVdJweA1ggsl_OPavMk2FzcvUo6RN77YO5dLYFJbKJXobJHACHTiuVTM2KRCpBw6FVN2xUUeOWwCqc8r8PEwbqtiQtIFUsyow9zckf3uv5LNqkDJ69BJUNiYA5jCqm0yS6prIWJDy9UpG8lQgSznkeCxTlnxvbuXc7gMAGrO4jgIaO1uJAd-J8Uf23i70SaQixs5Bf9omxTAhRUSkTql9IbjX-6K1-Q5mz1r9FrpeeuXSfcegNvqut7" }],
+            items: [{ name: "Fidget Spinner Terapi Sensorik", price: 145000, qty: 1, image: "images/spinner.png" }],
             file: "",
             refundReason: "",
             rejectReason: "",
@@ -657,14 +657,14 @@
         let db = JSON.parse(localStorage.getItem('rona_db')) || {};
         let updated = false;
 
-        // Force upgrade database to version 1.3 to include Sarah and Rara
-        if (!db.version || db.version !== "1.3") {
+        // Force upgrade database to version 1.9 to update final article cover images
+        if (!db.version || db.version !== "1.9") {
             db.products = defaultProducts;
             db.articles = defaultArticles;
             db.users = defaultUsers;
             db.transactions = defaultTransactions;
             db.activities = defaultActivities;
-            db.version = "1.3";
+            db.version = "1.9";
             updated = true;
         }
 
@@ -803,12 +803,12 @@
             const avatar = activeParent ? activeParent.avatar : "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150";
 
             const activeClass = (id) => activePageId === id 
-                ? 'text-primary font-bold border-b-2 border-primary pb-1' 
-                : 'text-on-surface-variant hover:text-primary transition-colors font-semibold';
+                ? 'text-[#c65f47] font-bold border-b-2 border-[#c65f47] pb-1' 
+                : 'text-[#243130]/75 hover:text-[#c65f47] transition-colors font-semibold';
                 
             const drawerActiveClass = (id) => activePageId === id 
-                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-bold transition-all shadow-sm' 
-                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low hover:text-primary font-semibold transition-all hover:translate-x-1';
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-[#c65f47]/10 text-[#c65f47] font-bold transition-all shadow-sm' 
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-[#243130]/80 hover:bg-[#243130]/5 hover:text-[#c65f47] font-semibold transition-all hover:translate-x-1';
 
             let desktopLinks = '';
             let drawerLinks = '';
@@ -821,9 +821,6 @@
                         <a class="text-sm ${activeClass('artikel')}" href="artikel.html">Artikel</a>
                         <a class="text-sm ${activeClass('katalog')}" href="katalog.html">Katalog</a>
                         <a class="text-sm ${activeClass('perjalanan')}" href="history.html">Perjalanan</a>
-                        <a class="text-sm ${activeClass('profil-anak')}" href="dashboard-parent.html?tab=profile">Profil Anak</a>
-                        <a class="text-sm ${activeClass('riwayat-belanja')}" href="dashboard-parent.html?tab=purchases">Riwayat Belanja</a>
-                        <a class="text-sm ${activeClass('dashboard')}" href="dashboard-parent.html">Dashboard</a>
                     </div>
                 `;
 
@@ -841,17 +838,8 @@
                         <a class="${drawerActiveClass('perjalanan')}" href="history.html">
                             <span class="material-symbols-outlined text-[20px]">timeline</span> Perjalanan
                         </a>
-                        <a class="${drawerActiveClass('profil-anak')}" href="dashboard-parent.html?tab=profile">
-                            <span class="material-symbols-outlined text-[20px]">face</span> Profil Anak
-                        </a>
-                        <a class="${drawerActiveClass('riwayat-belanja')}" href="dashboard-parent.html?tab=purchases">
-                            <span class="material-symbols-outlined text-[20px]">receipt_long</span> Riwayat Belanja
-                        </a>
-                        <a class="${drawerActiveClass('dashboard')}" href="dashboard-parent.html">
-                            <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
-                        </a>
                     </div>
-                    <div class="mt-auto px-4 py-6 border-t border-outline-variant/20">
+                    <div class="mt-auto px-4 py-6 border-t border-[#243130]/10">
                         <button onclick="handleLogout()" class="flex items-center justify-center gap-2 w-full py-3.5 border-2 border-red-200 text-red-600 text-sm font-bold rounded-2xl hover:bg-red-50 transition-colors">
                             <span class="material-symbols-outlined text-[18px]">logout</span> Keluar
                         </button>
@@ -859,30 +847,27 @@
                 `;
 
                 rightActions = `
-                    <div class="flex items-center gap-2 lg:gap-4">
-                        <!-- Notifikasi -->
-                        <div class="relative cursor-pointer p-2 hover:bg-surface-container rounded-full transition-colors flex items-center" onclick="alert('Notifikasi: Rara menunjukkan kemajuan fokus +15% minggu ini!')" title="Notifikasi">
-                            <span class="material-symbols-outlined text-primary">notifications</span>
-                            <span class="absolute top-1 right-1 bg-coral text-white text-[8px] font-bold w-3.5 h-3.5 flex items-center justify-center rounded-full">1</span>
+                    <div class="flex items-center gap-3">
+                        <!-- Notifikasi (Terracotta dot) -->
+                        <div class="relative cursor-pointer dot-btn-orange" onclick="alert('Notifikasi: Rara menunjukkan kemajuan fokus +15% minggu ini!')" title="Notifikasi">
+                            <span class="material-symbols-outlined text-white">notifications</span>
+                            <span class="absolute -top-1 -right-1 bg-white text-[#c65f47] text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-[#c65f47]">1</span>
                         </div>
-                        <!-- Keranjang -->
-                        <div class="relative cursor-pointer p-2 hover:bg-surface-container rounded-full transition-colors flex items-center" onclick="window.location.href='keranjang.html'" title="Keranjang">
-                            <span class="material-symbols-outlined text-primary">shopping_cart</span>
-                            <span id="cartBadgeCount" class="absolute top-1 right-1 bg-coral text-white text-[8px] font-bold w-3.5 h-3.5 flex items-center justify-center rounded-full">0</span>
+                        <!-- Keranjang (Sage green dot) -->
+                        <div class="relative cursor-pointer dot-btn-sage" onclick="window.location.href='keranjang.html'" title="Keranjang">
+                            <span class="material-symbols-outlined text-white">shopping_cart</span>
+                            <span id="cartBadgeCount" class="absolute -top-1 -right-1 bg-white text-[#7da095] text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-[#7da095]">0</span>
                         </div>
-                        <!-- Profil -->
-                        <a href="profil-anak.html" class="hidden lg:flex items-center gap-2 hover:opacity-85 transition-opacity" title="Profil Rara & Bunda Sarah">
-                            <div class="w-8 h-8 rounded-full overflow-hidden border border-primary/20 shrink-0 shadow-sm">
-                                <img src="${avatar}" class="w-full h-full object-cover">
-                            </div>
-                            <span class="text-xs font-bold text-on-surface-variant">Profil</span>
+                        <!-- Profil (Slate blue dot) -->
+                        <a href="dashboard-parent.html?tab=profile" class="dot-btn-blue" title="Profil Rara & Bunda Sarah">
+                            <span class="material-symbols-outlined text-white">person</span>
                         </a>
                         <!-- Logout -->
-                        <button onclick="handleLogout()" class="hidden lg:inline-block text-xs font-bold text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-xl border border-red-200 transition-colors">Keluar</button>
+                        <button onclick="handleLogout()" class="hidden lg:inline-block text-xs font-bold text-[#243130]/75 hover:text-[#c65f47] px-3.5 py-1.5 rounded-full border border-[#243130]/30 hover:bg-[#c65f47]/10 transition-colors">Keluar</button>
                         
                         <!-- Hamburger Menu Button -->
-                        <button id="ronaHamburger" onclick="ronaNav.toggleDrawer()" class="lg:hidden p-2 rounded-xl hover:bg-surface-container transition-colors flex items-center" aria-label="Menu">
-                            <span class="material-symbols-outlined text-primary text-[26px]">menu</span>
+                        <button id="ronaHamburger" onclick="ronaNav.toggleDrawer()" class="lg:hidden p-2 rounded-full hover:bg-[#243130]/10 transition-colors flex items-center" aria-label="Menu">
+                            <span class="material-symbols-outlined text-[#243130] text-[26px]">menu</span>
                         </button>
                     </div>
                 `;
@@ -907,11 +892,11 @@
                             <span class="material-symbols-outlined text-[20px]">storefront</span> Katalog
                         </a>
                     </div>
-                    <div class="mt-auto px-4 py-6 space-y-3 border-t border-outline-variant/20">
-                        <a href="login.html" class="flex items-center justify-center gap-2 w-full py-3.5 border-2 border-primary text-primary text-sm font-bold rounded-2xl hover:bg-primary/5 transition-colors">
+                    <div class="mt-auto px-4 py-6 space-y-3 border-t border-[#243130]/10">
+                        <a href="login.html" class="flex items-center justify-center gap-2 w-full py-3.5 border-2 border-[#c65f47] text-[#c65f47] text-sm font-bold rounded-2xl hover:bg-[#c65f47]/5 transition-colors">
                             <span class="material-symbols-outlined text-[18px]">login</span> Masuk
                         </a>
-                        <a href="register.html" class="flex items-center justify-center gap-2 w-full py-3.5 bg-primary text-white text-sm font-bold rounded-2xl hover:opacity-90 transition-opacity shadow-lg">
+                        <a href="register.html" class="flex items-center justify-center gap-2 w-full py-3.5 bg-[#c65f47] text-white text-sm font-bold rounded-2xl hover:opacity-90 transition-opacity shadow-lg">
                             <span class="material-symbols-outlined text-[18px]">person_add</span> Daftar Gratis
                         </a>
                     </div>
@@ -921,13 +906,13 @@
                     <div class="flex items-center gap-2 lg:gap-4">
                         <!-- Desktop Auth Buttons -->
                         <div class="hidden lg:flex items-center gap-3">
-                            <a href="login.html" class="text-sm font-bold text-primary hover:opacity-80 transition-opacity px-4 py-2 rounded-full border border-primary/20 hover:bg-primary/5">Masuk</a>
-                            <a href="register.html" class="text-sm font-bold text-white bg-primary px-5 py-2.5 rounded-full shadow-md hover:opacity-90 transition-opacity">Daftar Gratis</a>
+                            <a href="login.html" class="text-sm font-bold text-[#243130]/75 hover:text-[#c65f47] px-4 py-2 transition-colors">Masuk</a>
+                            <a href="register.html" class="text-sm font-bold text-white bg-[#c65f47] px-6 py-2.5 rounded-full shadow-md hover:scale-105 transition-transform">Daftar Gratis</a>
                         </div>
                         
                         <!-- Hamburger Menu Button -->
-                        <button id="ronaHamburger" onclick="ronaNav.toggleDrawer()" class="lg:hidden p-2 rounded-xl hover:bg-surface-container transition-colors flex items-center" aria-label="Menu">
-                            <span class="material-symbols-outlined text-primary text-[26px]">menu</span>
+                        <button id="ronaHamburger" onclick="ronaNav.toggleDrawer()" class="lg:hidden p-2 rounded-xl hover:bg-[#243130]/10 transition-colors flex items-center" aria-label="Menu">
+                            <span class="material-symbols-outlined text-[#243130] text-[26px]">menu</span>
                         </button>
                     </div>
                 `;
@@ -938,7 +923,7 @@
                 <div class="max-w-[1200px] mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
                     <div class="flex items-center gap-2.5">
                         <img alt="RONA Logo" class="h-9 w-9 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgIbGSRqH0qZyiuiq7hoVM0edbPazkiGScH5SQu4WqqTQoAzxBF4k2MxfZr2lOdz-BD3DZeoL4sim82ViCc-91D0g5X4D-zs9Qznw0ru8uYt5VV0xi3awAVeUziJVn1J6gkngp7PbIOVsKZccNPkHRPNZAfoTR1nJKUvZjtOkVTqOMvqHhLDojhHI9S41CsLP4p0AAiqxLp1EBwZ42xgBqIwIaE0Srqr5kjHHSWDFD3SGki6T1hzlw0W-tlrAAeZdqu82g4v88Q258"/>
-                        <a href="index.html" class="text-xl md:text-2xl font-extrabold text-primary tracking-tight">RONA</a>
+                        <a href="index.html" class="text-2xl font-bold font-vintage italic text-[#c65f47] tracking-wider">rona</a>
                     </div>
                     ${desktopLinks}
                     ${rightActions}
@@ -946,19 +931,19 @@
 
                 <!-- Mobile Drawer Overlay -->
                 <div id="ronaDrawerOverlay" onclick="ronaNav.closeDrawer()" 
-                     style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:9998; backdrop-filter:blur(3px);">
+                     style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:9998; backdrop-filter:blur(3px);">
                 </div>
 
                 <!-- Mobile Drawer Panel -->
                 <div id="ronaDrawerPanel"
-                     style="display:none; position:fixed; top:0; right:0; bottom:0; width:min(320px, 88vw); background:#fff; z-index:9999; box-shadow:-8px 0 40px rgba(13,106,92,0.15); overflow-y:auto; flex-direction:column; border-radius:24px 0 0 24px;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid rgba(190,201,197,0.3);">
+                     style="display:none; position:fixed; top:0; right:0; bottom:0; width:min(320px, 88vw); background:#f6f0e5; z-index:9999; box-shadow:-8px 0 40px rgba(0,0,0,0.25); overflow-y:auto; flex-direction:column; border-radius:24px 0 0 24px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid rgba(36,49,48,0.1);">
                         <div style="display:flex; align-items:center; gap:8px;">
                             <img alt="RONA" style="height:32px; width:32px; object-fit:contain;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgIbGSRqH0qZyiuiq7hoVM0edbPazkiGScH5SQu4WqqTQoAzxBF4k2MxfZr2lOdz-BD3DZeoL4sim82ViCc-91D0g5X4D-zs9Qznw0ru8uYt5VV0xi3awAVeUziJVn1J6gkngp7PbIOVsKZccNPkHRPNZAfoTR1nJKUvZjtOkVTqOMvqHhLDojhHI9S41CsLP4p0AAiqxLp1EBwZ42xgBqIwIaE0Srqr5kjHHSWDFD3SGki6T1hzlw0W-tlrAAeZdqu82g4v88Q258"/>
-                            <span style="font-size:18px; font-weight:800; color:#0d6a5c;">RONA</span>
+                            <span class="font-vintage italic text-xl font-bold text-[#c65f47]">rona</span>
                         </div>
                         <button onclick="ronaNav.closeDrawer()" style="padding:8px; border-radius:12px; background:transparent; border:none; cursor:pointer;">
-                            <span class="material-symbols-outlined" style="color:#6f7976;">close</span>
+                            <span class="material-symbols-outlined" style="color:#243130;">close</span>
                         </button>
                     </div>
                     <div style="display:flex; flex-direction:column; flex:1; padding:8px 8px 24px; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px;">
